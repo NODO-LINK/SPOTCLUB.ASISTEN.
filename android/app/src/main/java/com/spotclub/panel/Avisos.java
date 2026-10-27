@@ -72,7 +72,8 @@ final class Avisos {
     /** Deja programada la próxima tarea de las 8:00. Con forzar=false no toca una ya programada. */
     static void programar(Context c, boolean forzar) {
         JobScheduler js = c.getSystemService(JobScheduler.class);
-        if (!activo(c)) { js.cancel(JOB_ID); return; }
+        if (!activo(c)) { js.cancel(JOB_ID); cancelarDiarios(c); return; }
+        programarDiarios(c);
         if (!forzar && js.getPendingJob(JOB_ID) != null) return;
         long espera = proximoResumen(System.currentTimeMillis()) - System.currentTimeMillis();
         JobInfo job = new JobInfo.Builder(JOB_ID, new ComponentName(c, ResumenJob.class))
@@ -130,6 +131,26 @@ final class Avisos {
         } catch (Exception e) {
             return true;
         }
+    }
+
+    // ── avisos fijos de publicación: buenos días 7:00 y buenas noches 21:00 (Caracas) ──
+    private static final String[][] DIARIOS = {
+            {"diario-dias", "7", "Buenos días 🖤", "Es hora de publicar el flyer de Buenos días. Lo encuentras en Contenido."},
+            {"diario-noches", "21", "Buenas noches 🌙", "Es hora de publicar el flyer de Buenas noches. Lo encuentras en Contenido."},
+    };
+
+    static long proximaHora(long ahora, int hora) {
+        long hoy = Resumen.inicioDia(ahora) + hora * 3600000L;
+        return ahora < hoy ? hoy : hoy + DIA;
+    }
+
+    static void programarDiarios(Context c) {
+        long ahora = System.currentTimeMillis();
+        for (String[] d : DIARIOS) programarAlarma(c, d[0], d[2] + "|" + d[3], proximaHora(ahora, Integer.parseInt(d[1])));
+    }
+
+    static void cancelarDiarios(Context c) {
+        for (String[] d : DIARIOS) cancelarAlarma(c, d[0]);
     }
 
     // ── recordatorios con hora ──────────────────────────────────

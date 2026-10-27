@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle estado) {
         super.onCreate(estado);
+        Avisos.programar(this, false);        // deja listos los avisos de las 7:00, 8:00 y 21:00
         web = new WebView(this);
         web.setBackgroundColor(Color.parseColor("#0c0d0e"));
         setContentView(web);
