@@ -33,6 +33,12 @@ service cloud.firestore {
       allow write: if esAdmin();
     }
 
+    // Existencias: las mueven las ventas y los ajustes de inventario.
+    match /inventario/{id} {
+      allow read: if esVentas();
+      allow write: if esVentas();
+    }
+
     match /contadores/{id} {
       allow read: if signedIn();
       allow write: if esVentas();
