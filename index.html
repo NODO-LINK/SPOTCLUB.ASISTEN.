@@ -2130,7 +2130,7 @@ function renderCon(){
     }
     const lista=piezas.filter(p=>conFilter==='all'||estadoPieza(p).vis===conFilter).map(p=>{
         const e=estadoPieza(p);
-        return `<button type="button" class="crow" data-act="conSel" data-id="${esc(p.id)}" aria-current="${p.id===selPieza}"><img src="${esc(srcPieza(p.archivos[0]))}" alt="" loading="lazy">`+
+        return `<button type="button" class="crow" data-act="conSel" data-id="${esc(p.id)}" aria-current="${p.id===selPieza}"><img src="${esc(srcPieza(p.poster||p.archivos[0]))}" alt="" loading="lazy">`+
             `<div><strong>${esc(p.titulo)}</strong><small>${esc(p.tipo)} · ${esc(p.formato)}${esNuevo(p)?' · <b style="color:var(--late)">NUEVO</b>':''}</small></div>`+
             `<div style="text-align:right"><span class="bd c-${e.vis==='vencida'?'late':e.vis==='programada'?'enviado':e.vis==='publicada'?'pagada':'sin'}">${PUB_LBL[e.vis]}</span>${e.programada&&e.estado==='programada'?`<small style="text-align:right">${fshort(e.programada)}</small>`:''}</div></button>`;
     }).join('')||'<p class="empty">No hay piezas con este filtro.</p>';
@@ -2158,7 +2158,7 @@ function detallePieza(p){
          `<div class="actrow"><button type="button" class="btn sm" data-act="conProg" data-id="${esc(p.id)}">${e.estado==='programada'?'Reprogramar':'Programar'}</button><button type="button" class="btn ghost sm" data-act="conPub" data-id="${esc(p.id)}">Marcar como publicada</button>${e.estado==='programada'?`<button type="button" class="btn ghost sm" data-act="conBorrador" data-id="${esc(p.id)}">Quitar programación</button>`:''}</div>`;
     return `<div class="paper">`+
       `<div class="cli-head"><div><h3>${esc(p.titulo)}</h3><p class="meta">${esc(p.tipo)} · ${esc(p.formato)}</p><div class="tags"><span class="bd c-${e.vis==='vencida'?'late':e.vis==='programada'?'enviado':e.vis==='publicada'?'pagada':'sin'}">${PUB_LBL[e.vis]}${e.vis==='programada'||e.vis==='vencida'?' · '+ftime(e.programada):''}</span></div></div><div class="abts"><a class="btn ghost sm" href="${IG_URL}" target="_blank" rel="noopener">Abrir Instagram</a>${p.generada?`<button type="button" class="btn ghost sm" data-act="genDel" data-id="${esc(p.gid)}">Eliminar diseño</button>`:''}</div></div>`+
-      `<div class="cprev" style="margin-top:16px"><img src="${esc(srcPieza(p.archivos[conImg]))}" alt="Vista previa de ${esc(p.titulo)}">${thumbs}</div>`+
+      `<div class="cprev" style="margin-top:16px">${/\.mp4$/i.test(p.archivos[conImg])?`<video src="${esc(srcPieza(p.archivos[conImg]))}" poster="${esc(srcPieza(p.poster||''))}" controls playsinline preload="metadata" style="max-width:100%;max-height:560px;border-radius:6px;background:#060608"></video>`:`<img src="${esc(srcPieza(p.archivos[conImg]))}" alt="Vista previa de ${esc(p.titulo)}">`}${thumbs}</div>`+
       `<div class="actrow">${dl}</div>`+
       `<div class="sub"><div class="field"><label for="conCaption">Caption</label><textarea id="conCaption" style="min-height:170px" maxlength="2200">${esc(e.caption)}</textarea></div><p class="cnt-c" id="conCnt">${e.caption.length} / 2200</p>`+
       `<div class="actrow"><button type="button" class="btn sm" data-act="conCopy">Copiar caption</button><button type="button" class="btn ghost sm" data-act="conCap" data-id="${esc(p.id)}">Guardar cambios del caption</button>${pubMap[p.id]&&pubMap[p.id].caption!=null?`<button type="button" class="btn ghost sm" data-act="conCapReset" data-id="${esc(p.id)}">Restaurar original</button>`:''}</div></div>`+

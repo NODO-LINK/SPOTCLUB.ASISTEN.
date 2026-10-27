@@ -2,6 +2,51 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-27-flyer-3",
+      "titulo": "Se nota que eres tú",
+      "tipo": "Marca",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-27-flyer-3.png"
+      ],
+      "caption": "Story: agrega el sticker de enlace a tu DM con el texto «Pídela por DM».",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "2026-10-27-flyer-2",
+      "titulo": "Tu carta, tu personaje",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-27-flyer-2.png"
+      ],
+      "caption": "Tu personaje favorito convertido en carta 👇🖤\nHacemos cartas y franelas con el diseño que quieras. Escríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #anime #coleccion",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "2026-10-27-flyer-1",
+      "titulo": "¿Anime, rock o urbano?",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-27-flyer-1.png"
+      ],
+      "caption": "¿Cuál es tu mundo? Cuéntanos el tuyo 👇🖤\nHacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #anime #streetwear",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "2026-10-27-video",
+      "titulo": "¿Qué diseño te pondrías?",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-10-27-video.mp4"
+      ],
+      "poster": "spot-2026-10-27-video-poster.png",
+      "caption": "¿Cuál elegirías tú? 1, 2 o 3 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #anime #streetwear",
+      "fecha": "2026-10-27"
+    },
+    {
       "id": "2026-10-27-story",
       "titulo": "1 pieza basta",
       "tipo": "Proceso",
