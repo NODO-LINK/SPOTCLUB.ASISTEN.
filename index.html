@@ -333,15 +333,33 @@ td{padding:11px 14px;vertical-align:middle}
 /* ── responsive ── */
 @media (max-width:1100px){.grid2{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:980px){.fact{grid-template-columns:minmax(0,1fr)}.flist{max-height:none}}
+.nv-mas,.mtop-t{display:none}
+.mas-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mas-t{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px;min-height:84px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:700 .98rem var(--body);text-align:left;cursor:pointer}
+.mas-t .ic{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mas-t .ct{position:absolute;top:10px;right:12px;font:600 .8rem var(--mono);color:var(--muted)}
+.mas-t .ct.alert{color:var(--late)}
+.mas-t[aria-current="page"]{background:var(--bg);border-color:var(--ink)}
 @media (max-width:860px){
   .shell{grid-template-columns:minmax(0,1fr)}
+  .nv.sec{display:none}
+  .nv-mas{display:flex}
+  .mtop-t{display:block;flex:1;text-align:center;font:800 1rem var(--display);padding:0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #nav{overflow:visible}
+  .nv{flex:1 1 0;min-width:0}
+  .nv-mas[aria-current="page"]{background:var(--bg);color:var(--ink)}
+  .mas-sheet{align-items:flex-end;padding:0}
+  .mas-sheet .mc{max-width:none;border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
   .side{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;z-index:50;border-right:0;border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-left,0px)) calc(6px + var(--sb)) max(8px,env(safe-area-inset-right,0px));flex-direction:row;gap:0}
   .side .mark,.who{display:none}
   #nav{flex-direction:row;width:100%;gap:2px;overflow-x:auto;scrollbar-width:none}
   #nav::-webkit-scrollbar{display:none}
   .nv{flex:1 0 74px;flex-direction:column;justify-content:center;gap:4px;padding:6px 2px;min-height:52px;font-size:.7rem;border-radius:8px}
   .nv .ic{width:22px;height:22px}
-  .nv .ct{margin:0;font-size:.68rem}
+  .nv{position:relative}
+  .nv .ct{position:absolute;top:2px;left:calc(50% + 7px);margin:0;min-width:17px;height:17px;padding:0 5px;border-radius:9px;background:var(--ink);color:var(--surface);font:700 .64rem/17px var(--mono);text-align:center}
+  .nv .ct.alert{background:var(--late);color:#fff}
+  .nv .ct:empty{display:none}
   .mtop{display:flex;align-items:center;justify-content:space-between;padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));padding-top:calc(12px + env(safe-area-inset-top,0px));background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
   .pane{padding:18px max(16px,env(safe-area-inset-right,0px)) 96px max(16px,env(safe-area-inset-left,0px))}
   .pane-head h3{font-size:1.45rem}
@@ -433,14 +451,15 @@ td{padding:11px 14px;vertical-align:middle}
     <nav id="nav" aria-label="Secciones">
       <button class="nv" type="button" data-act="go" data-view="panel" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></svg>Panel</button>
       <button class="nv" type="button" data-act="go" data-view="ent"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg>Entregas <span class="ct" id="ctEnt"></span></button>
-      <button class="nv" type="button" data-act="go" data-view="fact"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Facturación <span class="ct" id="ctFact"></span></button>
+      <button class="nv sec" type="button" data-act="go" data-view="fact"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Facturación <span class="ct" id="ctFact"></span></button>
       <button class="nv" type="button" data-act="go" data-view="ventas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Ventas</button>
       <button class="nv" type="button" data-act="go" data-view="cli"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17.5" cy="9" r="2.6"/><path d="M17.5 14.2c2.4.3 3.9 1.9 4.3 4.3"/></svg>Clientes</button>
-      <button class="nv" type="button" data-act="go" data-view="rec"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>Recordatorios <span class="ct" id="ctRec"></span></button>
-      <button class="nv" type="button" data-act="go" data-view="inv"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v12H3z"/><path d="M2 4h20v4H2z"/><path d="M10 12h4"/></svg>Inventario</button>
-      <button class="nv" type="button" data-act="go" data-view="con"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M3.5 17.5 9 13l4 3.5 3-2.5 4.5 3.5"/></svg>Contenido <span class="ct" id="ctCon"></span></button>
-      <button class="nv" type="button" data-act="go" data-view="prod"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.4"/></svg>Productos</button>
-      <button class="nv" type="button" data-act="go" data-view="act" id="nvAct"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Actividad</button>
+      <button class="nv sec" type="button" data-act="go" data-view="rec"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>Recordatorios <span class="ct" id="ctRec"></span></button>
+      <button class="nv sec" type="button" data-act="go" data-view="inv"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v12H3z"/><path d="M2 4h20v4H2z"/><path d="M10 12h4"/></svg>Inventario</button>
+      <button class="nv sec" type="button" data-act="go" data-view="con"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M3.5 17.5 9 13l4 3.5 3-2.5 4.5 3.5"/></svg>Contenido <span class="ct" id="ctCon"></span></button>
+      <button class="nv sec" type="button" data-act="go" data-view="prod"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.4"/></svg>Productos</button>
+      <button class="nv sec" type="button" data-act="go" data-view="act" id="nvAct"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Actividad</button>
+      <button class="nv nv-mas" type="button" data-act="mas" aria-haspopup="dialog"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>Más <span class="ct" id="ctMas"></span></button>
     </nav>
     <div class="who">
       <span class="em" id="uEmail"></span>
@@ -450,7 +469,7 @@ td{padding:11px 14px;vertical-align:middle}
   </aside>
 
   <div class="main">
-    <header class="mtop"><span class="mark">THE SPOT<i></i></span><button class="linkbtn" type="button" data-act="logout">Cerrar sesión</button></header>
+    <header class="mtop"><span class="mark">THE SPOT<i></i></span><b class="mtop-t" id="mtopT"></b><button class="linkbtn" type="button" data-act="logout">Cerrar sesión</button></header>
     <main class="pane">
       <div id="banner"></div>
 
@@ -772,6 +791,13 @@ td{padding:11px 14px;vertical-align:middle}
 </div>
 
 <!-- ══════════ MODAL: RECIBO ══════════ -->
+<div id="mMas" class="overlay mas-sheet" role="dialog" aria-modal="true" aria-labelledby="mMasT">
+  <div class="mc">
+    <div class="mh"><h3 id="mMasT">Más secciones</h3><button class="mcl" type="button" data-act="close" aria-label="Cerrar">×</button></div>
+    <div class="mb"><div class="mas-grid" id="masGrid"></div></div>
+  </div>
+</div>
+
 <div id="mRecibo" class="overlay" role="dialog" aria-modal="true" aria-labelledby="mReciboT">
   <div class="mc">
     <div class="mh"><h3 id="mReciboT">Recibo de venta</h3><button class="mcl" type="button" data-act="close" aria-label="Cerrar">×</button></div>
@@ -2180,6 +2206,36 @@ function rebuildPiezas(){
 // sin zoom en el teléfono: ni pellizco ni doble toque (el doble toque ya lo bloquea touch-action)
 ['gesturestart','gesturechange','gestureend'].forEach(e=>document.addEventListener(e,ev=>ev.preventDefault()));
 document.addEventListener('touchmove',ev=>{ if(ev.touches&&ev.touches.length>1) ev.preventDefault(); },{passive:false});
+
+// celular: las secciones menos usadas van en la hoja "Más" y la barra superior muestra dónde estás
+(function(){
+    const nav=$('#nav'), grid=$('#masGrid'), mas=nav.querySelector('.nv-mas'), ctMas=$('#ctMas'), tit=$('#mtopT');
+    const etiqueta=b=>[...b.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim();
+    const sec=[...nav.querySelectorAll('.nv.sec')];
+    grid.innerHTML=sec.map(b=>`<button type="button" class="mas-t" data-act="go" data-view="${b.dataset.view}">${b.querySelector('svg').outerHTML}<span>${etiqueta(b)}</span><i class="ct"></i></button>`).join('');
+    const tiles=[...grid.children];
+    const poner=(el,prop,val)=>{ if(el[prop]!==val) el[prop]=val; };
+    function sync(){
+        let suma=0, alerta=false, actual=false;
+        sec.forEach((b,i)=>{
+            const t=tiles[i], c=b.querySelector('.ct'), n=c?c.textContent.trim():'';
+            poner(t,'hidden',b.hidden);
+            const ci=t.querySelector('.ct'); poner(ci,'textContent',n); ci.classList.toggle('alert',!!(c&&c.classList.contains('alert')));
+            if(!b.hidden&&/^\d+$/.test(n)) suma+=+n;
+            if(c&&c.classList.contains('alert')) alerta=true;
+            const cur=b.getAttribute('aria-current')==='page';
+            if(cur){ actual=true; t.setAttribute('aria-current','page'); } else t.removeAttribute('aria-current');
+        });
+        poner(ctMas,'textContent',suma?String(suma):''); if(ctMas.classList.contains('alert')!==alerta) ctMas.classList.toggle('alert',alerta);
+        if(actual&&mas.getAttribute('aria-current')!=='page') mas.setAttribute('aria-current','page'); else if(!actual&&mas.hasAttribute('aria-current')) mas.removeAttribute('aria-current');
+        const cur=nav.querySelector('.nv[aria-current="page"]:not(.nv-mas)'); poner(tit,'textContent',cur?etiqueta(cur):'');
+        poner(mas,'hidden',sec.every(b=>b.hidden));
+    }
+    new MutationObserver(sync).observe(nav,{subtree:true,attributes:true,childList:true,characterData:true});
+    grid.addEventListener('click',e=>{ if(e.target.closest('.mas-t')) cerrar('mMas'); });
+    document.addEventListener('click',e=>{ if(e.target.closest('[data-act="mas"]')) abrir('mMas'); });
+    sync();
+})();
 // vuelve a leer la lista de piezas del repositorio para que las nuevas aparezcan sin cerrar la app
 async function refrescarContenido(){
     if(!can('registrar')) return;
