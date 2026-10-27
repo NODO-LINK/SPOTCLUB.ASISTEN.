@@ -2,6 +2,39 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-27-buenas-noches",
+      "titulo": "Buenas noches · Story",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-27-buenas-noches.png"
+      ],
+      "caption": "Story: agrega el sticker de música o una cuenta regresiva para mañana.",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "2026-10-27-buenos-dias-2",
+      "titulo": "Buenos días · Story",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-27-buenos-dias-2.png"
+      ],
+      "caption": "Story: agrega el sticker de pregunta «¿Qué te pones hoy?» o una encuesta.",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "2026-10-27-buenos-dias-1",
+      "titulo": "Buenos días · Post",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-27-buenos-dias-1.png"
+      ],
+      "caption": "Buenos días, familia 🖤 Que hoy te salga todo con estilo.\nCuéntanos en los comentarios qué vas a estrenar hoy 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-10-27"
+    },
+    {
       "id": "prueba-video-tarde",
       "titulo": "PRUEBA TARDE · Cliente y diseño",
       "tipo": "Humor",
