@@ -569,7 +569,6 @@ td{padding:11px 14px;vertical-align:middle}
       <section id="v-prod" hidden></section>
       <section id="v-act" hidden></section>
     </main>
-    <footer class="app-footer">Realizado por <strong>DGP GLOBAL GROUP</strong> · Ocala, Florida · <a href="mailto:dgpgroup.usa@gmail.com">dgpgroup.usa@gmail.com</a></footer>
   </div>
 </div>
 
@@ -748,6 +747,23 @@ td{padding:11px 14px;vertical-align:middle}
   </div>
 </div>
 
+<!-- ══════════ MODAL: RESTAURAR ══════════ -->
+<div id="mRestaurar" class="overlay" role="dialog" aria-modal="true" aria-labelledby="mRestaurarT">
+  <div class="mc">
+    <div class="mh"><h3 id="mRestaurarT">Restaurar respaldo</h3><button class="mcl" type="button" data-act="close" aria-label="Cerrar">×</button></div>
+    <div class="mb">
+      <p id="restInfo" style="line-height:1.6"></p>
+      <ul class="rows" id="restLista" style="margin-top:14px"></ul>
+      <p style="margin-top:14px;color:var(--muted);font-size:.86rem">Los documentos con el mismo identificador se sobrescriben. No se borra nada de lo que ya exista. Los usuarios de acceso no se restauran: se crean en Authentication del proyecto.</p>
+      <p class="msg" id="restMsg" role="alert"></p>
+    </div>
+    <div class="mf">
+      <button class="btn ghost" type="button" data-act="close">Cancelar</button>
+      <button class="btn" type="button" id="btnRestaurar" data-act="restOk">Restaurar ahora</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ MODAL: MIGRAR ══════════ -->
 <div id="mMigrar" class="overlay" role="dialog" aria-modal="true" aria-labelledby="mMigrarT">
   <div class="mc">
@@ -776,19 +792,12 @@ td{padding:11px 14px;vertical-align:middle}
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
+<script src="firebase-config.js"></script>
 <script src="contenido/generador.js"></script>
 <script>
 // ══════════════════════════════════════════════
 //  FIREBASE
 // ══════════════════════════════════════════════
-const firebaseConfig = {
-    apiKey:            "AIzaSyBpiExYjeKjE316Ls0H-X1ybGyw8PLCF1o",
-    authDomain:        "the-spot-a7cd1.firebaseapp.com",
-    projectId:         "the-spot-a7cd1",
-    storageBucket:     "the-spot-a7cd1.firebasestorage.app",
-    messagingSenderId: "131741958215",
-    appId:             "1:131741958215:web:1cfa2d73a0ec9fd243f162"
-};
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db   = firebase.firestore();
@@ -1411,13 +1420,15 @@ function startActividad(){
         if(view==='act') renderActividad();
     },e=>console.error(e));
 }
-const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',stock:'Inventario',cliente:'Ficha de cliente',contenido:'Contenido',anulada:'Factura anulada',restaurada:'Factura restaurada',eliminada:'Factura eliminada',catalogo:'Catálogo modificado',migracion:'Migración'};
+const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',stock:'Inventario',cliente:'Ficha de cliente',contenido:'Contenido',anulada:'Factura anulada',restaurada:'Factura restaurada',eliminada:'Factura eliminada',catalogo:'Catálogo modificado',migracion:'Migración',respaldo:'Respaldo'};
 function renderActividad(){
     const rows=actividad.map(a=>{
         const t=a.fecha&&a.fecha.toMillis?a.fecha.toMillis():Date.now();
         return `<li><time>${ftime(t)}</time><div><strong>${esc(ACC[a.accion]||a.accion)}${a.numero!=null?' · F-'+String(a.numero).padStart(6,'0'):''}</strong><small>${esc(a.por||'')}${a.detalle?' · '+esc(a.detalle):''}</small></div></li>`;
     }).join('')||'<li class="empty">Aún no hay actividad registrada.</li>';
-    $('#v-act').innerHTML=`<div class="pane-head"><h3>Actividad</h3><span>Últimos 80 cambios, quién y cuándo</span></div><ul class="act" style="border-top:1px solid var(--ink)">${rows}</ul>`;
+    $('#v-act').innerHTML=`<div class="pane-head"><h3>Actividad</h3><span>Últimos 80 cambios, quién y cuándo</span></div>`+
+      `<div class="card"><div class="ch"><h2>Respaldo de la base de datos</h2></div><div class="cb"><p style="color:var(--muted);margin-bottom:12px">Descarga todo (ventas, clientes, inventario, productos, contenido) en un archivo. Sirve para guardar una copia o para pasar los datos a otro proyecto de Firebase. Proyecto actual: <span class="mono">${esc(firebaseConfig.projectId)}</span>.</p><div class="actrow" style="margin:0"><button type="button" class="btn" data-act="respDescargar">Descargar respaldo</button><button type="button" class="btn ghost" data-act="respElegir">Restaurar desde archivo</button><input type="file" id="respFile" accept="application/json,.json" hidden></div></div></div>`+
+      `<ul class="act" style="border-top:1px solid var(--ink)">${rows}</ul>`;
 }
 
 // ══════════════════════════════════════════════
@@ -2301,7 +2312,7 @@ function reciboHtml(v){
       (!v.legacy&&!v.anulada?`<hr class="rc-hr"><div class="rc-t">Pagos</div>${pagos||rcRow('Sin pagos registrados','—')}${rcRow('Pagado',fmt(v.pagado))}${rcRow('Saldo pendiente',fmt(v.saldo))}`:'')+
       (v.anulada?`<hr class="rc-hr"><div class="rc-row"><span>Estado</span><span>ANULADA</span></div>`:'')+
       `<hr class="rc-hr"><div class="rc-t">Estado de la entrega</div>${rcRow('Etapa',esc(etapaDef(v.etapa).l))}`+
-      `<div class="rc-foot">Gracias por tu compra · The Spot<br>Comprobante interno, sin validez fiscal.<br>Desarrollado por <strong>DGP GLOBAL GROUP</strong> · Ocala, Florida · dgpgroup.usa@gmail.com</div>`+
+      `<div class="rc-foot">Gracias por tu compra · The Spot<br>Comprobante interno, sin validez fiscal.</div>`+
     `</div>`;
 }
 function verRecibo(id){
@@ -2315,6 +2326,75 @@ function imprimirRecibo(){
     window.print();
     pa.innerHTML='';
 }
+
+// ══════════════════════════════════════════════
+//  RESPALDO Y RESTAURACIÓN (para guardar copias o cambiar de proyecto Firebase)
+// ══════════════════════════════════════════════
+const COLS_RESP=['ventas','contadores','inventario','clientes','config','publicaciones','piezas_gen','auditoria'];
+function aJson(v){
+    if(v&&typeof v.toMillis==='function') return {__ts:v.toMillis()};
+    if(Array.isArray(v)) return v.map(aJson);
+    if(v&&typeof v==='object'){ const o={}; for(const k in v) o[k]=aJson(v[k]); return o; }
+    return v;
+}
+function deJson(v){
+    if(Array.isArray(v)) return v.map(deJson);
+    if(v&&typeof v==='object'){
+        if(Object.keys(v).length===1&&typeof v.__ts==='number') return firebase.firestore.Timestamp.fromMillis(v.__ts);
+        const o={}; for(const k in v) o[k]=deJson(v[k]); return o;
+    }
+    return v;
+}
+async function descargarRespaldo(){
+    if(!can('migrar')) return;
+    toast('Preparando el respaldo…');
+    const out={version:1,fecha:new Date().toISOString(),proyecto:firebaseConfig.projectId,colecciones:{}}, omitidas=[]; let total=0;
+    for(const c of COLS_RESP){
+        try{
+            const s=await db.collection(c).get();
+            out.colecciones[c]=s.docs.map(d=>({id:d.id,data:aJson(d.data())})); total+=s.docs.length;
+        }catch(e){ omitidas.push(c); }
+    }
+    const url=URL.createObjectURL(new Blob([JSON.stringify(out)],{type:'application/json'}));
+    const a=document.createElement('a'); a.href=url; a.download='respaldo-'+firebaseConfig.projectId+'-'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+    log('respaldo',null,total+' documentos'+(omitidas.length?' · sin acceso a '+omitidas.join(', '):''));
+    toast('Respaldo descargado: '+pl(total,'documento','documentos')+(omitidas.length?'. No se pudo leer: '+omitidas.join(', ')+'.':'.'));
+}
+let respPend=null;
+function leerRespaldo(file){
+    const r=new FileReader();
+    r.onload=()=>{
+        try{
+            const j=JSON.parse(r.result);
+            if(j.version!==1||!j.colecciones) throw new Error('formato');
+            respPend=j;
+            const cols=Object.keys(j.colecciones).filter(c=>COLS_RESP.includes(c));
+            $('#restInfo').textContent='Respaldo del '+new Date(j.fecha).toLocaleString('es-VE')+' del proyecto '+j.proyecto+'. Se escribirá en el proyecto actual: '+firebaseConfig.projectId+'.';
+            $('#restLista').innerHTML=cols.map(c=>`<li><span>${esc(c)}</span><span>${pl(j.colecciones[c].length,'documento','documentos')}</span></li>`).join('')||'<li><span>El archivo no trae datos</span><span></span></li>';
+            $('#restMsg').textContent=''; abrir('mRestaurar');
+        }catch(e){ toast('Ese archivo no es un respaldo válido.','error'); }
+    };
+    r.readAsText(file);
+}
+async function restaurarRespaldo(){
+    if(!can('migrar')||!respPend) return;
+    const btn=$('#btnRestaurar'); btn.disabled=true; btn.textContent='Restaurando…';
+    try{
+        let n=0, b=db.batch(), k=0;
+        for(const c of COLS_RESP){
+            for(const d of (respPend.colecciones[c]||[])){
+                b.set(db.collection(c).doc(d.id),deJson(d.data)); k++; n++;
+                if(k===400){ await b.commit(); b=db.batch(); k=0; }
+            }
+        }
+        if(k) await b.commit();
+        log('respaldo',null,'Restauró '+n+' documentos del proyecto '+respPend.proyecto);
+        respPend=null; cerrar('mRestaurar'); toast('Restaurados '+pl(n,'documento','documentos')+'.');
+    }catch(e){ console.error(e); $('#restMsg').textContent='No se pudo restaurar: '+(e.message||'error'); }
+    btn.disabled=false; btn.textContent='Restaurar ahora';
+}
+document.addEventListener('change',e=>{ if(e.target.id==='respFile'&&e.target.files[0]){ leerRespaldo(e.target.files[0]); e.target.value=''; } });
 
 // ══════════════════════════════════════════════
 //  EVENTOS
@@ -2343,6 +2423,9 @@ document.addEventListener('click',e=>{
         case 'rmReg': regItems.splice(+t.dataset.i,1); renderReg(); break;
         case 'rmEdit': editItems.splice(+t.dataset.i,1); renderEdit(); break;
         case 'exportCSV': exportCSV(); break;
+        case 'respDescargar': descargarRespaldo(); break;
+        case 'respElegir': $('#respFile').click(); break;
+        case 'restOk': restaurarRespaldo(); break;
         case 'recibo': verRecibo(id); break;
         case 'reciboPrint': imprimirRecibo(); break;
         case 'genAbrir': conMode='gen'; if(!gen) genIniciar(); else { genAFormulario(); genUI(); genDibujar(); } renderCon(); break;

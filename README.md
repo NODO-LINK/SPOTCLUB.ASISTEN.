@@ -1,6 +1,6 @@
 # THE SPOT · Panel de ventas
 
-Aplicación de un solo archivo (`index.html`) con Firebase Auth y Firestore. Dominio: `thespot.dgp-link.com`.
+Aplicación web (`index.html`) con Firebase Auth y Firestore. Los datos del proyecto de Firebase están en `firebase-config.js`. Dominio: `thespot.dgp-link.com`.
 
 ## Secciones
 
@@ -54,3 +54,16 @@ Sin documento en `usuarios/{uid}` se asume `admin`. Para restringir a alguien, c
 - `TELEGRAM_CHAT_ID`: id del chat. Escríbele al bot (o agrégalo al grupo y escribe algo) y ejecuta `node contenido/fuentes/telegram.js --id` para verlo.
 
 Comandos: `--id` (lista los chats), `--prueba` (mensaje de prueba) y, sin argumentos, envía las piezas de hoy (`--fecha AAAA-MM-DD` para otra fecha). El entorno debe permitir conectarse a `api.telegram.org`.
+
+## Cambiar de proyecto de Firebase (por ejemplo, a uno gratuito)
+
+Todo lo que usa el panel (Authentication y Firestore) entra en el plan gratuito Spark. No usa Storage.
+
+1. En el proyecto actual: entrar como administrador, ir a **Actividad → Descargar respaldo** y guardar el archivo.
+2. En https://console.firebase.google.com crear un proyecto nuevo y dejarlo en el plan **Spark**.
+3. **Authentication → Sign-in method**: activar *Correo electrónico/contraseña*. Luego **Users → Add user** para crear el acceso.
+4. **Authentication → Settings → Authorized domains**: agregar `thespot.dgp-link.com`.
+5. **Firestore Database → Create database** (modo producción, región cercana) y pegar las reglas de `firestore.rules` en la pestaña **Rules**.
+6. **Project settings → Your apps → Web app**: copiar los valores de configuración y pegarlos en `firebase-config.js`.
+7. Entrar al panel con el usuario nuevo, ir a **Actividad → Restaurar desde archivo** y elegir el respaldo.
+8. Verificar ventas, inventario y clientes. Los usuarios de acceso no se restauran: se crean en Authentication.
