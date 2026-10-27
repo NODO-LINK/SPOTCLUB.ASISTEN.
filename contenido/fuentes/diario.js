@@ -19,7 +19,7 @@ const FORMATO={post:'Post 4:5',cuadrado:'Post 1:1',story:'Story 9:16'};
   const logoData=fs.existsSync(logoPath)?'data:image/png;base64,'+fs.readFileSync(logoPath).toString('base64'):null;
   for(const it of spec.piezas){
     if(!/^[a-z0-9-]+$/.test(it.id)) throw new Error('id inválido: '+it.id);
-    const g={plantilla:it.plantilla,formato:it.formato||'post',l1:it.l1||'',l2:it.l2||'',sub:it.sub||'',num:it.num||'',precio:it.precio||'10',p:it.p||['','',''],cta:!!it.cta,glitch:!!it.glitch};
+    const g={plantilla:it.plantilla,formato:it.formato||'post',l1:it.l1||'',l2:it.l2||'',sub:it.sub||'',num:it.num||'',precio:it.precio||'10',p:it.p||['','',''],cta:!!it.cta,sinPrecio:!!it.sinPrecio,glitch:!!it.glitch};
     g.logoData=logoData;
     if(it.foto){
       const ruta=path.resolve(dir,'..',it.foto); if(!ruta.startsWith(path.join(dir,'material'))) throw new Error('La foto debe estar en contenido/material/');

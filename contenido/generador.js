@@ -98,8 +98,11 @@ function dibujarPieza(cv,g){
         c.fillStyle=R; c.fillRect(0,bandTop,W,3);
         c.textAlign='center';
         fnt(40); sp(1); c.fillStyle=Wh; c.fillText('HAZ LA TUYA',W/2,bandTop+34);
+        if(g.sinPrecio){ fnt(82); sp(-2.5); c.fillStyle=R; c.fillText('PÍDELA POR DM',W/2,bandTop+98); }
+        else{
         fnt(82); sp(-2.5); c.fillStyle=R; c.fillText('DESDE $'+String(g.precio||'10').replace(',','.'),W/2,bandTop+88);
         fnt(40); sp(1); c.fillStyle=Wh; c.fillText('PÍDELA POR DM',W/2,bandTop+190);
+        }
         c.textAlign='left';
     }else if(!story){
         fnt(28,800); sp(1.7); c.fillStyle='rgba(245,245,245,.9)'; c.fillText('YOU LOOK LIKE SUCCESS',M,H-70);

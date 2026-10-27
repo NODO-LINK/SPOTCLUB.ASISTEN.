@@ -2,6 +2,28 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "prueba-flyer-4",
+      "titulo": "PRUEBA · Tu franela con tu diseño",
+      "tipo": "Producto",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-prueba-flyer-4.png"
+      ],
+      "caption": "Story de prueba con foto real: agrega el sticker de enlace a tu DM con el texto «Pídela por DM».",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "prueba-flyer-3",
+      "titulo": "PRUEBA · Tu carta, tu personaje",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-prueba-flyer-3.png"
+      ],
+      "caption": "PRUEBA con foto real. Tu carta, tu personaje 🖤\nHacemos cartas y franelas con el diseño que quieras. Escríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #coleccion #spotclub",
+      "fecha": "2026-10-27"
+    },
+    {
       "id": "prueba-video-voz",
       "titulo": "PRUEBA · Video con voz IA (Liam)",
       "tipo": "Video",
