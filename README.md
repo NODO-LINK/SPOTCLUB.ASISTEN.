@@ -69,3 +69,15 @@ Todo lo que usa el panel (Authentication y Firestore) entra en el plan gratuito 
 8. Probar el proyecto nuevo sin afectar el uso diario: abrir `https://thespot.dgp-link.com/?proyecto=nuevo`, entrar con el usuario nuevo y usar **Actividad → Restaurar desde archivo**. Una franja azul indica qué proyecto se está usando.
 9. Verificar ventas, inventario y clientes. Los usuarios de acceso no se restauran: se crean en Authentication.
 10. Cuando todo esté bien, cambiar `FIREBASE_PREDETERMINADO` a `'nuevo'` en `firebase-config.js`. El proyecto anterior queda disponible con `?proyecto=anterior`.
+
+## App Android (APK)
+
+La carpeta `android/` es una app que abre el panel (`https://thespot.dgp-link.com/`). Como solo muestra la página, se actualiza sola cada vez que cambia el sitio. No hay que volver a instalar nada, salvo que cambie la app misma.
+
+- GitHub compila el APK solo (`.github/workflows/apk.yml`) y lo deja en **Releases → Spot Club Panel (APK) → spot-club-panel.apk**.
+- Para recompilar a mano: pestaña **Actions → Construir APK → Run workflow**.
+- Instalar: abrir el archivo en el teléfono y permitir "instalar apps de esta fuente" cuando lo pida.
+- El APK va firmado con una llave de depuración incluida en el repositorio (`android/debug.keystore`). Sirve para repartirlo directamente; no sirve para publicar en Google Play.
+- Si cambia la dirección del panel, se edita `PANEL_URL` en `android/app/build.gradle`.
+
+También se puede instalar sin APK: abrir el panel en Chrome y usar **Instalar app** o **Agregar a pantalla de inicio**.

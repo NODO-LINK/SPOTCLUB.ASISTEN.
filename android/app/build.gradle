@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.spotclub.panel'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.spotclub.panel'
+        minSdk 29
+        targetSdk 34
+        // En GitHub Actions se pasa -PversionCode=<número de ejecución> para que cada APK pueda actualizar al anterior.
+        versionCode (project.findProperty('versionCode') ? project.findProperty('versionCode').toInteger() : 1)
+        versionName '1.0'
+        // Dirección del panel. La app solo la abre, así que se actualiza sola con cada cambio del sitio.
+        buildConfigField 'String', 'PANEL_URL', '"https://thespot.dgp-link.com/"'
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    signingConfigs {
+        // Llave de depuración fija (no es secreta) para que cada APK nuevo pueda instalarse sobre el anterior.
+        debug {
+            storeFile file('../debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

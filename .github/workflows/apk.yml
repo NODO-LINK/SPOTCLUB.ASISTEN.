@@ -1,0 +1,51 @@
+name: Construir APK
+
+# Compila la app Android del panel y la publica en la sección Releases del repositorio.
+# Se ejecuta sola cuando cambia la carpeta android/ y también a mano: pestaña Actions > Construir APK > Run workflow.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - '.github/workflows/apk.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Compilar
+        run: gradle -p android assembleDebug --no-daemon -PversionCode=${{ github.run_number }}
+
+      - name: Preparar el archivo
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk spot-club-panel.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spot-club-panel-apk
+          path: spot-club-panel.apk
+
+      - name: Publicar en Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-ultimo
+          name: Spot Club Panel (APK)
+          body: |
+            App Android del panel de Spot Club. Descarga `spot-club-panel.apk` e instálalo en el teléfono.
+            Compilada en la ejecución número ${{ github.run_number }}.
+          files: spot-club-panel.apk
+          make_latest: true

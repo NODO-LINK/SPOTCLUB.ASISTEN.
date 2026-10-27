@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0c0d0e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>THE SPOT · Panel de Ventas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -879,6 +883,17 @@ function keep(el,fn){
     if(f){ const i=document.getElementById(f); if(i) i.focus(); }
 }
 
+// Guarda un archivo: en la app Android usa el puente nativo; en el navegador, un enlace de descarga.
+function guardarArchivo(blob,nombre){
+    if(window.AndroidApp&&window.AndroidApp.guardar){
+        const r=new FileReader();
+        r.onloadend=()=>window.AndroidApp.guardar(nombre,blob.type||'application/octet-stream',String(r.result).split(',')[1]);
+        r.readAsDataURL(blob); return;
+    }
+    const u=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=u; a.download=nombre; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000);
+}
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{});
 let toastT;
 function toast(msg,type='',undo=false){
     const el=$('#toast');
@@ -1353,7 +1368,7 @@ function imprimir(){
     $$('.noprint',clone).forEach(n=>n.remove());
     pa.innerHTML=''; pa.appendChild(clone);
     window.print();
-    pa.innerHTML='';
+    if(window.AndroidApp) setTimeout(()=>{ pa.innerHTML=''; },60000); else pa.innerHTML='';
 }
 
 // anulación (reemplaza al borrado definitivo)
@@ -1597,9 +1612,7 @@ function exportCSV(){
     const rows=[['Factura','Fecha','Cliente','Cédula','Teléfono','Estado','Agencia','Guía','Productos','Total','Pagado','Saldo','Pago','Entrega','Adicional','Razón adicional','Anulada','Motivo anulación'],
         ...data.map(v=>[inv(v),new Date(v.fechaMs).toLocaleDateString('es-VE'),v.nombre,v.cedula,v.telefono,v.estado,v.agencia,v.guia,descProd(v),v.total.toFixed(2),v.pagado.toFixed(2),v.saldo.toFixed(2),PAGO_LBL[v.pstate],etapaDef(v.etapa).l,v.costoAdicional||'',v.razonAdicional||'',v.anulada?'Sí':'',v.motivoAnulacion||''])];
     const csv=rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');
-    const url=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}));
-    const a=document.createElement('a'); a.href=url; a.download=`thespot-ventas-${new Date().toISOString().slice(0,10)}.csv`;
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+    guardarArchivo(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),`thespot-ventas-${new Date().toISOString().slice(0,10)}.csv`);
     toast('CSV exportado.');
 }
 
@@ -2278,8 +2291,7 @@ async function genGuardar(){
 function genDescargar(){
     $('#gCanvas').toBlob(b=>{
         if(!b){ toast('No se pudo crear la imagen.','error'); return; }
-        const u=URL.createObjectURL(b), a=document.createElement('a');
-        a.href=u; a.download='spot-'+slug(gen.l1+gen.l2).slice(0,24)+'.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000);
+        guardarArchivo(b,'spot-'+slug(gen.l1+gen.l2).slice(0,24)+'.png');
     },'image/png');
 }
 document.addEventListener('input',e=>{
@@ -2327,7 +2339,7 @@ function imprimirRecibo(){
     const pa=$('#printArea');
     pa.innerHTML=$('#reciboContent').innerHTML;
     window.print();
-    pa.innerHTML='';
+    if(window.AndroidApp) setTimeout(()=>{ pa.innerHTML=''; },60000); else pa.innerHTML='';
 }
 
 // ══════════════════════════════════════════════
@@ -2358,9 +2370,7 @@ async function descargarRespaldo(){
             out.colecciones[c]=s.docs.map(d=>({id:d.id,data:aJson(d.data())})); total+=s.docs.length;
         }catch(e){ omitidas.push(c); }
     }
-    const url=URL.createObjectURL(new Blob([JSON.stringify(out)],{type:'application/json'}));
-    const a=document.createElement('a'); a.href=url; a.download='respaldo-'+firebaseConfig.projectId+'-'+new Date().toISOString().slice(0,10)+'.json';
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+    guardarArchivo(new Blob([JSON.stringify(out)],{type:'application/json'}),'respaldo-'+firebaseConfig.projectId+'-'+new Date().toISOString().slice(0,10)+'.json');
     log('respaldo',null,total+' documentos'+(omitidas.length?' · sin acceso a '+omitidas.join(', '):''));
     toast('Respaldo descargado: '+pl(total,'documento','documentos')+(omitidas.length?'. No se pudo leer: '+omitidas.join(', ')+'.':'.'));
 }
