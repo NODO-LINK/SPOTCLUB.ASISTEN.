@@ -7,7 +7,7 @@
 <title>THE SPOT · Panel de Ventas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -222,6 +222,12 @@ a.btn{display:inline-flex;align-items:center;justify-content:center;text-decorat
 .cped small{display:block;color:var(--muted);overflow-wrap:anywhere}
 .cped .r{text-align:right}
 .cped .tags{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;margin-top:4px}
+.gen{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:24px;align-items:start}
+.gen-form{display:flex;flex-direction:column;gap:14px;min-width:0}
+.gen-pasos{display:flex;flex-direction:column;gap:14px}
+.gen-prev{position:sticky;top:16px;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0}
+.gen-prev canvas{width:100%;max-height:72vh;object-fit:contain;border-radius:8px;border:1px solid var(--line);background:#060608}
+@media (max-width:980px){.gen{grid-template-columns:minmax(0,1fr)}.gen-prev{position:static;order:-1}.gen-prev canvas{max-height:60vh}}
 .wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:18px;overflow-x:auto}
 .wk div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px;min-height:92px;min-width:96px}
 .wk div.hoy{border-color:var(--ink)}
@@ -496,7 +502,52 @@ td{padding:11px 14px;vertical-align:middle}
 
       <section id="v-cli" hidden></section>
       <section id="v-inv" hidden></section>
-      <section id="v-con" hidden></section>
+      <section id="v-con" hidden>
+        <div id="conLib"></div>
+        <div id="conGenBox" hidden>
+          <div class="pane-head"><h3>Crear diseño</h3><button type="button" class="btn ghost" data-act="genCerrar">← Volver a la biblioteca</button></div>
+          <div class="gen">
+            <div class="gen-form">
+              <div class="g2">
+                <div class="field"><label for="gFormato">Formato</label><select id="gFormato"><option value="post">Post 4:5 (1080×1350)</option><option value="cuadrado">Cuadrado 1:1 (1080×1080)</option><option value="story">Story 9:16 (1080×1920)</option></select></div>
+                <div class="field"><label for="gPlantilla">Plantilla</label><select id="gPlantilla"><option value="oferta">Oferta con precio</option><option value="frase">Frase grande</option><option value="numero">Número grande</option><option value="pasos">Pasos</option><option value="pregunta">Pregunta a la comunidad</option></select></div>
+              </div>
+              <div class="field"><label for="gL1">Línea 1 (blanca)</label><input type="text" id="gL1" autocomplete="off"></div>
+              <div class="field"><label for="gL2">Línea 2 (roja)</label><input type="text" id="gL2" autocomplete="off"></div>
+              <div class="field" id="gfNum"><label for="gNum">Número</label><input type="text" id="gNum" autocomplete="off"></div>
+              <div class="field" id="gfSub"><label for="gSub">Subtítulo</label><input type="text" id="gSub" autocomplete="off"></div>
+              <div id="gfPasos" class="gen-pasos">
+                <div class="field"><label for="gP1">Paso 1</label><input type="text" id="gP1" autocomplete="off"></div>
+                <div class="field"><label for="gP2">Paso 2</label><input type="text" id="gP2" autocomplete="off"></div>
+                <div class="field"><label for="gP3">Paso 3</label><input type="text" id="gP3" autocomplete="off"></div>
+              </div>
+              <div class="g2">
+                <div class="field"><label for="gPrecio">Precio "desde" (USD)</label><input type="text" inputmode="decimal" id="gPrecio" autocomplete="off"></div>
+                <div style="display:flex;flex-direction:column;justify-content:flex-end;gap:2px">
+                  <label class="tog"><input type="checkbox" id="gCta"><span>Cierre "Haz la tuya"</span></label>
+                  <label class="tog"><input type="checkbox" id="gGlitch"><span>Efecto glitch</span></label>
+                </div>
+              </div>
+              <div class="edit-section">
+                <h4>Caption</h4>
+                <div class="g2">
+                  <div class="field"><label for="gTipo">Tipo de publicación</label><select id="gTipo"><option value="oferta">Oferta</option><option value="comunidad">Comunidad</option><option value="envios">Envíos</option><option value="proceso">Proceso</option><option value="marca">Marca</option></select></div>
+                  <div class="field"><label for="gTema">Fandom o tema (opcional)</label><input type="text" id="gTema" placeholder="Ej: Tokyo Ghoul" autocomplete="off"></div>
+                </div>
+                <div class="actrow" style="margin:10px 0"><button type="button" class="btn ghost sm" data-act="genCap">Generar caption</button></div>
+                <div class="field"><label for="gCaption">Caption</label><textarea id="gCaption" style="min-height:150px" maxlength="2200"></textarea></div>
+              </div>
+            </div>
+            <div class="gen-prev">
+              <canvas id="gCanvas" aria-label="Vista previa del diseño"></canvas>
+              <div class="actrow" style="justify-content:center">
+                <button type="button" class="btn ghost sm" data-act="genDescargar">Descargar imagen</button>
+                <button type="button" class="btn" data-act="genGuardar">Guardar en la biblioteca</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section id="v-prod" hidden></section>
       <section id="v-act" hidden></section>
     </main>
@@ -695,6 +746,7 @@ td{padding:11px 14px;vertical-align:middle}
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
+<script src="contenido/generador.js"></script>
 <script>
 // ══════════════════════════════════════════════
 //  FIREBASE
@@ -816,7 +868,8 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
 // ══════════════════════════════════════════════
 let user=null, rol='admin', ventas=[], unsub=null, unsubAct=null, unsubCfg=null, actividad=[];
 let delCtx=null, pagoCtx=null, prodEditId=null, pdraft={t:[],d:[]};
-let piezas=[], pubMap={}, unsubPub=null, selPieza=null, conFilter='all', conImg=0, conErr='';
+let piezas=[], piezasBase=[], piezasGen=[], unsubGen=null, conMode='lib', gen=null;
+let pubMap={}, unsubPub=null, selPieza=null, conFilter='all', conImg=0, conErr='';
 let cliNotas={}, unsubCli=null, selCli=null, cliQ='', cliSort='rec';
 let invMap={}, unsubInv=null, invEdit=false, invFilter='all', stockCtx=null;
 let view='panel', selId=null, lastAction=null;
@@ -896,7 +949,8 @@ auth.onAuthStateChanged(async u=>{
         if(unsubInv){unsubInv();unsubInv=null;}
         if(unsubCli){unsubCli();unsubCli=null;}
         if(unsubPub){unsubPub();unsubPub=null;}
-        pubMap={};
+        if(unsubGen){unsubGen();unsubGen=null;}
+        pubMap={}; piezasGen=[]; piezasBase=[];
         invMap={}; cliNotas={}; ventas=[];
     }
 });
@@ -1028,6 +1082,8 @@ function renderPanel(){
     if(N.length) rows.push({t:'idle',h:pl(N.length,'factura sin ningún pago','facturas sin ningún pago'),s:N.slice(0,3).map(v=>`${inv(v)} · ${fmt(v.saldo)}`).join(' · '),a:'Ver facturas',go:'fact',pf:'saldo'});
     if(can('registrar')){
         const ven=piezasVencidas(), hoyP=piezas.filter(p=>{ const e=estadoPieza(p); return e.estado==='programada'&&e.programada>=Date.now()&&esHoy(e.programada); });
+        const nuevas=piezas.filter(p=>p.fecha&&esHoy(new Date(p.fecha+'T12:00:00').getTime())&&estadoPieza(p).estado==='borrador');
+        if(nuevas.length) rows.push({t:'info',h:pl(nuevas.length,'diseño nuevo de hoy para descargar','diseños nuevos de hoy para descargar'),s:nuevas.slice(0,3).map(p=>p.titulo).join(' · '),a:'Descargar',go:'con'});
         if(ven.length) rows.push({t:'late',h:pl(ven.length,'publicación sin subir a Instagram','publicaciones sin subir a Instagram'),s:ven.slice(0,3).map(p=>p.titulo).join(' · '),a:'Ver contenido',go:'con'});
         if(hoyP.length) rows.push({t:'info',h:pl(hoyP.length,'publicación programada para hoy','publicaciones programadas para hoy'),s:hoyP.slice(0,3).map(p=>p.titulo+' · '+new Date(estadoPieza(p).programada).toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'})).join(' · '),a:'Ver contenido',go:'con'});
     }
@@ -1570,6 +1626,11 @@ function abrirEliminar(kind,id){
         $('#mEliminarT').textContent='Eliminar factura';
         $('#delInfo').textContent=`${inv(v)} · ${v.nombre} · ${fmt(v.total)}`;
         $('#delWarn').textContent='Se borra el pedido con sus pagos e historial y no se puede recuperar. El número de factura queda sin usar. Si solo quieres que deje de contar, usa Anular.';
+    }else if(kind==='gen'){
+        const g=piezasGen.find(x=>x.id===id); if(!g) return;
+        $('#mEliminarT').textContent='Eliminar diseño';
+        $('#delInfo').textContent=g.titulo||'Diseño';
+        $('#delWarn').textContent='Se borra de la biblioteca junto con su programación. No se puede recuperar.';
     }else{
         const p=catalogo.find(x=>x.id===id); if(!p) return;
         $('#mEliminarT').textContent='Eliminar producto';
@@ -1591,6 +1652,11 @@ async function eliminarOk(){
             await b.commit();
             if(selId===v.id) selId=null;
             toast('Factura eliminada.');
+        }else if(delCtx.kind==='gen'){
+            if(!can('registrar')) throw new Error('permiso');
+            await db.collection('piezas_gen').doc(delCtx.id).delete();
+            db.collection('publicaciones').doc('g_'+delCtx.id).delete().catch(()=>{});
+            selPieza=null; toast('Diseño eliminado.');
         }else{
             if(!can('catalogo')) throw new Error('permiso');
             const p=catalogo.find(x=>x.id===delCtx.id);
@@ -1987,17 +2053,29 @@ function estadoPieza(p){
     const vis=estado==='programada'&&programada&&programada<Date.now()?'vencida':estado;
     return {estado,programada,vis,caption:d.caption!=null?d.caption:p.caption,publicadaEn:d.publicadaEn||null,enlace:d.enlace||''};
 }
+const esNuevo = p=>!!p.fecha&&estadoPieza(p).estado==='borrador'&&(Date.now()-new Date(p.fecha+'T00:00:00').getTime())<2*864e5;
 const piezasVencidas = ()=>piezas.filter(p=>estadoPieza(p).vis==='vencida');
 const localInput = ms=>{ const d=new Date(ms); return dateInput(ms)+'T'+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); };
 
+const srcPieza = a=>String(a).startsWith('data:')?a:'contenido/'+a;
+function rebuildPiezas(){
+    piezasBase=piezasBase.map((p,i)=>({p,i})).sort((a,b)=>(b.p.fecha||'').localeCompare(a.p.fecha||'')||a.i-b.i).map(x=>x.p);
+    piezas=[...piezasGen.map(g=>({id:'g_'+g.id,gid:g.id,generada:true,titulo:g.titulo||'Diseño nuevo',tipo:g.tipo||'Generado',formato:g.formato||'',archivos:[g.img],caption:g.caption||''})),...piezasBase];
+}
 async function startContenido(){
     if(unsubPub){unsubPub();unsubPub=null;}
+    if(unsubGen){unsubGen();unsubGen=null;}
     if(!can('registrar')) return;
     try{
         const r=await fetch('contenido/contenido.json',{cache:'no-store'});
         if(!r.ok) throw new Error(r.status);
-        piezas=(await r.json()).piezas||[]; conErr='';
-    }catch(e){ piezas=[]; conErr='No se pudo cargar la lista de diseños (contenido/contenido.json).'; }
+        piezasBase=(await r.json()).piezas||[]; conErr='';
+    }catch(e){ piezasBase=[]; conErr='No se pudo cargar la lista de diseños (contenido/contenido.json).'; }
+    rebuildPiezas();
+    unsubGen=db.collection('piezas_gen').onSnapshot(s=>{
+        piezasGen=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>((b.creado&&b.creado.toMillis?b.creado.toMillis():0)-(a.creado&&a.creado.toMillis?a.creado.toMillis():0)));
+        rebuildPiezas(); render();
+    },e=>console.warn('piezas_gen',e));
     unsubPub=db.collection('publicaciones').onSnapshot(s=>{
         pubMap={}; s.docs.forEach(d=>{ pubMap[d.id]=d.data(); });
         render();
@@ -2021,13 +2099,15 @@ function renderCon(){
     }
     const lista=piezas.filter(p=>conFilter==='all'||estadoPieza(p).vis===conFilter).map(p=>{
         const e=estadoPieza(p);
-        return `<button type="button" class="crow" data-act="conSel" data-id="${esc(p.id)}" aria-current="${p.id===selPieza}"><img src="contenido/${esc(p.archivos[0])}" alt="" loading="lazy">`+
-            `<div><strong>${esc(p.titulo)}</strong><small>${esc(p.tipo)} · ${esc(p.formato)}</small></div>`+
+        return `<button type="button" class="crow" data-act="conSel" data-id="${esc(p.id)}" aria-current="${p.id===selPieza}"><img src="${esc(srcPieza(p.archivos[0]))}" alt="" loading="lazy">`+
+            `<div><strong>${esc(p.titulo)}</strong><small>${esc(p.tipo)} · ${esc(p.formato)}${esNuevo(p)?' · <b style="color:var(--late)">NUEVO</b>':''}</small></div>`+
             `<div style="text-align:right"><span class="bd c-${e.vis==='vencida'?'late':e.vis==='programada'?'enviado':e.vis==='publicada'?'pagada':'sin'}">${PUB_LBL[e.vis]}</span>${e.programada&&e.estado==='programada'?`<small style="text-align:right">${fshort(e.programada)}</small>`:''}</div></button>`;
     }).join('')||'<p class="empty">No hay piezas con este filtro.</p>';
-    keep($('#v-con'),()=>{
-        $('#v-con').innerHTML=
-          `<div class="pane-head"><h3>Contenido</h3><span>Diseños para @spot__club</span></div>`+
+    $('#conLib').hidden=conMode!=='lib'; $('#conGenBox').hidden=conMode!=='gen';
+    if(conMode!=='lib') return;
+    keep($('#conLib'),()=>{
+        $('#conLib').innerHTML=
+          `<div class="pane-head"><h3>Contenido</h3><button type="button" class="btn" data-act="genAbrir">+ Crear diseño</button></div>`+
           (conErr?`<div class="banner"><strong>${esc(conErr)}</strong></div>`:'')+
           `<p class="note-ig">Instagram no permite publicar desde este panel. El flujo es: descarga el diseño, copia el caption, súbelo desde la app y luego márcalo como publicado aquí.</p>`+
           `<h4 style="margin-bottom:8px">Próximos 7 días</h4><div class="wk">${wk}</div>`+
@@ -2038,16 +2118,16 @@ function renderCon(){
 function detallePieza(p){
     const e=estadoPieza(p);
     if(conImg>=p.archivos.length) conImg=0;
-    const thumbs=p.archivos.length>1?`<div class="cthumbs">${p.archivos.map((a,i)=>`<button type="button" data-act="conImg" data-i="${i}" aria-current="${i===conImg}" aria-label="Lámina ${i+1}"><img src="contenido/${esc(a)}" alt=""></button>`).join('')}</div>`:'';
-    const dl=p.archivos.map((a,i)=>`<a class="btn ghost sm" href="contenido/${esc(a)}" download="${esc(a)}">Descargar${p.archivos.length>1?' '+(i+1):''}</a>`).join('');
+    const thumbs=p.archivos.length>1?`<div class="cthumbs">${p.archivos.map((a,i)=>`<button type="button" data-act="conImg" data-i="${i}" aria-current="${i===conImg}" aria-label="Lámina ${i+1}"><img src="${esc(srcPieza(a))}" alt=""></button>`).join('')}</div>`:'';
+    const dl=p.archivos.map((a,i)=>`<a class="btn ghost sm" href="${esc(srcPieza(a))}" download="${esc(String(a).startsWith('data:')?'spot-'+p.id+'.jpg':a)}">Descargar${p.archivos.length>1?' '+(i+1):''}</a>`).join('');
     const prog=e.programada?localInput(e.programada):'';
     const acciones=e.estado==='publicada'
         ?`<p style="margin-top:6px">Publicada el ${ftime(e.publicadaEn||Date.now())}${e.enlace?` · <a href="${esc(e.enlace)}" target="_blank" rel="noopener">ver publicación</a>`:''}</p><div class="actrow"><button type="button" class="btn ghost sm" data-act="conBorrador" data-id="${esc(p.id)}">Volver a borrador</button></div>`
         :`<div class="g2" style="margin-top:8px"><div class="field"><label for="conFecha">Fecha y hora</label><input type="datetime-local" id="conFecha" value="${prog}"></div><div class="field"><label for="conEnlace">Enlace de la publicación (opcional)</label><input type="url" id="conEnlace" placeholder="https://www.instagram.com/p/…" value="${esc(e.enlace)}"></div></div>`+
          `<div class="actrow"><button type="button" class="btn sm" data-act="conProg" data-id="${esc(p.id)}">${e.estado==='programada'?'Reprogramar':'Programar'}</button><button type="button" class="btn ghost sm" data-act="conPub" data-id="${esc(p.id)}">Marcar como publicada</button>${e.estado==='programada'?`<button type="button" class="btn ghost sm" data-act="conBorrador" data-id="${esc(p.id)}">Quitar programación</button>`:''}</div>`;
     return `<div class="paper">`+
-      `<div class="cli-head"><div><h3>${esc(p.titulo)}</h3><p class="meta">${esc(p.tipo)} · ${esc(p.formato)}</p><div class="tags"><span class="bd c-${e.vis==='vencida'?'late':e.vis==='programada'?'enviado':e.vis==='publicada'?'pagada':'sin'}">${PUB_LBL[e.vis]}${e.vis==='programada'||e.vis==='vencida'?' · '+ftime(e.programada):''}</span></div></div><a class="btn ghost sm" href="${IG_URL}" target="_blank" rel="noopener">Abrir Instagram</a></div>`+
-      `<div class="cprev" style="margin-top:16px"><img src="contenido/${esc(p.archivos[conImg])}" alt="Vista previa de ${esc(p.titulo)}">${thumbs}</div>`+
+      `<div class="cli-head"><div><h3>${esc(p.titulo)}</h3><p class="meta">${esc(p.tipo)} · ${esc(p.formato)}</p><div class="tags"><span class="bd c-${e.vis==='vencida'?'late':e.vis==='programada'?'enviado':e.vis==='publicada'?'pagada':'sin'}">${PUB_LBL[e.vis]}${e.vis==='programada'||e.vis==='vencida'?' · '+ftime(e.programada):''}</span></div></div><div class="abts"><a class="btn ghost sm" href="${IG_URL}" target="_blank" rel="noopener">Abrir Instagram</a>${p.generada?`<button type="button" class="btn ghost sm" data-act="genDel" data-id="${esc(p.gid)}">Eliminar diseño</button>`:''}</div></div>`+
+      `<div class="cprev" style="margin-top:16px"><img src="${esc(srcPieza(p.archivos[conImg]))}" alt="Vista previa de ${esc(p.titulo)}">${thumbs}</div>`+
       `<div class="actrow">${dl}</div>`+
       `<div class="sub"><div class="field"><label for="conCaption">Caption</label><textarea id="conCaption" style="min-height:170px" maxlength="2200">${esc(e.caption)}</textarea></div><p class="cnt-c" id="conCnt">${e.caption.length} / 2200</p>`+
       `<div class="actrow"><button type="button" class="btn sm" data-act="conCopy">Copiar caption</button><button type="button" class="btn ghost sm" data-act="conCap" data-id="${esc(p.id)}">Guardar cambios del caption</button>${pubMap[p.id]&&pubMap[p.id].caption!=null?`<button type="button" class="btn ghost sm" data-act="conCapReset" data-id="${esc(p.id)}">Restaurar original</button>`:''}</div></div>`+
@@ -2069,6 +2149,104 @@ function copiarCaption(){
 }
 document.addEventListener('input',e=>{
     if(e.target.id==='conCaption'){ const c=$('#conCnt'); if(c) c.textContent=e.target.value.length+' / 2200'; }
+});
+
+// ══════════════════════════════════════════════
+//  GENERADOR DE DISEÑOS Y CAPTIONS
+// ══════════════════════════════════════════════
+const GEN_DEF={
+    oferta:  {l1:'TU DISEÑO.',l2:'TU FRANELA.',sub:'IMPRESIÓN DTF · DESDE 1 PIEZA',precio:'10',cta:true,num:'',p:['','',''],tipo:'oferta'},
+    frase:   {l1:'YOU LOOK',l2:'LIKE SUCCESS',sub:'FRANELAS PERSONALIZADAS · DTF',precio:'10',cta:false,num:'',p:['','',''],tipo:'marca'},
+    numero:  {l1:'ESTADOS.',l2:'',sub:'ENVIAMOS DE AMAZONAS A ZULIA.',precio:'10',cta:false,num:'24',p:['','',''],tipo:'envios'},
+    pasos:   {l1:'ASÍ DE',l2:'FÁCIL.',sub:'',precio:'10',cta:true,num:'',p:['MANDA TU DISEÑO POR DM','CONFIRMA Y PAGA','RECÍBELA EN 3 A 5 DÍAS HÁBILES'],tipo:'proceso'},
+    pregunta:{l1:'¿ANIME, BANDA',l2:'O ARTISTA?',sub:'COMENTA EL TUYO.',precio:'10',cta:false,num:'',p:['','',''],tipo:'comunidad'}
+};
+const CAP_ABRE={
+    oferta:['¿Tienes un diseño en la cabeza? Lo ponemos en tu franela 👇🖤','{t} en tu franela. Tú lo pides, nosotros lo hacemos 👇🖤','Tu franela, tu diseño, tu estilo 👇🖤','Si lo imaginas, lo estampamos 👇🖤'],
+    comunidad:['¿Cuál es tu {t}? Cuéntanos 👇🖤','Dinos tu favorito y lo llevamos a una franela 👇🖤','Los fans de {t} levanten la mano 👇🖤','¿Quién más vive para {t}? 👇🖤'],
+    envios:['De Amazonas a Zulia, tu franela llega 👇🖤','Estés donde estés, te la enviamos 👇🖤','Tu franela viaja a todo el país 👇🖤'],
+    proceso:['De tu idea a tu franela en 4 pasos 👇🖤','Así nace tu franela personalizada 👇🖤','Mira cómo la hacemos 👇🖤'],
+    marca:['You look like success 🖤🔴','Se nota cuando lo llevas puesto 🖤🔴','Que se note tu estilo 🖤🔴']
+};
+let capIdx=0;
+const slug = t=>String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
+function generarCaption(tipo,tema,precio){
+    const l=CAP_ABRE[tipo]||CAP_ABRE.oferta;
+    const t=(tema||'').trim();
+    let pool=l.filter(x=>t||!x.includes('{t}')); if(!pool.length) pool=l;
+    const ap=pool[capIdx++%pool.length].replace(/\{t\}/g,t||'diseño favorito');
+    const p=String(precio||'10').replace(',','.');
+    const tags=['#franelaspersonalizadas','#venezuela','#parati',t?'#'+slug(t):'#dtf','#streetwear'].filter(x=>x!=='#');
+    return `${ap}\nHacemos tu franela con el diseño que quieras, desde $${p}. Escríbenos al DM 📩\n${tags.join(' ')}`;
+}
+
+function genIniciar(){
+    gen={plantilla:'oferta',formato:'post',glitch:false,tema:'',caption:'',...JSON.parse(JSON.stringify(GEN_DEF.oferta))};
+    gen.caption=generarCaption('oferta','',gen.precio);
+    genAFormulario(); genUI(); genDibujar();
+}
+function genAFormulario(){
+    $('#gFormato').value=gen.formato; $('#gPlantilla').value=gen.plantilla;
+    $('#gL1').value=gen.l1; $('#gL2').value=gen.l2; $('#gSub').value=gen.sub; $('#gNum').value=gen.num; $('#gPrecio').value=gen.precio;
+    $('#gP1').value=gen.p[0]; $('#gP2').value=gen.p[1]; $('#gP3').value=gen.p[2];
+    $('#gCta').checked=gen.cta; $('#gGlitch').checked=gen.glitch; $('#gTipo').value=gen.tipo; $('#gTema').value=gen.tema; $('#gCaption').value=gen.caption;
+}
+function genDeFormulario(){
+    gen.formato=$('#gFormato').value; gen.l1=$('#gL1').value; gen.l2=$('#gL2').value; gen.sub=$('#gSub').value; gen.num=$('#gNum').value;
+    gen.precio=$('#gPrecio').value; gen.p=[$('#gP1').value,$('#gP2').value,$('#gP3').value]; gen.cta=$('#gCta').checked; gen.glitch=$('#gGlitch').checked;
+    gen.tipo=$('#gTipo').value; gen.tema=$('#gTema').value; gen.caption=$('#gCaption').value;
+}
+function genUI(){
+    const p=gen.plantilla;
+    $('#gfNum').hidden=p!=='numero'; $('#gfPasos').hidden=p!=='pasos'; $('#gfSub').hidden=p==='pasos';
+}
+let genRaf=0;
+function genDibujar(){
+    cancelAnimationFrame(genRaf);
+    genRaf=requestAnimationFrame(async()=>{
+        try{ await document.fonts.load('900 100px Inter'); }catch(e){}
+        dibujarPieza($('#gCanvas'),gen);
+    });
+}
+
+function genJpeg(){
+    const cv=$('#gCanvas'); let q=.9, d=cv.toDataURL('image/jpeg',q);
+    while(d.length>850000&&q>.5){ q-=.1; d=cv.toDataURL('image/jpeg',q); }
+    return d;
+}
+async function genGuardar(){
+    if(!can('registrar')) return;
+    genDeFormulario();
+    const titulo=(gen.l1+' '+gen.l2).replace(/\s+/g,' ').trim()||'Diseño nuevo';
+    const formato=gen.formato==='story'?'Story 9:16':gen.formato==='cuadrado'?'Post 1:1':'Post 4:5';
+    const tipos={oferta:'Oferta',comunidad:'Comunidad',envios:'Envíos',proceso:'Proceso',marca:'Marca'};
+    const img=genJpeg();
+    if(img.length>900000){ toast('La imagen es demasiado pesada para guardarla.','error'); return; }
+    try{
+        const ref=await db.collection('piezas_gen').add({titulo,tipo:tipos[gen.tipo]||'Generado',formato,caption:gen.caption,img,creado:FV.serverTimestamp(),por:user.email});
+        log('contenido',null,'Creó el diseño «'+titulo+'»');
+        selPieza='g_'+ref.id; conImg=0; conMode='lib'; render(); toast('Diseño guardado en la biblioteca.');
+    }catch(e){ console.error(e); toast('No se pudo guardar el diseño.','error'); }
+}
+function genDescargar(){
+    $('#gCanvas').toBlob(b=>{
+        if(!b){ toast('No se pudo crear la imagen.','error'); return; }
+        const u=URL.createObjectURL(b), a=document.createElement('a');
+        a.href=u; a.download='spot-'+slug(gen.l1+gen.l2).slice(0,24)+'.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000);
+    },'image/png');
+}
+document.addEventListener('input',e=>{
+    if(e.target.closest&&e.target.closest('#conGenBox')&&gen&&e.target.id!=='gPlantilla'){ genDeFormulario(); genDibujar(); }
+});
+document.addEventListener('change',e=>{
+    if(!gen||!e.target.closest||!e.target.closest('#conGenBox')) return;
+    if(e.target.id==='gPlantilla'){
+        const def=JSON.parse(JSON.stringify(GEN_DEF[e.target.value]));
+        const fm=gen.formato, gl=gen.glitch, tema=gen.tema;
+        gen={plantilla:e.target.value,formato:fm,glitch:gl,tema,caption:'',...def};
+        gen.caption=generarCaption(gen.tipo,gen.tema,gen.precio);
+        genAFormulario(); genUI(); genDibujar();
+    }else{ genDeFormulario(); genDibujar(); }
 });
 
 // ══════════════════════════════════════════════
@@ -2098,6 +2276,12 @@ document.addEventListener('click',e=>{
         case 'rmReg': regItems.splice(+t.dataset.i,1); renderReg(); break;
         case 'rmEdit': editItems.splice(+t.dataset.i,1); renderEdit(); break;
         case 'exportCSV': exportCSV(); break;
+        case 'genAbrir': conMode='gen'; if(!gen) genIniciar(); else { genAFormulario(); genUI(); genDibujar(); } renderCon(); break;
+        case 'genCerrar': conMode='lib'; renderCon(); break;
+        case 'genCap': genDeFormulario(); gen.caption=generarCaption(gen.tipo,gen.tema,gen.precio); $('#gCaption').value=gen.caption; break;
+        case 'genGuardar': genGuardar(); break;
+        case 'genDescargar': genDescargar(); break;
+        case 'genDel': abrirEliminar('gen',id); break;
         case 'conSel': selPieza=id; conImg=0; renderCon(); break;
         case 'conFilter': conFilter=t.dataset.f; renderCon(); break;
         case 'conImg': conImg=+t.dataset.i; renderCon(); break;

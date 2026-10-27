@@ -49,6 +49,11 @@ service cloud.firestore {
       allow read, write: if esVentas();
     }
 
+    // Diseños creados con el generador del panel (imagen incluida).
+    match /piezas_gen/{id} {
+      allow read, write: if esVentas();
+    }
+
     match /contadores/{id} {
       allow read: if signedIn();
       allow write: if esVentas();
