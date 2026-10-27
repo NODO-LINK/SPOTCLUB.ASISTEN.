@@ -71,3 +71,9 @@ Segundo video del día, además del de las 6:30 a. m. (que sigue igual: oferta a
 - **Personajes:** solo los que se ven en las fotos reales del dueño; nunca se dibujan.
 - **Retroalimentación:** el dueño califica cada video en el panel (campo en Contenido) y las notas se anotan aquí con fecha.
 - **Script:** `node contenido/fuentes/video-tarde.js especificacion.json` (formato en la cabecera del script).
+
+## Automatismo total (27 de octubre de 2026)
+- **Toda la creación de contenido es automática.** Las rutinas (6:33 a. m. y 5:15 p. m., hora de Caracas) nunca hacen preguntas al dueño ni le piden material, ideas, textos ni confirmaciones. Deciden solas y dejan las piezas en el panel (sección Contenido).
+- Si falta algo (material nuevo, una duda de tema, una fecha), decidir con estos criterios: reutilizar material antiguo, hacer una pieza sencilla con la marca o repetir un formato que funcionó. Nunca detenerse a preguntar ni entregar menos piezas por esperar una respuesta.
+- No usar AskUserQuestion ni mandar mensajes que esperen respuesta. El informe final de cada corrida es solo informativo, de 3 a 5 líneas.
+- El dueño corrige cuando quiera desde el chat o el panel; esas correcciones se anotan aquí y se aplican desde el día siguiente.
