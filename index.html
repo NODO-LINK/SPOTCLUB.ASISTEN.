@@ -1995,8 +1995,9 @@ async function guardarConteo(){
 function abrirStock(d){
     const x=variantes().find(v=>v.docId===d); if(!x||!can('inventario')) return;
     stockCtx=d;
-    $('#stockInfo').textContent=`${x.nombre} · ${x.cargado?'existencia actual: '+x.cantidad:'sin cargar'}`;
-    $('#sMov').value=x.cargado?'entrada':'fijar'; $('#sCant').value=''; $('#sMin').value=x.minimo; $('#sNota').value=''; $('#sMsg').textContent='';
+    const vendidos=!x.cargado&&x.cantidad<0?-x.cantidad:0;   // ventas hechas antes de cargar el inventario
+    $('#stockInfo').textContent=`${x.nombre} · ${x.cargado?'existencia actual: '+x.cantidad:'sin cargar'+(vendidos?' · ya vendidas: '+vendidos+' (se restan al registrar la entrada)':'')}`;
+    $('#sMov').value=(x.cargado||vendidos)?'entrada':'fijar'; $('#sCant').value=''; $('#sMin').value=x.minimo; $('#sNota').value=''; $('#sMsg').textContent='';
     abrir('mStock');
 }
 async function guardarStock(){
@@ -2009,7 +2010,8 @@ async function guardarStock(){
     if(mov==='fijar'){ data.cantidad=c; nueva=c; }
     else{
         const delta=mov==='entrada'?c:-c;
-        nueva=(x.cargado?x.cantidad:0)+delta;
+        // si aún no estaba cargado, las ventas hechas antes (guardadas como cantidad negativa) se restan de la entrada
+        nueva=(x.cargado?x.cantidad:Math.min(0,x.cantidad))+delta;
         data.cantidad=x.cargado?FV.increment(delta):nueva;
     }
     const btn=$('#btnStock'); btn.disabled=true;
