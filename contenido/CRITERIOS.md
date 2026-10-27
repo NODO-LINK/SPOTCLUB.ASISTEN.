@@ -29,7 +29,8 @@ Definidos con el dueño el 27 de octubre de 2026. La rutina diaria y quien edite
 ## Video
 - 10 a 14 segundos, vertical 9:16, sin audio (el dueño pone un sonido en tendencia desde Instagram).
 - Tipo actual: oferta animada con texto. El formato "POV: me haces un pedido" necesita material real.
-- Material de Instagram: sin acceso a los originales desde aquí. Solo hay miniaturas (203×360 px). Para usar fotos y videos reales, el dueño debe enviarlos como originales de la galería.
+- Material propio: el dueño sube los originales de la galería a `contenido/material/` (instrucciones en `contenido/material/LEEME.md`). Desde aquí no se pueden descargar de Instagram: vidIQ solo da miniaturas de 203×360 px y la red del entorno bloquea el servidor de Instagram.
+- Con material subido, la rutina usa fotos de fondo en al menos 1 de los 3 flyers y hasta 4 fotos o clips en el video, y anota lo usado en `contenido/material/usado.json` para no repetir.
 
 ## Datos de la cuenta (vidIQ, 27 de octubre de 2026)
 - Mejor reel: carta personalizada de Tokyo Ghoul, 2.6 mil reproducciones y 155 me gusta, unas 10 veces el promedio.

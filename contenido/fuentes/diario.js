@@ -1,5 +1,6 @@
 // Crea las piezas del día y las agrega a contenido/contenido.json.
 // Uso:  node contenido/fuentes/diario.js especificacion.json
+// Con "foto": "contenido/material/archivo.jpg" (y opcional focoX/focoY de 0 a 1) la pieza usa esa foto de fondo.
 // especificacion.json: { "fecha": "2026-10-27", "piezas": [ { id, titulo, tipo, formato: "post|story|cuadrado",
 //   plantilla: "oferta|frase|numero|pasos|pregunta", l1, l2, sub, num, precio, p: ["","",""], cta, glitch, caption } ] }
 const {chromium}=require('playwright');
@@ -17,7 +18,14 @@ const FORMATO={post:'Post 4:5',cuadrado:'Post 1:1',story:'Story 9:16'};
   for(const it of spec.piezas){
     if(!/^[a-z0-9-]+$/.test(it.id)) throw new Error('id inválido: '+it.id);
     const g={plantilla:it.plantilla,formato:it.formato||'post',l1:it.l1||'',l2:it.l2||'',sub:it.sub||'',num:it.num||'',precio:it.precio||'10',p:it.p||['','',''],cta:!!it.cta,glitch:!!it.glitch};
-    const data=await p.evaluate(g=>{const c=document.getElementById('c');dibujarPieza(c,g);return c.toDataURL('image/png');},g);
+    if(it.foto){
+      const ruta=path.resolve(dir,'..',it.foto); if(!ruta.startsWith(path.join(dir,'material'))) throw new Error('La foto debe estar en contenido/material/');
+      const ext=path.extname(ruta).slice(1).toLowerCase().replace('jpg','jpeg');
+      g.fotoData='data:image/'+ext+';base64,'+fs.readFileSync(ruta).toString('base64'); g.focoX=it.focoX; g.focoY=it.focoY;
+    }
+    const data=await p.evaluate(async g=>{
+      if(g.fotoData){ const im=new Image(); im.src=g.fotoData; await im.decode(); g.img=im; delete g.fotoData; }
+      const c=document.getElementById('c');dibujarPieza(c,g);return c.toDataURL('image/png');},g);
     const file='spot-'+it.id+'.png';
     fs.writeFileSync(path.join(dir,file),Buffer.from(data.split(',')[1],'base64'));
     const entry={id:it.id,titulo:it.titulo,tipo:it.tipo,formato:FORMATO[g.formato],archivos:[file],caption:it.caption,fecha:spec.fecha};

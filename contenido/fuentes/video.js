@@ -5,7 +5,8 @@
 //   "gancho":["¿QUÉ DISEÑO","TE PONDRÍAS?"], "gancho_sub":"ELIGE 1, 2 O 3",
 //   "ranking_titulo":"ELIGE TU FANDOM", "ranking":["ANIME","BANDAS","ARTISTAS"],
 //   "medio":["NOSOTROS LO","IMPRIMIMOS EN DTF"], "medio_sub":"DESDE 1 PIEZA",
-//   "cierre":["TU DISEÑO.","TU FRANELA."], "precio":"10" }
+//   "cierre":["TU DISEÑO.","TU FRANELA."], "precio":"10",
+//   "fotos":["contenido/material/a.jpg","contenido/material/b.mp4"]   (opcional, hasta 4: fotos o videos del dueño como fondo) }
 // Zonas seguras de Instagram: gancho entre 10% y 35% de alto, sin texto en el 20% inferior ni en el borde derecho.
 const {chromium}=require('playwright');
 const fs=require('fs');const path=require('path');const {execFileSync}=require('child_process');
@@ -16,7 +17,7 @@ const pagina=`<canvas id="c" width="${W}" height="${H}"></canvas><script>
 const W=${W}, H=${H};
 const c=document.getElementById('c'), x=c.getContext('2d'), K='#060608', Wh='#F5F5F5', R='#E5212E';
 const F='Inter,Arial,sans-serif', MAXW=840, M=90;
-let S={};
+let S={}, IMG=[];
 const up=t=>String(t||'').toUpperCase();
 // líneas de escaneo precalculadas
 const sc=document.createElement('canvas'); sc.width=W; sc.height=H; const sx=sc.getContext('2d'); sx.fillStyle='rgba(255,255,255,.035)'; for(let y=0;y<H;y+=6) sx.fillRect(0,y,W,2);
@@ -38,8 +39,16 @@ function contorno(t,t0,txt,y,size,alpha){
   const w=x.measureText(txt).width, sc=1+.08*clamp(1-dt/0.6); x.translate(M+(MAXW-w)/2+w/2,y+size/2); x.scale(sc,sc); x.translate(-w/2,-size/2);
   x.lineWidth=6; x.strokeStyle=R; x.strokeText(txt,0,0); x.restore();
 }
+// foto de fondo de la escena (si hay material): recorte "cover", zoom lento y velo oscuro
+function foto(t){
+  if(!IMG.length) return;
+  const esc=t<3?0:t<7?1:t<9.5?2:3, im=IMG[esc%IMG.length], ini=[0,3,7,9.5][esc], z=1+.07*clamp((t-ini)/3);
+  const iw=im.naturalWidth, ih=im.naturalHeight, k=Math.max(W/iw,H/ih)*z, dw=iw*k, dh=ih*k;
+  x.drawImage(im,(W-dw)/2,(H-dh)/2,dw,dh);
+  const g=x.createLinearGradient(0,0,0,H); g.addColorStop(0,'rgba(6,6,8,.72)'); g.addColorStop(.5,'rgba(6,6,8,.50)'); g.addColorStop(1,'rgba(6,6,8,.82)'); x.fillStyle=g; x.fillRect(0,0,W,H);
+}
 function fondo(t,glow){
-  x.fillStyle=K; x.fillRect(0,0,W,H);
+  x.fillStyle=K; x.fillRect(0,0,W,H); foto(t);
   const g=x.createRadialGradient(W*.85,H*.12,0,W*.85,H*.12,W*.9); g.addColorStop(0,'rgba(229,33,46,'+(.30*glow)+')'); g.addColorStop(1,'rgba(229,33,46,0)'); x.fillStyle=g; x.fillRect(0,0,W,H);
   const g2=x.createRadialGradient(0,H,0,0,H,W*.9); g2.addColorStop(0,'rgba(229,33,46,'+(.22*glow)+')'); g2.addColorStop(1,'rgba(229,33,46,0)'); x.fillStyle=g2; x.fillRect(0,0,W,H);
   x.drawImage(sc,0,0);
@@ -71,7 +80,7 @@ function dibujar(t){
   }
   x.letterSpacing='0px';
 }
-window.preparar=s=>{S=s;}; window.cuadro=(t,fmt)=>{ dibujar(t); return c.toDataURL(fmt==='png'?'image/png':'image/jpeg',.93); };
+window.preparar=async s=>{S=s; IMG=[]; for(const d of (s.fotosData||[])){ const im=new Image(); im.src=d; await im.decode(); IMG.push(im); } }; window.cuadro=(t,fmt)=>{ dibujar(t); return c.toDataURL(fmt==='png'?'image/png':'image/jpeg',.93); };
 </script>`;
 
 (async()=>{
@@ -82,6 +91,14 @@ window.preparar=s=>{S=s;}; window.cuadro=(t,fmt)=>{ dibujar(t); return c.toDataU
   const b=await chromium.launch();const p=await b.newPage({viewport:{width:W,height:H}});p.on('pageerror',e=>console.error('página:',e.message));
   await p.setContent('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">'+pagina);
   await p.evaluate(async()=>{await document.fonts.load('800 40px Inter');await document.fonts.load('900 100px Inter');await document.fonts.ready;});
+  // fotos de material (contenido/material/*): hasta 4, ya sea imagen o un fotograma tomado de un video
+  spec.fotosData=[];
+  for(const f of (spec.fotos||[]).slice(0,4)){
+    let ruta=path.resolve(dir,'..',f); if(!ruta.startsWith(path.join(dir,'material'))) throw new Error('El material debe estar en contenido/material/');
+    if(/\.(mp4|mov|m4v|webm)$/i.test(ruta)){ const out=path.join(tmp,'clip-'+spec.fotosData.length+'.jpg'); execFileSync('ffmpeg',['-y','-loglevel','error','-ss','1','-i',ruta,'-frames:v','1','-q:v','2',out]); ruta=out; }
+    const ext=path.extname(ruta).slice(1).toLowerCase().replace('jpg','jpeg');
+    spec.fotosData.push('data:image/'+ext+';base64,'+fs.readFileSync(ruta).toString('base64'));
+  }
   await p.evaluate(s=>preparar(s),spec);
   const N=FPS*DUR;
   for(let i=0;i<N;i++){

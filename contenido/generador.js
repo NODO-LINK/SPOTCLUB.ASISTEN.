@@ -8,6 +8,14 @@ function dibujarPieza(cv,g){
     const sp=(px)=>{ if('letterSpacing' in c) c.letterSpacing=px+'px'; };
     c.textBaseline='top'; c.textAlign='left';
     c.fillStyle=K; c.fillRect(0,0,W,H);
+    // foto de fondo opcional (g.img): recorte tipo "cover" y velo oscuro para que el texto se lea
+    if(g.img){
+        const iw=g.img.naturalWidth||g.img.width, ih=g.img.naturalHeight||g.img.height, k=Math.max(W/iw,H/ih);
+        const dw=iw*k, dh=ih*k, fx=g.focoX==null?.5:g.focoX, fy=g.focoY==null?.5:g.focoY;
+        c.drawImage(g.img,(W-dw)*fx,(H-dh)*fy,dw,dh);
+        const v=c.createLinearGradient(0,0,0,H); v.addColorStop(0,'rgba(6,6,8,.72)'); v.addColorStop(.5,'rgba(6,6,8,.50)'); v.addColorStop(1,'rgba(6,6,8,.82)');
+        c.fillStyle=v; c.fillRect(0,0,W,H);
+    }
     // brillo rojo y líneas de escaneo
     const gl=c.createRadialGradient(W*.9,H*.08,0,W*.9,H*.08,W*.75);
     gl.addColorStop(0,'rgba(229,33,46,.34)'); gl.addColorStop(1,'rgba(229,33,46,0)');
