@@ -389,12 +389,21 @@ td{padding:11px 14px;vertical-align:middle}
   #printArea .rc{max-width:560px;margin:0 auto}
   #printArea *{color:#000!important;background:transparent!important}
   .noprint{display:none!important}
-  #printArea.t80,#printArea.t58{font:12px/1.35 'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace}
+  #printArea.t80,#printArea.t58{font:600 12px/1.35 'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace}
+  #printArea .tk{position:relative;padding:2mm 0}
+  #printArea .tk>*:not(.tk-wm){position:relative}
+  #printArea .tk-wm{position:absolute;left:50%;top:50%;width:92%;transform:translate(-50%,-50%);opacity:.1;z-index:0}
+  #printArea .tk-lg{width:28mm;max-width:70%;height:auto;margin-bottom:1mm}
+  #printArea.t58 .tk-lg{width:22mm}
+  #printArea .tk-marca{font:900 2.1em/1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:-.02em}
+  #printArea .tk-slogan{font:800 .78em/1.2 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.12em}
   #printArea.t80{width:72mm;margin:0 auto}
   #printArea.t58{width:48mm;margin:0 auto;font-size:10.5px}
   #printArea .tk hr{border:0;border-top:1px dashed #000;margin:6px 0}
   #printArea .tk-c{text-align:center}
   #printArea .tk-b{font-weight:800}
+  #printArea .tk-it{font-weight:700}
+  #printArea .tk-r{font-weight:700}
   #printArea .tk-r,#printArea .tk-it{display:flex;justify-content:space-between;gap:6px}
   #printArea .tk-it span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
   #printArea .tk-it span:last-child,#printArea .tk-r span:last-child{white-space:nowrap}
@@ -2400,12 +2409,23 @@ function verRecibo(id){
     abrir('mRecibo');
 }
 // ticket compacto para impresoras térmicas de 80 mm o 58 mm
+// el logo del sitio es blanco; para papel se pinta de negro (se calcula una sola vez)
+let logoNegroUrl=null;
+function logoNegro(){
+    if(logoNegroUrl) return logoNegroUrl;
+    if(!(LOGO_IMG.complete&&LOGO_IMG.naturalWidth)) return null;
+    const c=document.createElement('canvas'); c.width=LOGO_IMG.naturalWidth; c.height=LOGO_IMG.naturalHeight;
+    const x=c.getContext('2d'); x.drawImage(LOGO_IMG,0,0); x.globalCompositeOperation='source-in'; x.fillStyle='#000'; x.fillRect(0,0,c.width,c.height);
+    return (logoNegroUrl=c.toDataURL('image/png'));
+}
 function ticketHtml(v){
     const adic=v.costoAdicional||0, emp=v.empaque??EMPAQUE;
     const f=(l,x)=>`<div class="tk-r"><span>${l}</span><span>${x}</span></div>`;
     const pagos=(v.pagos||[]).map(p=>f(fshort(p.fecha)+' '+esc(p.metodo),fmt(p.monto))).join('');
-    return `<div class="tk">`+
-      `<div class="tk-c tk-b" style="font-size:1.35em">THE SPOT</div><div class="tk-c">Comprobante de venta</div>`+
+    const lg=logoNegro();
+    return `<div class="tk">`+(lg?`<img class="tk-wm" src="${lg}" alt="">`:'')+
+      (lg?`<div class="tk-c"><img class="tk-lg" src="${lg}" alt="Spot Club"></div>`:'')+
+      `<div class="tk-c tk-marca">SPOT CLUB</div><div class="tk-c tk-slogan">YOU LOOK LIKE SUCCESS</div><div class="tk-c tk-b" style="margin-top:4px">Comprobante de venta</div>`+
       `<div class="tk-c">N° ${esc(inv(v))}</div><div class="tk-c">${new Date(v.fechaMs).toLocaleDateString('es-VE',{day:'2-digit',month:'2-digit',year:'numeric'})}</div><hr>`+
       `<div>${esc(v.nombre)}</div><div>CI ${esc(v.cedula)}</div><div>Tel ${esc(v.telefono)}</div><div>${esc(v.estado)} · ${esc(v.agencia)}</div>`+(v.guia?`<div>Guía ${esc(v.guia)}</div>`:'')+`<hr>`+
       v.items.map((it,i)=>`<div class="tk-it"><span>${i+1}. ${esc(it.label||'Producto')}</span><span>${fmt(it.subtotal)}</span></div>`).join('')+
@@ -2413,7 +2433,7 @@ function ticketHtml(v){
       `<div class="tk-r tk-b tk-t"><span>TOTAL</span><span>${fmt(v.total)}</span></div>`+
       (!v.legacy&&!v.anulada?`<hr>${pagos||f('Sin pagos','—')}${f('Pagado',fmt(v.pagado))}${f('Saldo',fmt(v.saldo))}`:'')+
       (v.anulada?`<hr><div class="tk-c tk-b">ANULADA</div>`:'')+
-      `<hr><div>Entrega: ${esc(etapaDef(v.etapa).l)}</div><hr><div class="tk-c">Gracias por tu compra</div><div class="tk-c">Comprobante interno, sin validez fiscal</div></div>`;
+      `<hr><div class="tk-b">Entrega: ${esc(etapaDef(v.etapa).l)}</div><hr><div class="tk-c tk-b" style="font-size:1.1em">¡GRACIAS POR TU COMPRA!</div><div class="tk-c tk-slogan" style="margin-top:3px">YOU LOOK LIKE SUCCESS</div><div class="tk-c tk-b">@SPOT__CLUB</div><div class="tk-c" style="font-size:.8em;margin-top:3px">Comprobante interno, sin validez fiscal</div></div>`;
 }
 let reciboId=null;
 function imprimirRecibo(){
