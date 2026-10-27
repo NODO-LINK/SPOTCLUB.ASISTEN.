@@ -2139,6 +2139,18 @@ function rebuildPiezas(){
     piezasBase=piezasBase.map((p,i)=>({p,i})).sort((a,b)=>(b.p.fecha||'').localeCompare(a.p.fecha||'')||a.i-b.i).map(x=>x.p);
     piezas=[...piezasGen.map(g=>({id:'g_'+g.id,gid:g.id,generada:true,titulo:g.titulo||'Diseño nuevo',tipo:g.tipo||'Generado',formato:g.formato||'',archivos:[g.img],caption:g.caption||''})),...piezasBase];
 }
+// vuelve a leer la lista de piezas del repositorio para que las nuevas aparezcan sin cerrar la app
+async function refrescarContenido(){
+    if(!can('registrar')) return;
+    try{
+        const r=await fetch('contenido/contenido.json',{cache:'no-store'}); if(!r.ok) return;
+        const nuevas=(await r.json()).piezas||[];
+        if(JSON.stringify(nuevas)===JSON.stringify(piezasBase)) return;
+        piezasBase=nuevas; conErr=''; rebuildPiezas(); render();
+    }catch(e){ }
+}
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') refrescarContenido(); });
+setInterval(()=>{ if(document.visibilityState==='visible') refrescarContenido(); },300000);
 async function startContenido(){
     if(unsubPub){unsubPub();unsubPub=null;}
     if(unsubGen){unsubGen();unsubGen=null;}
