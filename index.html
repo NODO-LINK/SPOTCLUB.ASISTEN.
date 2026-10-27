@@ -2231,11 +2231,13 @@ function genUI(){
     const p=gen.plantilla;
     $('#gfNum').hidden=p!=='numero'; $('#gfPasos').hidden=p!=='pasos'; $('#gfSub').hidden=p==='pasos';
 }
+const LOGO_IMG=new Image(); LOGO_IMG.onload=()=>{ if(gen&&conMode==='gen') genDibujar(); }; LOGO_IMG.src='contenido/logo-spotclub.png';
 let genRaf=0;
 function genDibujar(){
     cancelAnimationFrame(genRaf);
     genRaf=requestAnimationFrame(async()=>{
         try{ await document.fonts.load('900 100px Inter'); }catch(e){}
+        gen.logo=(LOGO_IMG.complete&&LOGO_IMG.naturalWidth)?LOGO_IMG:null;
         dibujarPieza($('#gCanvas'),gen);
     });
 }

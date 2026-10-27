@@ -17,7 +17,7 @@ const pagina=`<canvas id="c" width="${W}" height="${H}"></canvas><script>
 const W=${W}, H=${H};
 const c=document.getElementById('c'), x=c.getContext('2d'), K='#060608', Wh='#F5F5F5', R='#E5212E';
 const F='Inter,Arial,sans-serif', MAXW=840, M=90;
-let S={}, IMG=[];
+let S={}, IMG=[], LOGO=null;
 const up=t=>String(t||'').toUpperCase();
 // líneas de escaneo precalculadas
 const sc=document.createElement('canvas'); sc.width=W; sc.height=H; const sx=sc.getContext('2d'); sx.fillStyle='rgba(255,255,255,.035)'; for(let y=0;y<H;y+=6) sx.fillRect(0,y,W,2);
@@ -53,7 +53,11 @@ function fondo(t,glow){
   const g2=x.createRadialGradient(0,H,0,0,H,W*.9); g2.addColorStop(0,'rgba(229,33,46,'+(.22*glow)+')'); g2.addColorStop(1,'rgba(229,33,46,0)'); x.fillStyle=g2; x.fillRect(0,0,W,H);
   x.drawImage(sc,0,0);
   // marca arriba
-  x.textBaseline='top'; x.fillStyle=R; x.fillRect(M,222,22,22); x.fillStyle=Wh; x.font='900 40px '+F; x.letterSpacing='-.8px'; x.fillText('SPOT CLUB',M+36,214);
+  // logo enorme y tenue de marca de agua
+  if(LOGO){ x.save(); x.globalAlpha=.07; const lw=W*1.0, lh=lw*LOGO.naturalHeight/LOGO.naturalWidth; x.drawImage(LOGO,W*.30,H-lh*.78,lw,lh); x.restore(); }
+  x.textBaseline='top'; let tx=M+36;
+  if(LOGO){ const lh=56, lw=lh*LOGO.naturalWidth/LOGO.naturalHeight; x.drawImage(LOGO,M,206,lw,lh); tx=M+lw+18; } else { x.fillStyle=R; x.fillRect(M,222,22,22); }
+  x.fillStyle=Wh; x.font='900 40px '+F; x.letterSpacing='-.8px'; x.fillText('SPOT CLUB',tx,214);
   x.font='800 30px '+F; x.letterSpacing='1px'; x.globalAlpha=.85; x.textAlign='right'; x.fillText('@SPOT__CLUB',W-150,218); x.textAlign='left'; x.globalAlpha=1;
 }
 function dibujar(t){
@@ -80,7 +84,7 @@ function dibujar(t){
   }
   x.letterSpacing='0px';
 }
-window.preparar=async s=>{S=s; IMG=[]; for(const d of (s.fotosData||[])){ const im=new Image(); im.src=d; await im.decode(); IMG.push(im); } }; window.cuadro=(t,fmt)=>{ dibujar(t); return c.toDataURL(fmt==='png'?'image/png':'image/jpeg',.93); };
+window.preparar=async s=>{S=s; IMG=[]; LOGO=null; if(s.logoData){ LOGO=new Image(); LOGO.src=s.logoData; await LOGO.decode(); } for(const d of (s.fotosData||[])){ const im=new Image(); im.src=d; await im.decode(); IMG.push(im); } }; window.cuadro=(t,fmt)=>{ dibujar(t); return c.toDataURL(fmt==='png'?'image/png':'image/jpeg',.93); };
 </script>`;
 
 (async()=>{
@@ -99,6 +103,7 @@ window.preparar=async s=>{S=s; IMG=[]; for(const d of (s.fotosData||[])){ const 
     const ext=path.extname(ruta).slice(1).toLowerCase().replace('jpg','jpeg');
     spec.fotosData.push('data:image/'+ext+';base64,'+fs.readFileSync(ruta).toString('base64'));
   }
+  const lp=path.join(dir,'logo-spotclub.png'); if(fs.existsSync(lp)) spec.logoData='data:image/png;base64,'+fs.readFileSync(lp).toString('base64');
   await p.evaluate(s=>preparar(s),spec);
   const N=FPS*DUR;
   for(let i=0;i<N;i++){

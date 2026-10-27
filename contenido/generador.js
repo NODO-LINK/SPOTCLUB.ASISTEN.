@@ -24,6 +24,8 @@ function dibujarPieza(cv,g){
     gl2.addColorStop(0,'rgba(229,33,46,.22)'); gl2.addColorStop(1,'rgba(229,33,46,0)');
     c.fillStyle=gl2; c.fillRect(0,0,W,H);
     c.fillStyle='rgba(255,255,255,.035)'; for(let y=0;y<H;y+=6) c.fillRect(0,y,W,2);
+    // logo enorme y tenue de marca de agua, abajo a la derecha
+    if(g.logo){ c.save(); c.globalAlpha=.07; const lw=W*1.0, lh=lw*g.logo.naturalHeight/g.logo.naturalWidth; c.drawImage(g.logo,W*.30,H-lh*.78,lw,lh); c.restore(); }
 
     const M=90, maxW=W-2*M;
     const up=t=>String(t||'').toUpperCase();
@@ -45,8 +47,10 @@ function dibujarPieza(cv,g){
 
     // cabecera
     const hy=story?260:70;
-    c.fillStyle=R; c.fillRect(M,hy+8,22,22);
-    fnt(40); sp(-.8); c.fillStyle=Wh; c.fillText('SPOT CLUB',M+36,hy);
+    let tx=M+36;
+    if(g.logo){ const lh=56, lw=lh*g.logo.naturalWidth/g.logo.naturalHeight; c.drawImage(g.logo,M,hy-8,lw,lh); tx=M+lw+18; }
+    else { c.fillStyle=R; c.fillRect(M,hy+8,22,22); }
+    fnt(40); sp(-.8); c.fillStyle=Wh; c.fillText('SPOT CLUB',tx,hy);
     fnt(30,800); sp(1); c.globalAlpha=.85; c.textAlign='right'; c.fillText('@SPOT__CLUB',W-M,hy+4); c.textAlign='left'; c.globalAlpha=1;
 
     const bandH=270, bandTop=story?H-340-bandH:H-bandH;

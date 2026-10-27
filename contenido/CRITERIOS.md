@@ -24,7 +24,7 @@ Definidos con el dueño el 27 de octubre de 2026. La rutina diaria y quien edite
 - Juvenil, de fan, con jerga ligera.
 - Prohibido: groserías, política y religión, comparar con otras marcas.
 - Colores: negro, blanco y rojo. Inglés solo en el lema "You Look Like Success".
-- Logo del ojo con púas: pendiente de recibir el archivo. Mientras tanto, "SPOT CLUB" en texto.
+- Logo del ojo con púas: ya está en `contenido/logo-spotclub.png` (blanco, fondo transparente). Los scripts lo ponen solos en la cabecera junto a "SPOT CLUB" y como marca de agua grande y tenue. No hay que hacer nada más.
 
 ## Video
 - 10 a 14 segundos, vertical 9:16, sin audio (el dueño pone un sonido en tendencia desde Instagram).
