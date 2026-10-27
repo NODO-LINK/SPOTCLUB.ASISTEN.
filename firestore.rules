@@ -1,7 +1,9 @@
 rules_version = '2';
-// Reglas propuestas para THE SPOT. NO están desplegadas: revisar y publicar desde
-// Firebase Console > Firestore > Reglas (o con `firebase deploy --only firestore:rules`).
+// Reglas de seguridad de THE SPOT. Publicar en Firebase Console > Firestore Database > Rules > Publish
+// (o con `firebase deploy --only firestore:rules`).
 // Sin documento en usuarios/{uid} se asume rol "admin", igual que el panel, para no dejar a nadie fuera.
+// IMPORTANTE: por eso hay que desactivar el registro libre en Authentication > Settings > User actions
+// (quitar "Enable create (sign-up)"). Así solo existen las cuentas que tú creas en Authentication > Users.
 service cloud.firestore {
   match /databases/{database}/documents {
 
