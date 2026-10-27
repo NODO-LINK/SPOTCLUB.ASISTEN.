@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--k:#060608;--w:#F5F5F5;--r:#E5212E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#222;font-family:'Inter',Arial,sans-serif;font-weight:900;text-transform:uppercase}
+.s{position:relative;overflow:hidden;background:var(--k);color:var(--w);width:1080px;margin:0 0 40px}
+.feed{height:1350px}.story{height:1920px}
+/* textura: líneas de escaneo y brillo rojo */
+.s::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 2px,transparent 2px 6px);pointer-events:none;z-index:5}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);background:var(--r);opacity:.28}
+.dots{position:absolute;width:520px;height:520px;background:radial-gradient(var(--r) 28%,transparent 30%) 0 0/26px 26px;opacity:.55;-webkit-mask:radial-gradient(closest-side,#000,transparent);mask:radial-gradient(closest-side,#000,transparent)}
+.top{position:absolute;left:90px;right:90px;top:70px;display:flex;justify-content:space-between;align-items:center;font-size:30px;letter-spacing:.04em;z-index:4}
+.top b{display:flex;align-items:center;gap:14px;font-size:40px;letter-spacing:-.02em}
+.top b::before{content:"";width:22px;height:22px;background:var(--r);display:block}
+.top span{font-weight:800;opacity:.85}
+.st .top{top:260px}
+.bot{position:absolute;left:90px;right:90px;bottom:70px;display:flex;justify-content:space-between;font-size:28px;font-weight:800;letter-spacing:.06em;z-index:4;opacity:.9}
+.r{color:var(--r)}
+.h{white-space:nowrap;position:absolute;left:90px;right:90px;line-height:.88;letter-spacing:-.045em;z-index:3;-webkit-text-stroke:0}
+.sub{position:absolute;left:90px;right:90px;font-weight:800;letter-spacing:.03em;z-index:3}
+.band{position:absolute;left:-40px;right:-40px;background:var(--r);color:var(--w);white-space:nowrap;display:flex;align-items:center;font-size:44px;letter-spacing:.02em;z-index:4;overflow:hidden}
+.cta{position:absolute;left:0;right:0;background:rgba(6,6,8,.88);border-top:3px solid var(--r);text-align:center;z-index:4;padding:26px 90px}
+.cta i{display:block;font-style:normal;font-size:40px;letter-spacing:.02em}
+.cta i.p{color:var(--r);font-size:82px;line-height:1;letter-spacing:-.03em;margin:6px 0}
+.glitch{text-shadow:-7px 0 0 var(--r),7px 0 0 rgba(245,245,245,.35)}
+.num{font-size:560px;line-height:.75;color:transparent;-webkit-text-stroke:5px var(--r);letter-spacing:-.06em}
+</style></head><body>
+
+<!-- 1 · OFERTA -->
+<section class="s feed" id="oferta">
+  <div class="glow" style="width:700px;height:700px;right:-250px;top:-150px"></div>
+  <div class="dots" style="left:-180px;bottom:-120px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="h" style="top:240px;font-size:138px">TU DISEÑO.<br><span class="r">TU FRANELA.</span></div>
+  <div class="sub" style="top:600px;font-size:40px">IMPRESIÓN DTF · DESDE 1 PIEZA</div>
+  <div style="position:absolute;left:70px;top:720px;background:var(--r);padding:30px 70px 36px;transform:rotate(-3deg);z-index:3">
+    <div style="font-size:48px;letter-spacing:.04em">DESDE</div>
+    <div style="font-size:290px;line-height:.8;letter-spacing:-.06em;margin-top:6px">$10</div>
+  </div>
+  <div style="position:absolute;right:90px;bottom:150px;z-index:3;border:5px solid var(--w);border-radius:100px;padding:20px 48px;font-size:48px;letter-spacing:.02em">PÍDELA POR DM</div>
+  <div class="bot"><span>ENVÍOS A TODO EL PAÍS</span><span>YOU LOOK LIKE SUCCESS</span></div>
+</section>
+
+<!-- 2 · CARRUSEL PROCESO -->
+<section class="s feed" id="proceso-1">
+  <div class="glow" style="width:800px;height:800px;left:-300px;bottom:-300px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="h glitch" style="top:300px;font-size:176px">¿CÓMO SE<br>HACE TU<br><span class="r">FRANELA?</span></div>
+  <div class="sub" style="top:900px;font-size:44px">EN 4 PASOS. SIN COMPLICARTE.</div>
+  <div style="position:absolute;right:90px;bottom:120px;font-size:64px;z-index:3;display:flex;align-items:center;gap:20px">DESLIZA <span class="r" style="font-size:110px;line-height:1">→</span></div>
+</section>
+<section class="s feed" id="proceso-2">
+  <div class="dots" style="right:-200px;top:-150px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>1 / 4</span></div>
+  <div class="num" style="position:absolute;left:60px;top:150px">01</div>
+  <div class="h" style="top:620px;font-size:150px">ENVÍANOS<br><span class="r">TU DISEÑO</span></div>
+  <div class="sub" style="top:1030px;font-size:42px;line-height:1.2;font-weight:700">ANIME, BANDA, ARTISTA<br>O LO QUE IMAGINES.</div>
+</section>
+<section class="s feed" id="proceso-3">
+  <div class="dots" style="left:-200px;bottom:-150px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>2 / 4</span></div>
+  <div class="num" style="position:absolute;left:60px;top:150px">02</div>
+  <div class="h" style="top:620px;font-size:140px">LO<br>IMPRIMIMOS<br><span class="r">EN DTF</span></div>
+  <div class="sub" style="top:1030px;font-size:42px;line-height:1.2;font-weight:700">PASAMOS TU DISEÑO A PELÍCULA<br>Y EL ESTAMPADO SALE BRILLANDO.</div>
+</section>
+<section class="s feed" id="proceso-4">
+  <div class="glow" style="width:700px;height:700px;right:-250px;top:200px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>3 / 4</span></div>
+  <div class="num" style="position:absolute;left:60px;top:150px">03</div>
+  <div class="h" style="top:620px;font-size:128px">LO<br>PRESIONAMOS<br><span class="r">EN LA PRENDA</span></div>
+  <div class="sub" style="top:1030px;font-size:42px;line-height:1.2;font-weight:700">DESDE 1 PIEZA.<br>NO NECESITAS PEDIR POR DOCENAS.</div>
+</section>
+<section class="s feed" id="proceso-5">
+  <div class="dots" style="right:-200px;top:-100px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>4 / 4</span></div>
+  <div class="num" style="position:absolute;left:60px;top:150px">04</div>
+  <div class="h" style="top:640px;font-size:112px">TE LA ENVIAMOS<br><span class="r">A TODO EL PAÍS</span></div>
+  <div class="sub" style="top:910px;font-size:40px;line-height:1.2;font-weight:700">ENTREGA EN 3 A 5 DÍAS HÁBILES<br>DESPUÉS DEL PAGO.</div>
+  <div class="cta" style="bottom:0"><i>HAZ LA TUYA</i><i class="p">DESDE $10</i><i>PÍDELA POR DM</i></div>
+</section>
+
+<!-- 3 · STORY FANDOM -->
+<section class="s story st" id="fandom-story">
+  <div class="glow" style="width:900px;height:900px;left:-400px;top:200px"></div>
+  <div class="dots" style="right:-220px;bottom:300px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="h" style="top:400px;font-size:190px">ELIGE TU<br><span class="r">FANDOM</span></div>
+  <div style="position:absolute;left:90px;right:90px;top:830px;z-index:3;display:flex;flex-direction:column;gap:26px;font-size:120px;letter-spacing:-.04em;line-height:1">
+    <div style="display:flex;align-items:center;gap:36px;border-top:4px solid var(--w);padding-top:26px"><span class="r" style="font-size:90px">1</span>ANIME</div>
+    <div style="display:flex;align-items:center;gap:36px;border-top:4px solid var(--w);padding-top:26px"><span class="r" style="font-size:90px">2</span>BANDAS</div>
+    <div style="display:flex;align-items:center;gap:36px;border-top:4px solid var(--w);padding:26px 0 0"><span class="r" style="font-size:90px">3</span>ARTISTAS</div>
+  </div>
+  <div class="sub" style="top:1440px;font-size:46px;text-align:center">VOTA EN LA ENCUESTA <span class="r">↓</span></div>
+</section>
+
+<!-- 4 · 24 ESTADOS -->
+<section class="s feed" id="estados">
+  <div class="glow" style="width:800px;height:800px;right:-300px;top:100px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="num" style="position:absolute;left:70px;top:190px;font-size:640px;-webkit-text-stroke:0;color:var(--r)">24</div>
+  <div class="h" style="top:760px;font-size:180px">ESTADOS.</div>
+  <div class="sub" style="top:960px;font-size:46px;line-height:1.15">ENVIAMOS DE <span class="r">AMAZONAS</span> A <span class="r">ZULIA</span>.</div>
+  <div style="position:absolute;left:90px;bottom:150px;z-index:3;border:5px solid var(--w);border-radius:100px;padding:20px 48px;font-size:48px">PIDE DESDE DONDE ESTÉS</div>
+  <div class="bot"><span>PÍDELA POR DM</span><span>DESDE $10</span></div>
+</section>
+
+<!-- 5 · LEMA -->
+<section class="s feed" id="exito">
+  <div class="glow" style="width:900px;height:900px;left:-300px;top:-300px"></div>
+  <div class="band" style="top:210px;height:90px;transform:rotate(-4deg)">YOU LOOK LIKE SUCCESS · YOU LOOK LIKE SUCCESS · YOU LOOK LIKE SUCCESS · YOU LOOK LIKE SUCCESS</div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="h glitch" style="top:400px;font-size:190px">YOU<br>LOOK<br>LIKE<br><span class="r">SUCCESS</span></div>
+  <div class="band" style="bottom:150px;height:90px;transform:rotate(3deg);background:var(--w);color:var(--k)">FRANELAS PERSONALIZADAS · DTF · VENEZUELA · FRANELAS PERSONALIZADAS · DTF</div>
+</section>
+
+<!-- 6 · VIZZION (drop privado: sin precio ni CTA de compra) -->
+<section class="s story st" id="vizzion-story">
+  <div class="glow" style="width:1000px;height:1000px;left:-300px;top:500px;opacity:.35"></div>
+  <div class="dots" style="left:-200px;top:-50px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="h glitch" style="top:640px;font-size:196px;text-align:left">VIZZION</div>
+  <div style="position:absolute;left:90px;top:860px;z-index:3;display:flex;align-items:center;gap:26px;font-size:70px;letter-spacing:.02em"><span style="background:var(--r);padding:8px 28px">VOL. 01</span><span>DROP PRIVADO</span></div>
+  <div class="sub" style="top:1130px;font-size:64px;line-height:1.1;letter-spacing:-.01em">NO ESTÁ A LA VENTA.<br><span class="r">SOLO PARA ELEGIDOS.</span></div>
+</section>
+
+<!-- 7 · STORY PEDIDO -->
+<section class="s story st" id="pidela-story">
+  <div class="glow" style="width:800px;height:800px;right:-300px;top:600px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="h" style="top:380px;font-size:150px">ASÍ DE<br><span class="r">FÁCIL.</span></div>
+  <div style="position:absolute;left:90px;right:90px;top:690px;z-index:3;display:flex;flex-direction:column;gap:36px;font-size:60px;line-height:1.02;letter-spacing:-.02em">
+    <div style="display:flex;gap:30px;align-items:baseline"><span class="r" style="font-size:90px">1</span>MANDA TU DISEÑO POR DM</div>
+    <div style="display:flex;gap:30px;align-items:baseline"><span class="r" style="font-size:90px">2</span>CONFIRMA Y PAGA</div>
+    <div style="display:flex;gap:30px;align-items:baseline"><span class="r" style="font-size:90px">3</span>RECÍBELA EN 3 A 5 DÍAS HÁBILES</div>
+  </div>
+  <div class="cta" style="top:1250px"><i>HAZ LA TUYA</i><i class="p">DESDE $10</i><i>PÍDELA POR DM</i></div>
+</section>
+
+<!-- 8 · COMENTA -->
+<section class="s feed" id="comenta">
+  <div class="dots" style="right:-180px;bottom:-100px"></div>
+  <div class="glow" style="width:700px;height:700px;left:-250px;top:100px"></div>
+  <div class="top"><b>SPOT CLUB</b><span>@spot__club</span></div>
+  <div class="h" style="top:250px;font-size:170px">¿ANIME,<br>BANDA O<br><span class="r">ARTISTA?</span></div>
+  <div class="sub" style="top:860px;font-size:58px;line-height:1.08;letter-spacing:-.01em">COMENTA EL TUYO.<br>LO PONEMOS EN UNA FRANELA.</div>
+  <div style="position:absolute;left:90px;bottom:150px;font-size:150px;line-height:1;z-index:3" class="r">↓</div>
+  <div class="bot"><span></span><span>DESDE $10 · DTF</span></div>
+</section>
+</body></html>

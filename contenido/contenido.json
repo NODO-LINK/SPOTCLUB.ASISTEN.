@@ -1,0 +1,45 @@
+{
+  "cuenta": "@spot__club",
+  "piezas": [
+    {
+      "id": "oferta", "titulo": "Tu diseño, tu franela", "tipo": "Oferta", "formato": "Post 4:5",
+      "archivos": ["spot-oferta.png"],
+      "caption": "¿Tienes un diseño en la cabeza? Lo ponemos en tu franela 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #dtf #streetwear"
+    },
+    {
+      "id": "proceso", "titulo": "Cómo se hace tu franela", "tipo": "Proceso", "formato": "Carrusel 4:5 · 5 láminas",
+      "archivos": ["spot-proceso-1.png","spot-proceso-2.png","spot-proceso-3.png","spot-proceso-4.png","spot-proceso-5.png"],
+      "caption": "De tu idea a tu franela en 4 pasos 👇🖤\n1. Nos envías tu diseño. 2. Lo imprimimos en DTF. 3. Lo presionamos en la prenda. 4. Te la enviamos a todo el país. Entrega en 3 a 5 días hábiles tras el pago.\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #dtf #streetwear"
+    },
+    {
+      "id": "fandom", "titulo": "Elige tu fandom", "tipo": "Comunidad", "formato": "Story 9:16",
+      "archivos": ["spot-fandom-story.png"],
+      "caption": "Story con encuesta: agrega el sticker de encuesta con las opciones Anime / Bandas / Artistas en el espacio de abajo.\n\nUsa lo que más voten para el próximo diseño."
+    },
+    {
+      "id": "estados", "titulo": "24 estados", "tipo": "Envíos", "formato": "Post 4:5",
+      "archivos": ["spot-estados.png"],
+      "caption": "De Amazonas a Zulia, tu franela llega 👇🖤\nEnviamos a los 24 estados. Hacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #envios #parati #streetwear"
+    },
+    {
+      "id": "exito", "titulo": "You look like success", "tipo": "Marca", "formato": "Post 4:5",
+      "archivos": ["spot-exito.png"],
+      "caption": "You look like success 🖤🔴\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#youlooklikesuccess #franelaspersonalizadas #venezuela #parati #streetwear"
+    },
+    {
+      "id": "vizzion", "titulo": "VIZZION Vol. 01 (teaser)", "tipo": "Drop privado", "formato": "Story 9:16",
+      "archivos": ["spot-vizzion-story.png"],
+      "caption": "VIZZION Vol. 01. Drop privado, no está a la venta. Solo para elegidos 🖤\n#vizzion #spotclub #streetwear #venezuela"
+    },
+    {
+      "id": "pidela", "titulo": "Así de fácil pedirla", "tipo": "Oferta", "formato": "Story 9:16",
+      "archivos": ["spot-pidela-story.png"],
+      "caption": "Story: agrega el sticker de enlace a tu DM o el botón de mensaje. Mensaje sugerido para quien te escriba: «Hola, quiero mi franela. Te envío mi diseño»."
+    },
+    {
+      "id": "comenta", "titulo": "¿Anime, banda o artista?", "tipo": "Comunidad", "formato": "Post 4:5",
+      "archivos": ["spot-comenta.png"],
+      "caption": "¿Anime, banda o artista? Cuéntanos el tuyo 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #anime #streetwear"
+    }
+  ]
+}

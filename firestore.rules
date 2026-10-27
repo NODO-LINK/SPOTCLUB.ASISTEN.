@@ -44,6 +44,11 @@ service cloud.firestore {
       allow read, write: if esVentas();
     }
 
+    // Estado de las publicaciones de Instagram (la lista de diseños vive en contenido/contenido.json).
+    match /publicaciones/{id} {
+      allow read, write: if esVentas();
+    }
+
     match /contadores/{id} {
       allow read: if signedIn();
       allow write: if esVentas();
