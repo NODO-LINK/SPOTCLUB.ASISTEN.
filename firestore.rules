@@ -56,6 +56,11 @@ service cloud.firestore {
       allow read, write: if esVentas();
     }
 
+    // Recordatorios propios del administrador y su equipo de ventas.
+    match /recordatorios/{id} {
+      allow read, write: if esVentas();
+    }
+
     match /contadores/{id} {
       allow read: if signedIn();
       allow write: if esVentas();

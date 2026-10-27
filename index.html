@@ -232,6 +232,9 @@ a.btn{display:inline-flex;align-items:center;justify-content:center;text-decorat
 .gen-prev{position:sticky;top:16px;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0}
 .gen-prev canvas{width:100%;max-height:72vh;object-fit:contain;border-radius:8px;border:1px solid var(--line);background:#060608}
 @media (max-width:980px){.gen{grid-template-columns:minmax(0,1fr)}.gen-prev{position:static;order:-1}.gen-prev canvas{max-height:60vh}}
+.rec li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rec li:last-child{border-bottom:0}
+.rec small{display:block;color:var(--muted);font-size:.8rem}
 .wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:18px;overflow-x:auto}
 .wk div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px;min-height:92px;min-width:96px}
 .wk div.hoy{border-color:var(--ink)}
@@ -407,6 +410,7 @@ td{padding:11px 14px;vertical-align:middle}
       <button class="nv" type="button" data-act="go" data-view="fact">Facturación <span class="ct" id="ctFact"></span></button>
       <button class="nv" type="button" data-act="go" data-view="ventas">Ventas</button>
       <button class="nv" type="button" data-act="go" data-view="cli">Clientes</button>
+      <button class="nv" type="button" data-act="go" data-view="rec">Recordatorios <span class="ct" id="ctRec"></span></button>
       <button class="nv" type="button" data-act="go" data-view="inv">Inventario</button>
       <button class="nv" type="button" data-act="go" data-view="con">Contenido <span class="ct" id="ctCon"></span></button>
       <button class="nv" type="button" data-act="go" data-view="prod">Productos</button>
@@ -524,6 +528,7 @@ td{padding:11px 14px;vertical-align:middle}
       </section>
 
       <section id="v-cli" hidden></section>
+      <section id="v-rec" hidden></section>
       <section id="v-inv" hidden></section>
       <section id="v-con" hidden>
         <div id="conLib"></div>
@@ -843,8 +848,8 @@ const DAY = 864e5;
 
 // permisos por rol (sin documento en "usuarios" se asume admin)
 const PERMISOS = {
-    admin:    {views:['panel','ent','fact','ventas','cli','inv','con','prod','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
-    ventas:   {views:['panel','ent','fact','ventas','cli','inv','con'],inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
+    admin:    {views:['panel','ent','fact','ventas','cli','rec','inv','con','prod','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
+    ventas:   {views:['panel','ent','fact','ventas','cli','rec','inv','con'],inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
     despacho: {views:['panel','ent'],                        inventario:0, registrar:0, cobrar:0, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1}
 };
 
@@ -924,6 +929,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
 // ══════════════════════════════════════════════
 let user=null, rol='admin', ventas=[], unsub=null, unsubAct=null, unsubCfg=null, actividad=[];
 let delCtx=null, pagoCtx=null, prodEditId=null, pdraft={t:[],d:[]};
+let recs=[], unsubRec=null;
 let piezas=[], piezasBase=[], piezasGen=[], unsubGen=null, conMode='lib', gen=null;
 let pubMap={}, unsubPub=null, selPieza=null, conFilter='all', conImg=0, conErr='';
 let cliNotas={}, unsubCli=null, selCli=null, cliQ='', cliSort='rec';
@@ -994,7 +1000,8 @@ auth.onAuthStateChanged(async u=>{
         $$('#nav .nv').forEach(b=>{ b.hidden=!PERMISOS[rol].views.includes(b.dataset.view); });
         $('#regCard').hidden=!can('registrar');
         go(rol==='despacho'?'ent':'panel');
-        startListener(); startConfig(); startInv(); startCli(); startContenido();
+        startListener(); startConfig(); startInv(); startCli(); startContenido(); startRec();
+        avisosApp(u);
     } else {
         user=null;
         $('#loginPage').hidden=false;
@@ -1006,6 +1013,8 @@ auth.onAuthStateChanged(async u=>{
         if(unsubCli){unsubCli();unsubCli=null;}
         if(unsubPub){unsubPub();unsubPub=null;}
         if(unsubGen){unsubGen();unsubGen=null;}
+        if(unsubRec){unsubRec();unsubRec=null;}
+        recs=[];
         pubMap={}; piezasGen=[]; piezasBase=[];
         invMap={}; cliNotas={}; ventas=[];
     }
@@ -1053,7 +1062,7 @@ function go(v,o={}){
     if(v==='cli'&&o.cli) selCli=o.cli;
     if(v==='con'&&o.pieza){ selPieza=o.pieza; conImg=0; }
     $$('#nav .nv').forEach(b=>b.dataset.view===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
-    ['panel','ent','fact','ventas','cli','inv','con','prod','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
+    ['panel','ent','fact','ventas','cli','rec','inv','con','prod','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
     if(v==='act') startActividad();
     render();
     window.scrollTo({top:0});
@@ -1073,6 +1082,8 @@ function render(){
     if(view==='prod')  renderProd();
     if(view==='inv')   renderInv();
     if(view==='cli')   renderCli();
+    if(view==='rec')   renderRec();
+    { const n=recPendientesHoy().length; const c=$('#ctRec'); if(c){ c.textContent=n?n:''; c.classList.toggle('alert',n>0);} }
     if(view==='con')   renderCon();
     { const n=piezasVencidas().length; const c=$('#ctCon'); if(c){ c.textContent=n?n+' ⚠':''; c.classList.toggle('alert',!!n);} }
     if(view==='ventas') renderReg();
@@ -1135,6 +1146,10 @@ function renderPanel(){
     if(D.length) rows.push({t:'warn',h:pl(D.length,'entregado con saldo pendiente','entregados con saldo pendiente'),s:D.slice(0,3).map(v=>`${v.nombre} debe ${fmt(v.saldo)}`).join(' · '),a:'Ver facturas',go:'fact',pf:'saldo'});
     const W=vs.filter(v=>v.etapa==='procesado');
     if(W.length) rows.push({t:'info',h:W.length===1?'1 pedido espera despacho':W.length+' pedidos esperan despacho',s:W.slice(0,4).map(v=>`${inv(v)} ${v.nombre.split(' ')[0]}`).join(' · '),a:'Ir a entregas',go:'ent'});
+    const SG=vs.filter(v=>v.etapa==='entregado'&&!v.seguimiento&&dias(v)>=2&&dias(v)<=10);
+    if(can('registrar')&&SG.length) rows.push({t:'info',h:pl(SG.length,'cliente para seguimiento','clientes para seguimiento'),s:SG.slice(0,3).map(v=>v.nombre).join(' · '),a:'Ver entregas',go:'ent'});
+    const RP=can('registrar')?recPendientesHoy():[];
+    if(RP.length) rows.push({t:'warn',h:pl(RP.length,'recordatorio para hoy','recordatorios para hoy'),s:RP.slice(0,3).map(r=>r.texto).join(' · '),a:'Ver recordatorios',go:'rec'});
     const N=migradas.filter(v=>v.pagado===0&&v.saldo>0);
     if(N.length) rows.push({t:'idle',h:pl(N.length,'factura sin ningún pago','facturas sin ningún pago'),s:N.slice(0,3).map(v=>`${inv(v)} · ${fmt(v.saldo)}`).join(' · '),a:'Ver facturas',go:'fact',pf:'saldo'});
     if(can('registrar')){
@@ -1211,6 +1226,9 @@ function msgEtapa(v){
     if(v.etapa==='agencia')   return `Hola ${n}, tu pedido ${f} ya está en la agencia ${v.agencia}${v.guia?' (guía '+v.guia+')':''}. Ya puedes retirarlo.`;
     return `Hola ${n}, te escribimos de The Spot para confirmar que recibiste tu pedido ${f}. ¡Gracias por tu compra!`;
 }
+function msgSeguimiento(v){
+    return `Hola ${(v.nombre||'').split(' ')[0]}, te escribimos de The Spot. ¿Te llegó bien tu pedido ${inv(v)}? Cuéntanos qué tal te quedó. ¡Gracias por tu compra!`;
+}
 function msgCobro(v){
     return `Hola ${(v.nombre||'').split(' ')[0]}, te escribimos de The Spot. Tu pedido ${inv(v)} tiene un saldo pendiente de ${fmt(v.saldo)}. Puedes pagar por ${METODOS.slice(0,3).join(', ')}. ¡Gracias!`;
 }
@@ -1249,6 +1267,7 @@ function renderEnt(){
                 `<div class="acts">`+
                   (st.act&&can('entregas')?`<button type="button" class="btn" data-act="adv" data-id="${v.id}">${st.act}</button>`:'')+
                   `<a class="btn ghost sm" href="${waLink(v,msgEtapa(v))}" target="_blank" rel="noopener" aria-label="Avisar por WhatsApp a ${esc(v.nombre)}">WA</a>`+
+                  (st.k==='entregado'&&can('registrar')?(v.seguimiento?'<span class="bd c-pagada">Seguimiento hecho</span>':`<a class="btn ghost sm" href="${waLink(v,msgSeguimiento(v))}" target="_blank" rel="noopener" data-act="seguim" data-id="${v.id}">Seguimiento</a>`):'')+
                   (prev&&can('entregas')?`<button type="button" class="btn ghost sm" data-act="back" data-id="${v.id}" title="Volver a ${prev.l}" aria-label="Volver a ${prev.l}">↩</button>`:'')+
                 `</div></article>`;
         }).join('')||'<p class="empty">Sin pedidos en esta etapa.</p>';
@@ -1438,7 +1457,7 @@ function startActividad(){
         if(view==='act') renderActividad();
     },e=>console.error(e));
 }
-const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',stock:'Inventario',cliente:'Ficha de cliente',contenido:'Contenido',anulada:'Factura anulada',restaurada:'Factura restaurada',eliminada:'Factura eliminada',catalogo:'Catálogo modificado',migracion:'Migración',respaldo:'Respaldo'};
+const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',stock:'Inventario',cliente:'Ficha de cliente',recordatorio:'Recordatorio',seguimiento:'Seguimiento al cliente',contenido:'Contenido',anulada:'Factura anulada',restaurada:'Factura restaurada',eliminada:'Factura eliminada',catalogo:'Catálogo modificado',migracion:'Migración',respaldo:'Respaldo'};
 function renderActividad(){
     const rows=actividad.map(a=>{
         const t=a.fecha&&a.fecha.toMillis?a.fecha.toMillis():Date.now();
@@ -2410,6 +2429,116 @@ async function restaurarRespaldo(){
 document.addEventListener('change',e=>{ if(e.target.id==='respFile'&&e.target.files[0]){ leerRespaldo(e.target.files[0]); e.target.value=''; } });
 
 // ══════════════════════════════════════════════
+//  RECORDATORIOS Y RESUMEN DE LAS 8:00
+// ══════════════════════════════════════════════
+const enApp = ()=>!!(window.AndroidApp&&window.AndroidApp.sesion);
+// la app Android recibe la sesión del administrador para armar el resumen sola a las 8:00
+function avisosApp(u){
+    if(!enApp()||rol!=='admin') return;
+    try{ window.AndroidApp.sesion(firebaseConfig.apiKey,firebaseConfig.projectId,u.refreshToken); window.AndroidApp.pedirPermiso(); }catch(e){}
+}
+function startRec(){
+    if(unsubRec){unsubRec();unsubRec=null;}
+    if(!can('registrar')) return;
+    unsubRec=db.collection('recordatorios').onSnapshot(s=>{
+        recs=s.docs.map(d=>({id:d.id,...d.data()}));
+        render();
+    },e=>console.warn('recordatorios',e));
+}
+const finDeHoy = ()=>{ const d=new Date(); d.setHours(23,59,59,999); return d.getTime(); };
+const recPendientesHoy = ()=>recs.filter(r=>!r.hecho&&(+r.fecha||0)<=finDeHoy());
+function recCuando(r){
+    const f=+r.fecha||0, d=new Date(f);
+    const dia=d.toLocaleDateString('es-VE',{day:'2-digit',month:'short'});
+    return r.conHora?dia+' · '+d.toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'}):dia;
+}
+// mismas reglas que el resumen de la app (Resumen.java)
+function lineasResumen(){
+    const ahora=Date.now(), hoy0=new Date(); hoy0.setHours(0,0,0,0); const h0=hoy0.getTime(), ayer0=h0-DAY;
+    const L=[], vs=vivas();
+    const atr=vs.filter(v=>atraso(v)>0);
+    if(atr.length) L.push('Entregas atrasadas: '+atr.length+' ('+atr.slice(0,3).map(v=>v.nombre.split(' ')[0]).join(', ')+(atr.length>3?'…':'')+')');
+    const sinEnv=vs.filter(v=>v.etapa==='procesado').length;
+    if(sinEnv) L.push(pl(sinEnv,'pedido espera despacho','pedidos esperan despacho'));
+    const cob=vs.filter(v=>!v.legacy&&v.saldo>0&&(ahora-v.fechaMs)/DAY>7);
+    if(cob.length) L.push('Cobros con más de 7 días: '+cob.length+' ('+fmt(cob.reduce((s,v)=>s+v.saldo,0))+')');
+    const bajos=variantes().filter(x=>x.estado==='agotado'||x.estado==='poco');
+    if(bajos.length) L.push('Poco stock: '+bajos.slice(0,3).map(x=>x.nombre+' ('+x.cantidad+')').join(', ')+(bajos.length>3?' y '+(bajos.length-3)+' más':''));
+    const seg=vs.filter(v=>v.etapa==='entregado'&&!v.seguimiento&&dias(v)>=2&&dias(v)<=10).length;
+    if(seg) L.push(pl(seg,'cliente para seguimiento','clientes para seguimiento'));
+    const hoyIso=new Date().toLocaleDateString('en-CA');
+    const pz=piezas.filter(p=>p.fecha===hoyIso).length;
+    if(pz) L.push(pl(pz,'diseño nuevo de hoy para descargar','diseños nuevos de hoy para descargar'));
+    recs.filter(r=>!r.hecho&&(+r.fecha||0)<h0+DAY).sort((a,b)=>a.fecha-b.fecha).forEach(r=>{
+        const f=+r.fecha; L.push('Recordatorio: '+r.texto+' ('+(f<h0?'vencido':r.conHora?new Date(f).toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'}):'hoy')+')');
+    });
+    let cobrado=0,np=0,ped=0;
+    vs.forEach(v=>{ if(v.fechaMs>=ayer0&&v.fechaMs<h0) ped++; v.pagos.forEach(p=>{ if(p.fecha>=ayer0&&p.fecha<h0){ cobrado+=+p.monto||0; np++; } }); });
+    if(np||ped) L.push('Ayer: cobraste '+fmt(cobrado)+' en '+pl(np,'pago','pagos')+' y entraron '+pl(ped,'pedido','pedidos'));
+    return L.length?L:['Todo al día. No hay nada pendiente.'];
+}
+
+function renderRec(){
+    const hoyStr=new Date().toLocaleDateString('en-CA');
+    const pend=recs.filter(r=>!r.hecho).sort((a,b)=>a.fecha-b.fecha);
+    const hechos=recs.filter(r=>r.hecho).sort((a,b)=>b.fecha-a.fecha).slice(0,8);
+    const h0=new Date(); h0.setHours(0,0,0,0);
+    const fila=(r,hecho)=>{
+        const f=+r.fecha||0, venc=!hecho&&f<h0.getTime(), hoy=!hecho&&!venc&&f<=finDeHoy();
+        return `<li><div><strong${hecho?' style="text-decoration:line-through;color:var(--muted)"':''}>${esc(r.texto)}</strong><small>${esc(recCuando(r))}${venc?' · <b style="color:var(--late)">vencido</b>':hoy?' · <b style="color:var(--s3)">hoy</b>':''}</small></div>`+
+            `<div class="abts"><button type="button" class="btn ghost sm" data-act="recHecho" data-id="${r.id}" data-v="${hecho?0:1}">${hecho?'Reabrir':'Hecho'}</button><button type="button" class="btn ghost sm" data-act="recDel" data-id="${r.id}">Eliminar</button></div></li>`;
+    };
+    let est=null; try{ est=enApp()&&window.AndroidApp.estadoAvisos?JSON.parse(window.AndroidApp.estadoAvisos()):null; }catch(e){}
+    const aviso = est
+        ? `<div class="field" style="gap:10px"><label class="tog"><input type="checkbox" data-act="recAvisos" ${est.activo?'checked':''}><span>Recibir el resumen de las 8:00 a. m. en este teléfono</span></label>`+
+          `<p style="color:var(--muted);font-size:.86rem">${rol!=='admin'?'Solo el administrador recibe el resumen.':!est.sesion?'Cierra sesión y vuelve a entrar para activarlo.':!est.permiso?'Falta el permiso de notificaciones.':'Listo: llega todos los días cerca de las 8:00, aunque la app esté cerrada. Si tu teléfono ahorra batería de forma agresiva, déjala sin restricciones.'}</p>`+
+          `<div class="actrow" style="margin:0">${!est.permiso?'<button type="button" class="btn sm" data-act="recPermiso">Dar permiso de notificaciones</button>':''}<button type="button" class="btn ghost sm" data-act="recProbar">Probar el aviso ahora</button></div></div>`
+        : `<p style="color:var(--muted)">Las notificaciones del teléfono funcionan en la <strong>app Android</strong> de Spot Club. Aquí, en el navegador, el mismo resumen aparece abajo y en el Panel.</p>`;
+    keep($('#v-rec'),()=>{
+        $('#v-rec').innerHTML=
+          `<div class="pane-head"><h3>Recordatorios</h3><span>Resumen diario y recordatorios propios</span></div>`+
+          `<div class="card"><div class="ch"><h2>Nuevo recordatorio</h2></div><div class="cb"><form id="recForm" novalidate><div class="g3">`+
+            `<div class="field" style="grid-column:span 1"><label for="rTexto">¿Qué quieres recordar?</label><input type="text" id="rTexto" placeholder="Ej: llamar a José por su saldo" autocomplete="off"></div>`+
+            `<div class="field"><label for="rFecha">Fecha</label><input type="date" id="rFecha" value="${hoyStr}"></div>`+
+            `<div class="field"><label for="rHora">Hora (opcional)</label><input type="time" id="rHora"></div>`+
+          `</div><p class="msg" id="recMsg" role="alert"></p><div class="actrow" style="margin:0"><button type="submit" class="btn">Guardar recordatorio</button></div></form></div></div>`+
+          `<div class="grid2"><div class="card"><div class="ch"><h2>Pendientes</h2></div><div class="cb">${pend.length?`<ul class="rec">${pend.map(r=>fila(r,false)).join('')}</ul>`:'<p class="empty">No tienes recordatorios pendientes.</p>'}${hechos.length?`<h4 style="margin:18px 0 6px">Hechos recientes</h4><ul class="rec">${hechos.map(r=>fila(r,true)).join('')}</ul>`:''}</div></div>`+
+          `<div class="stack"><div class="card"><div class="ch"><h2>Aviso de las 8:00</h2></div><div class="cb">${aviso}</div></div>`+
+          `<div class="card"><div class="ch"><h2>Así se vería hoy</h2></div><div class="cb"><ul class="rows">${lineasResumen().map(l=>`<li><span>${esc(l)}</span></li>`).join('')}</ul></div></div></div></div>`;
+    });
+}
+async function recCrear(){
+    const texto=$('#rTexto').value.trim(), fecha=$('#rFecha').value, hora=$('#rHora').value, msg=$('#recMsg');
+    if(!texto){ msg.textContent='Escribe qué quieres recordar.'; return; }
+    if(!fecha){ msg.textContent='Elige la fecha.'; return; }
+    const ms=new Date(fecha+'T'+(hora||'12:00')+':00').getTime();
+    try{
+        const ref=await db.collection('recordatorios').add({texto,fecha:ms,conHora:!!hora,hecho:false,por:user.email,creado:FV.serverTimestamp()});
+        if(hora&&ms>Date.now()&&window.AndroidApp&&window.AndroidApp.programar) window.AndroidApp.programar(ref.id,texto,String(ms));
+        log('recordatorio',null,texto+' · '+recCuando({fecha:ms,conHora:!!hora}));
+        $('#rTexto').value=''; $('#rHora').value=''; msg.textContent=''; toast('Recordatorio guardado.');
+    }catch(e){ console.error(e); msg.textContent='No se pudo guardar. Revisa las reglas de Firestore (colección recordatorios).'; }
+}
+async function recHecho(id,hecho){
+    const r=recs.find(x=>x.id===id); if(!r) return;
+    try{
+        await db.collection('recordatorios').doc(id).update({hecho});
+        if(window.AndroidApp&&window.AndroidApp.cancelar&&hecho) window.AndroidApp.cancelar(id);
+        if(window.AndroidApp&&window.AndroidApp.programar&&!hecho&&r.conHora&&+r.fecha>Date.now()) window.AndroidApp.programar(id,r.texto,String(r.fecha));
+    }catch(e){ toast('No se pudo actualizar.','error'); }
+}
+async function recEliminar(id){
+    try{ await db.collection('recordatorios').doc(id).delete(); if(window.AndroidApp&&window.AndroidApp.cancelar) window.AndroidApp.cancelar(id); }
+    catch(e){ toast('No se pudo eliminar.','error'); }
+}
+async function marcarSeguimiento(id){
+    const v=byId(id); if(!v||!can('registrar')) return;
+    try{ await db.collection('ventas').doc(id).update({seguimiento:true,seguimientoPor:user.email,seguimientoEn:FV.serverTimestamp()}); log('seguimiento',v,v.nombre); }
+    catch(e){ console.error(e); toast('No se pudo marcar el seguimiento.','error'); }
+}
+document.addEventListener('submit',e=>{ if(e.target.id==='recForm'){ e.preventDefault(); recCrear(); } });
+
+// ══════════════════════════════════════════════
 //  EVENTOS
 // ══════════════════════════════════════════════
 document.addEventListener('click',e=>{
@@ -2417,7 +2546,7 @@ document.addEventListener('click',e=>{
     const id=t.dataset.id;
     switch(t.dataset.act){
         case 'go':   go(t.dataset.view,{late:!!t.dataset.late,pf:t.dataset.pf,sel:t.dataset.sel,cli:t.dataset.cli,pieza:t.dataset.pieza}); break;
-        case 'logout': auth.signOut(); break;
+        case 'logout': if(window.AndroidApp&&window.AndroidApp.cerrarSesion) window.AndroidApp.cerrarSesion(); auth.signOut(); break;
         case 'adv':  { const v=byId(id); if(v) setEtapa(id,ETAPAS[etapaIdx(v.etapa)+1].k); } break;
         case 'back': { const v=byId(id); if(v) setEtapa(id,ETAPAS[etapaIdx(v.etapa)-1].k,'corrección'); } break;
         case 'undo': undoEtapa(); break;
@@ -2436,6 +2565,12 @@ document.addEventListener('click',e=>{
         case 'rmReg': regItems.splice(+t.dataset.i,1); renderReg(); break;
         case 'rmEdit': editItems.splice(+t.dataset.i,1); renderEdit(); break;
         case 'exportCSV': exportCSV(); break;
+        case 'seguim': marcarSeguimiento(id); break;
+        case 'recHecho': recHecho(id,t.dataset.v==='1'); break;
+        case 'recDel': recEliminar(id); break;
+        case 'recAvisos': { const on=t.checked; if(window.AndroidApp&&window.AndroidApp.avisos) window.AndroidApp.avisos(on); renderRec(); } break;
+        case 'recPermiso': if(window.AndroidApp&&window.AndroidApp.pedirPermiso){ window.AndroidApp.pedirPermiso(); setTimeout(renderRec,1500); } break;
+        case 'recProbar': if(window.AndroidApp&&window.AndroidApp.probarAviso){ window.AndroidApp.probarAviso(); toast('Armando el resumen… llega en unos segundos.'); } break;
         case 'respDescargar': descargarRespaldo(); break;
         case 'respElegir': $('#respFile').click(); break;
         case 'restOk': restaurarRespaldo(); break;

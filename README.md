@@ -81,3 +81,12 @@ La carpeta `android/` es una app que abre el panel (`https://thespot.dgp-link.co
 - Si cambia la dirección del panel, se edita `PANEL_URL` en `android/app/build.gradle`.
 
 También se puede instalar sin APK: abrir el panel en Chrome y usar **Instalar app** o **Agregar a pantalla de inicio**.
+
+## Recordatorios y notificaciones
+
+- Sección **Recordatorios** del panel: crea recordatorios propios con fecha y hora opcional, márcalos como hechos y mira "Así se vería hoy" (el mismo resumen que llega al teléfono).
+- **Resumen de las 8:00 a. m.** (solo administrador, todos los días): una sola notificación en la app Android con entregas atrasadas, pedidos sin enviar, cobros de más de 7 días, stock bajo, clientes para seguimiento, diseños nuevos de hoy, recordatorios de hoy y el cierre de caja de ayer. La app lo arma sola: con la sesión del administrador lee Firestore por su API REST y no necesita servidor ni plan de pago. Las reglas del resumen están en `android/app/src/main/java/com/spotclub/panel/Resumen.java` y son las mismas que usa el panel.
+- Los recordatorios con hora se programan como alarmas del teléfono y suenan a su hora, aunque la app esté cerrada.
+- **Seguimiento al cliente:** en Entregas, los pedidos entregados tienen el botón "Seguimiento", que abre WhatsApp con un mensaje y marca el pedido como atendido.
+- La colección `recordatorios` necesita las reglas de `firestore.rules` publicadas.
+- Limitaciones: la hora del resumen puede variar unos minutos (Android agrupa tareas para ahorrar batería) y, si el teléfono restringe mucho la batería de la app, puede retrasarse. Hay que haber iniciado sesión en la app al menos una vez y aceptado el permiso de notificaciones.

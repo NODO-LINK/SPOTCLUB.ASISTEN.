@@ -185,6 +185,57 @@ public class MainActivity extends Activity {
             }
         }
 
+        // ── avisos ───────────────────────────────────────────
+        /** La página entrega la sesión del administrador para que el resumen de las 8:00 pueda leer los datos. */
+        @JavascriptInterface
+        public void sesion(String apiKey, String proyecto, String refresh) {
+            Avisos.prefs(MainActivity.this).edit().putString("apiKey", apiKey).putString("proyecto", proyecto).putString("refresh", refresh).apply();
+            Avisos.crearCanal(MainActivity.this);
+            Avisos.programar(MainActivity.this, false);
+        }
+
+        @JavascriptInterface
+        public void cerrarSesion() {
+            Avisos.prefs(MainActivity.this).edit().remove("refresh").apply();
+            Avisos.programar(MainActivity.this, true);
+        }
+
+        @JavascriptInterface
+        public void avisos(boolean activos) {
+            Avisos.prefs(MainActivity.this).edit().putBoolean("activo", activos).apply();
+            Avisos.programar(MainActivity.this, true);
+        }
+
+        @JavascriptInterface
+        public String estadoAvisos() {
+            return "{\"activo\":" + Avisos.prefs(MainActivity.this).getBoolean("activo", true)
+                    + ",\"sesion\":" + Avisos.sesionGuardada(MainActivity.this)
+                    + ",\"permiso\":" + Avisos.permiso(MainActivity.this) + "}";
+        }
+
+        @JavascriptInterface
+        public void pedirPermiso() {
+            runOnUiThread(() -> {
+                if (!Avisos.permiso(MainActivity.this)) requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"}, 2);
+            });
+        }
+
+        @JavascriptInterface
+        public void probarAviso() {
+            new Thread(() -> {
+                boolean ok = Avisos.enviarResumen(MainActivity.this);
+                if (!ok) runOnUiThread(() -> Toast.makeText(MainActivity.this, "No hay conexión para armar el resumen", Toast.LENGTH_LONG).show());
+            }).start();
+        }
+
+        @JavascriptInterface
+        public void programar(String id, String texto, String milisegundos) {
+            try { Avisos.programarAlarma(MainActivity.this, id, texto, Long.parseLong(milisegundos)); } catch (NumberFormatException ignorar) { }
+        }
+
+        @JavascriptInterface
+        public void cancelar(String id) { Avisos.cancelarAlarma(MainActivity.this, id); }
+
         @JavascriptInterface
         public void imprimir() {
             runOnUiThread(() -> {
