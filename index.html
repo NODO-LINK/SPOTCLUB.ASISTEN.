@@ -1295,6 +1295,7 @@ function renderEnt(){
                   (st.act&&can('entregas')?`<button type="button" class="btn" data-act="adv" data-id="${v.id}">${st.act}</button>`:'')+
                   `<a class="btn ghost sm" href="${waLink(v,msgEtapa(v))}" target="_blank" rel="noopener" aria-label="Avisar por WhatsApp a ${esc(v.nombre)}">WA</a>`+
                   (st.k==='entregado'&&can('registrar')?(v.seguimiento?'<span class="bd c-pagada">Seguimiento hecho</span>':`<a class="btn ghost sm" href="${waLink(v,msgSeguimiento(v))}" target="_blank" rel="noopener" data-act="seguim" data-id="${v.id}">Seguimiento</a>`):'')+
+                  (can('registrar')?`<button type="button" class="btn ghost sm" data-act="edit" data-id="${v.id}" aria-label="Editar el pedido ${esc(inv(v))}">Editar</button>`:'')+
                   (prev&&can('entregas')?`<button type="button" class="btn ghost sm" data-act="back" data-id="${v.id}" title="Volver a ${prev.l}" aria-label="Volver a ${prev.l}">↩</button>`:'')+
                 `</div></article>`;
         }).join('')||'<p class="empty">Sin pedidos en esta etapa.</p>';
