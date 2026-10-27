@@ -45,3 +45,12 @@ Empieza en cero. Entra a **Inventario > Cargar conteo**, escribe lo que tienes d
 
 Sin documento en `usuarios/{uid}` se asume `admin`. Para restringir a alguien, crear `usuarios/<uid>` con `rol: "ventas"` o `"despacho"`.
 `firestore.rules` contiene las reglas que hacen cumplir esos permisos en el servidor. No están desplegadas; publicarlas desde Firebase Console cuando se hayan creado los documentos de roles.
+
+## Entrega diaria por Telegram
+
+`contenido/fuentes/telegram.js` envía las piezas del día a un chat de Telegram (cada una como foto con su caption y como archivo original). Los datos de acceso van en variables de entorno, nunca en el repositorio:
+
+- `TELEGRAM_BOT_TOKEN`: token que entrega @BotFather al crear el bot (`/newbot`).
+- `TELEGRAM_CHAT_ID`: id del chat. Escríbele al bot (o agrégalo al grupo y escribe algo) y ejecuta `node contenido/fuentes/telegram.js --id` para verlo.
+
+Comandos: `--id` (lista los chats), `--prueba` (mensaje de prueba) y, sin argumentos, envía las piezas de hoy (`--fecha AAAA-MM-DD` para otra fecha). El entorno debe permitir conectarse a `api.telegram.org`.
