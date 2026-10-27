@@ -85,6 +85,8 @@ a.btn{display:inline-flex;align-items:center;justify-content:center;text-decorat
 .nv::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--bar);flex:none}
 .nv .ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .nv::before{display:none}
+.med-par{display:inline-flex;gap:4px;margin:0 6px 6px 0}.med-par .chip{margin:0}.med-menos{min-width:36px;padding:0 10px}
+.med-res{width:100%;margin-top:6px;font-size:.85rem;color:var(--muted)}
 .nv:hover{color:var(--ink)}
 .nv[aria-current="page"]{background:var(--bg);color:var(--ink)}
 .nv[aria-current="page"]::before{background:var(--ink);border-color:var(--ink)}
@@ -465,7 +467,7 @@ td{padding:11px 14px;vertical-align:middle}
               <div id="reg-diseno-blk" class="prod-block hidden">
                 <label class="tog"><input type="checkbox" id="reg-chk-diseno"><span>¿Incluye diseño?</span></label>
                 <div id="reg-medidas-blk" class="hidden">
-                  <div class="block-label lbl" style="margin-top:10px">Medida del diseño</div>
+                  <div class="block-label lbl" style="margin-top:10px">Diseños de la prenda (elige uno o varios)</div>
                   <div class="chips" id="reg-medidas"></div>
                 </div>
               </div>
@@ -618,7 +620,7 @@ td{padding:11px 14px;vertical-align:middle}
           <div id="esel-diseno-blk" class="hidden" style="margin-top:12px">
             <label class="tog"><input type="checkbox" id="esel-chk-diseno"><span>¿Incluye diseño?</span></label>
             <div id="esel-medidas-blk" class="hidden">
-              <div class="block-label lbl" style="margin-top:8px">Medida del diseño</div>
+              <div class="block-label lbl" style="margin-top:8px">Diseños de la prenda (elige uno o varios)</div>
               <div class="chips" id="esel-medidas"></div>
             </div>
           </div>
@@ -1476,8 +1478,9 @@ function renderActividad(){
 // ══════════════════════════════════════════════
 //  SELECTOR DE PRODUCTO
 // ══════════════════════════════════════════════
+function disenosTxt(ms){ const c={}; ms.forEach(m=>{ c[m]=(c[m]||0)+1; }); return Object.keys(c).map(m=>c[m]>1?m+' ×'+c[m]:m).join(' + '); }
 function makeSelector(p){
-    const s={prod:null,talla:null,diseno:false,medida:null};
+    const s={prod:null,talla:null,diseno:false,medidas:[]};
     const E=k=>document.getElementById(p+'-'+k);
     const P=()=>catalogo.find(x=>x.id===s.prod);
 
@@ -1486,14 +1489,15 @@ function makeSelector(p){
         const base={productoId:pr.id,productoNombre:pr.nombre};
         if(pr.tipo==='simple') return {...base,categoria:'simple',label:pr.nombre,subtotal:+pr.precio||0,precioPrenda:+pr.precio||0,tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0};
         if(!s.talla) return null;
-        if(s.diseno&&!s.medida) return null;
+        if(s.diseno&&!s.medidas.length) return null;
         const b=+((pr.tallas||[]).find(x=>x.t===s.talla)||{}).p||0;
-        const d=s.diseno?(+((pr.disenos||[]).find(x=>x.m===s.medida)||{}).p||0):0;
-        return {...base,categoria:'prenda',tipoPrenda:pr.id,talla:s.talla,precioPrenda:b,tieneDiseno:s.diseno,medidaDiseno:s.medida||null,precioDiseno:d,subtotal:b+d,
-                label:`${pr.nombre} · T.${s.talla}${s.diseno&&s.medida?' · Diseño '+s.medida:''}`};
+        const ds=s.diseno?s.medidas.map(m=>({m,p:+((pr.disenos||[]).find(x=>x.m===m)||{}).p||0})):[];
+        const d=ds.reduce((a,x)=>a+x.p,0), nom=disenosTxt(ds.map(x=>x.m));
+        return {...base,categoria:'prenda',tipoPrenda:pr.id,talla:s.talla,precioPrenda:b,tieneDiseno:ds.length>0,medidaDiseno:ds.length?ds.map(x=>x.m).join(' + '):null,disenos:ds,precioDiseno:d,subtotal:b+d,
+                label:`${pr.nombre} · T.${s.talla}${ds.length?' · '+(ds.length>1?'Diseños ':'Diseño ')+nom:''}`};
     }
     function draw(){
-        if(s.prod&&!P()) Object.assign(s,{prod:null,talla:null,diseno:false,medida:null});
+        if(s.prod&&!P()) Object.assign(s,{prod:null,talla:null,diseno:false,medidas:[]});
         const pr=P(), pren=!!pr&&pr.tipo==='prenda';
         E('prods').innerHTML=catalogo.map(x=>`<button type="button" class="chip" data-prod="${esc(x.id)}" aria-pressed="${s.prod===x.id}">${esc(x.nombre)}${x.tipo==='simple'?` <span class="pr">${fmt(x.precio)}</span>`:''}</button>`).join('')||'<p class="empty">No hay productos. Agrégalos en la sección Productos.</p>';
         E('talla-blk').classList.toggle('hidden',!pren);
@@ -1502,22 +1506,27 @@ function makeSelector(p){
         E('chk-diseno').checked=s.diseno;
         if(pren){
             E('tallas').innerHTML=(pr.tallas||[]).map(x=>`<button type="button" class="chip" data-talla="${esc(x.t)}" aria-pressed="${s.talla===x.t}">${esc(x.t)} <span class="pr">${fmt(x.p)}</span></button>`).join('');
-            E('medidas').innerHTML=(pr.disenos||[]).map(d=>`<button type="button" class="chip" data-med="${esc(d.m)}" aria-pressed="${s.medida===d.m}">${esc(d.m)} <span class="pr">${fmt(d.p)}</span></button>`).join('');
+            const cnt=m=>s.medidas.filter(x=>x===m).length;
+            E('medidas').innerHTML=(pr.disenos||[]).map(d=>{ const n=cnt(d.m); return `<span class="med-par"><button type="button" class="chip" data-med="${esc(d.m)}" aria-pressed="${n>0}">${esc(d.m)} <span class="pr">${fmt(d.p)}</span>${n>1?` <b>×${n}</b>`:''}</button>${n>0?`<button type="button" class="chip med-menos" data-menos="${esc(d.m)}" aria-label="Quitar un diseño de ${esc(d.m)}">−</button>`:''}</span>`; }).join('')+
+              (s.medidas.length?`<p class="med-res">${s.medidas.length} ${s.medidas.length===1?'diseño':'diseños'}: ${esc(disenosTxt(s.medidas))} · <button type="button" class="linkbtn" data-limpiar="1">Quitar todos</button></p>`:'<p class="med-res">Toca cada medida para agregar un diseño. Puedes elegir varios o repetir la misma.</p>');
         }
         E('add-btn').classList.toggle('hidden',!getItem());
     }
-    function reset(){ Object.assign(s,{prod:null,talla:null,diseno:false,medida:null}); draw(); }
+    function reset(){ Object.assign(s,{prod:null,talla:null,diseno:false,medidas:[]}); draw(); }
 
-    E('prods').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{prod:b.dataset.prod,talla:null,diseno:false,medida:null}); draw(); });
-    E('tallas').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{talla:b.dataset.talla,diseno:false,medida:null}); draw(); });
-    E('medidas').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; s.medida=b.dataset.med; draw(); });
-    E('chk-diseno').addEventListener('change',e=>{ s.diseno=e.target.checked; s.medida=null; draw(); });
+    E('prods').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{prod:b.dataset.prod,talla:null,diseno:false,medidas:[]}); draw(); });
+    E('tallas').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{talla:b.dataset.talla,diseno:false,medidas:[]}); draw(); });
+    E('medidas').addEventListener('click',e=>{
+        if(e.target.closest('[data-limpiar]')){ s.medidas=[]; draw(); return; }
+        const menos=e.target.closest('[data-menos]'); if(menos){ const i=s.medidas.lastIndexOf(menos.dataset.menos); if(i>=0) s.medidas.splice(i,1); draw(); return; }
+        const b=e.target.closest('[data-med]'); if(!b) return; s.medidas.push(b.dataset.med); draw(); });
+    E('chk-diseno').addEventListener('change',e=>{ s.diseno=e.target.checked; s.medidas=[]; draw(); });
     draw();
     return {getItem,reset,draw};
 }
 
 const itemsTotal = a=>a.reduce((s,it)=>s+it.subtotal,0);
-const cleanItems = a=>a.map(it=>({categoria:it.categoria??null,productoId:it.productoId??null,productoNombre:it.productoNombre??null,tipoPrenda:it.tipoPrenda??null,talla:it.talla??null,precioPrenda:it.precioPrenda??0,tieneDiseno:!!it.tieneDiseno,medidaDiseno:it.medidaDiseno??null,precioDiseno:it.precioDiseno??0,subtotal:+it.subtotal||0,label:it.label||'Producto'}));
+const cleanItems = a=>a.map(it=>({categoria:it.categoria??null,productoId:it.productoId??null,productoNombre:it.productoNombre??null,tipoPrenda:it.tipoPrenda??null,talla:it.talla??null,precioPrenda:it.precioPrenda??0,tieneDiseno:!!it.tieneDiseno,medidaDiseno:it.medidaDiseno??null,disenos:Array.isArray(it.disenos)?it.disenos.map(d=>({m:String(d.m),p:+d.p||0})):[],precioDiseno:it.precioDiseno??0,subtotal:+it.subtotal||0,label:it.label||'Producto'}));
 function itemRows(items,fn){
     return '<div class="items-list-header lbl">Productos</div>'+items.map((it,i)=>`<div class="item-row"><span class="item-num">${i+1}</span><span class="item-label">${esc(it.label)}</span><span class="item-price">${fmt(it.subtotal)}</span><button type="button" class="item-rm" data-act="${fn}" data-i="${i}" aria-label="Quitar ${esc(it.label)}">×</button></div>`).join('');
 }
