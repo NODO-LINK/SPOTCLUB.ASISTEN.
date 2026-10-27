@@ -2,6 +2,39 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "prueba-meme-3",
+      "titulo": "PRUEBA MEME · El diseño en tres formatos",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-prueba-meme-3.png"
+      ],
+      "caption": "Story de prueba: agrega el sticker de pregunta «¿Cuál ha sido tu peor archivo de diseño?».",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "prueba-meme-2",
+      "titulo": "PRUEBA MEME · Último pedido",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-prueba-meme-2.png"
+      ],
+      "caption": "Y claro que sí 😅 Siempre hay espacio para uno más.\nEscríbenos al DM y te armamos la franela 📩\n#franelaspersonalizadas #venezuela #parati #emprendedor #spotclub",
+      "fecha": "2026-10-27"
+    },
+    {
+      "id": "prueba-meme-1",
+      "titulo": "PRUEBA MEME · Carta del personaje",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-prueba-meme-1.png"
+      ],
+      "caption": "Admite que a ti también te pasaría 🖤\nHacemos tu carta con el personaje que quieras. Escríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #coleccion #spotclub",
+      "fecha": "2026-10-27"
+    },
+    {
       "id": "prueba-flyer-4",
       "titulo": "PRUEBA · Tu franela con tu diseño",
       "tipo": "Producto",

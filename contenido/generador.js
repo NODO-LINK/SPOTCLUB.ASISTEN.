@@ -109,3 +109,33 @@ function dibujarPieza(cv,g){
     }
     sp(0);
 }
+
+// Formato meme de Instagram: recuadro blanco arriba con el texto y la foto debajo, sin velo.
+// g: { formato, l1 (texto del meme, en minúsculas y mayúsculas normales), img, logo }
+function dibujarMeme(cv,g){
+    const W=1080, H=g.formato==='story'?1920:g.formato==='cuadrado'?1080:1350, story=g.formato==='story';
+    cv.width=W; cv.height=H;
+    const c=cv.getContext('2d'), K='#060608', Wh='#F5F5F5', R='#E5212E', FONT='Inter,Arial,sans-serif';
+    c.textBaseline='top'; c.textAlign='left';
+    c.fillStyle=story?K:'#fff'; c.fillRect(0,0,W,H);
+    const M=64, maxW=W-2*M, size=story?62:56, lh=size*1.22, top=story?260:0, pad=44;
+    c.font=`800 ${size}px ${FONT}`; if('letterSpacing' in c) c.letterSpacing=(-.01*size)+'px';
+    const lines=[]; String(g.l1||'').split('\n').forEach(par=>{ let cur=''; par.split(/\s+/).forEach(wd=>{ const tr=cur?cur+' '+wd:wd; if(c.measureText(tr).width>maxW&&cur){ lines.push(cur); cur=wd; } else cur=tr; }); lines.push(cur); });
+    const boxH=pad*2+lines.length*lh;
+    if(story){ c.fillStyle='#fff'; c.fillRect(0,top,W,boxH); }
+    c.fillStyle=K; lines.forEach((ln,i)=>c.fillText(ln,M,top+pad+i*lh));
+    c.fillStyle=R; c.fillRect(0,top+boxH,W,6);
+    const py=top+boxH+6, ph=(story?H-260:H)-py-(story?0:0);
+    if(g.img){
+        const iw=g.img.naturalWidth||g.img.width, ih=g.img.naturalHeight||g.img.height, k=Math.max(W/iw,ph/ih);
+        const dw=iw*k, dh=ih*k, fx=g.focoX==null?.5:g.focoX, fy=g.focoY==null?.5:g.focoY;
+        c.save(); c.beginPath(); c.rect(0,py,W,ph); c.clip(); c.drawImage(g.img,(W-dw)*fx,py+(ph-dh)*fy,dw,dh); c.restore();
+    }
+    // sello discreto abajo a la izquierda
+    const by=(story?H-340:H-96), bh=64;
+    c.fillStyle='rgba(6,6,8,.82)'; const bw=g.logo?330:290; c.fillRect(M-16,by,bw,bh);
+    let tx=M;
+    if(g.logo){ const lh2=40, lw2=lh2*g.logo.naturalWidth/g.logo.naturalHeight; c.drawImage(g.logo,M,by+12,lw2,lh2); tx=M+lw2+12; }
+    c.font=`800 28px ${FONT}`; if('letterSpacing' in c) c.letterSpacing='1px'; c.fillStyle=Wh; c.fillText('@SPOT__CLUB',tx,by+18);
+    if('letterSpacing' in c) c.letterSpacing='0px';
+}

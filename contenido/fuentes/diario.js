@@ -29,7 +29,7 @@ const FORMATO={post:'Post 4:5',cuadrado:'Post 1:1',story:'Story 9:16'};
     const data=await p.evaluate(async g=>{
       if(g.logoData){ const lg=new Image(); lg.src=g.logoData; await lg.decode(); g.logo=lg; delete g.logoData; }
       if(g.fotoData){ const im=new Image(); im.src=g.fotoData; await im.decode(); g.img=im; delete g.fotoData; }
-      const c=document.getElementById('c');dibujarPieza(c,g);return c.toDataURL('image/png');},g);
+      const c=document.getElementById('c');(g.plantilla==='meme'?dibujarMeme:dibujarPieza)(c,g);return c.toDataURL('image/png');},g);
     const file='spot-'+it.id+'.png';
     fs.writeFileSync(path.join(dir,file),Buffer.from(data.split(',')[1],'base64'));
     const entry={id:it.id,titulo:it.titulo,tipo:it.tipo,formato:FORMATO[g.formato],archivos:[file],caption:it.caption,fecha:spec.fecha};
