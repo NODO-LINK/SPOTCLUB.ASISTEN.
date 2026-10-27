@@ -62,7 +62,7 @@ Todo lo que usa el panel (Authentication y Firestore) entra en el plan gratuito 
 1. En el proyecto actual: entrar como administrador, ir a **Actividad → Descargar respaldo** y guardar el archivo.
 2. En https://console.firebase.google.com crear un proyecto nuevo y dejarlo en el plan **Spark**.
 3. **Authentication → Sign-in method**: activar *Correo electrónico/contraseña*. Luego **Users → Add user** para crear el acceso.
-4. **Authentication → Settings → Authorized domains**: agregar `thespot.dgp-link.com`.
+4. **Authentication → Settings → Authorized domains**: agregar `nodo-link.github.io` (y `thespot.dgp-link.com` si usas ese dominio).
 5. **Firestore Database → Create database** (modo producción, región cercana) y pegar las reglas de `firestore.rules` en la pestaña **Rules**.
 6. **Project settings → Your apps → Web app**: copiar los valores de configuración en `firebase-config.js` (ya están los dos proyectos: `anterior` y `nuevo`).
 7. Respaldo del proyecto actual: abrir `https://thespot.dgp-link.com/?proyecto=anterior`, entrar y descargar el respaldo desde **Actividad**.
@@ -72,7 +72,7 @@ Todo lo que usa el panel (Authentication y Firestore) entra en el plan gratuito 
 
 ## App Android (APK)
 
-La carpeta `android/` es una app que abre el panel (`https://thespot.dgp-link.com/`). Como solo muestra la página, se actualiza sola cada vez que cambia el sitio. No hay que volver a instalar nada, salvo que cambie la app misma.
+La carpeta `android/` es una app que abre el panel (`https://nodo-link.github.io/SPOTCLUB.ASISTEN./`). Como solo muestra la página, se actualiza sola cada vez que cambia el sitio. No hay que volver a instalar nada, salvo que cambie la app misma.
 
 - GitHub compila el APK solo (`.github/workflows/apk.yml`) y lo deja en **Releases → Spot Club Panel (APK) → spot-club-panel.apk**.
 - Para recompilar a mano: pestaña **Actions → Construir APK → Run workflow**.

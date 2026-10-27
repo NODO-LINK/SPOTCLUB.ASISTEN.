@@ -14,7 +14,7 @@ android {
         versionCode (project.findProperty('versionCode') ? project.findProperty('versionCode').toInteger() : 1)
         versionName '1.0'
         // Dirección del panel. La app solo la abre, así que se actualiza sola con cada cambio del sitio.
-        buildConfigField 'String', 'PANEL_URL', '"https://thespot.dgp-link.com/"'
+        buildConfigField 'String', 'PANEL_URL', '"https://nodo-link.github.io/SPOTCLUB.ASISTEN./"'
     }
 
     buildFeatures {
