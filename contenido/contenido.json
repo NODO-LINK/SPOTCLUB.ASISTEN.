@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "prueba-video-tarde",
+      "titulo": "PRUEBA TARDE · Cliente y diseño",
+      "tipo": "Humor",
+      "formato": "Video 9:16 · 18 s",
+      "archivos": [
+        "spot-prueba-video-tarde.mp4"
+      ],
+      "poster": "spot-prueba-video-tarde-poster.png",
+      "caption": "Todos hemos estado ahí 😅 Cuéntame cuál ha sido tu peor archivo de diseño 👇\n#franelaspersonalizadas #cartaspersonalizadas #venezuela #humor #spotclub\nTikTok: Cuando el cliente manda el diseño en Word 😭 #emprendedor #venezuela #fyp #cartas #spotclub",
+      "fecha": "2026-10-27",
+      "turno": "tarde"
+    },
+    {
       "id": "prueba-meme-3",
       "titulo": "PRUEBA MEME · El diseño en tres formatos",
       "tipo": "Comunidad",

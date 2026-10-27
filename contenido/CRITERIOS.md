@@ -54,3 +54,20 @@ Respuestas del dueño para que el contenido suene como él, porque su comunidad 
 
 ### Correcciones del dueño
 (Se agregan aquí con fecha.)
+
+## Video animado de la tarde (definido el 27 de octubre de 2026)
+Segundo video del día, además del de las 6:30 a. m. (que sigue igual: oferta animada de 12 s con precio).
+- **Hora:** listo a las 5:30 p. m. (Caracas), todos los días, y con aviso en la app al estar listo.
+- **Tipo:** texto animado palabra por palabra, con efecto glitch al aparecer y salidas suaves. Máximo 6 palabras por escena.
+- **Fondo:** fotos y clips reales del dueño (`contenido/material/`). Si no hay material nuevo, reutilizar fotos antiguas de `usado.json`.
+- **Duración:** 15 a 20 s. **Formato:** vertical 9:16 para Reels y TikTok (el caption trae las dos versiones).
+- **Sonido:** solo efectos sencillos generados con el script (tick por palabra, whoosh, golpe final). Sin voz IA ni música. Es la única excepción a "sin audio".
+- **Mensaje:** una sola idea por video. Sin series ni secciones con nombre.
+- **Tema (rotación diaria):** día = fecha en America/Caracas; (días desde 2026-10-27) módulo 4: 0 humor y memes, 1 producto, 2 proceso y pedidos, 3 cultura fandom.
+- **Precio:** solo en los videos de producto (franja final "DESDE $10 · PÍDELA POR DM"). En los demás, cierre libre o ninguno, sin llamada fija.
+- **Caption:** corto con 5 hashtags para Instagram y una línea "TikTok:" con su versión.
+- **Fechas especiales de Venezuela:** el video de la tarde ese día es el especial y reemplaza al tema de la rotación.
+- **Límites:** sin datos de clientes (nombres, teléfonos, cédulas, direcciones), sin mencionar otras marcas, sin humor ofensivo (religión, política, cuerpos, grupos), sin prometer tiempos ni precios que no sean los reales (3 a 5 días hábiles, desde $10).
+- **Personajes:** solo los que se ven en las fotos reales del dueño; nunca se dibujan.
+- **Retroalimentación:** el dueño califica cada video en el panel (campo en Contenido) y las notas se anotan aquí con fecha.
+- **Script:** `node contenido/fuentes/video-tarde.js especificacion.json` (formato en la cabecera del script).
