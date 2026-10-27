@@ -28,6 +28,7 @@ Definidos con el dueño el 27 de octubre de 2026. La rutina diaria y quien edite
 
 ## Video
 - 10 a 14 segundos, vertical 9:16, sin audio (el dueño pone un sonido en tendencia desde Instagram).
+- **Nunca llevan audio ni voz IA.** Decisión del dueño el 27 de octubre de 2026, tras probar una voz. No generar voiceovers ni música, y no gastar créditos de vidIQ en eso.
 - Tipo actual: oferta animada con texto. El formato "POV: me haces un pedido" necesita material real.
 - Material propio: el dueño sube los originales de la galería a `contenido/material/` (instrucciones en `contenido/material/LEEME.md`). Desde aquí no se pueden descargar de Instagram: vidIQ solo da miniaturas de 203×360 px y la red del entorno bloquea el servidor de Instagram.
 - Con material subido, la rutina usa fotos de fondo en al menos 1 de los 3 flyers y hasta 4 fotos o clips en el video, y anota lo usado en `contenido/material/usado.json` para no repetir.
