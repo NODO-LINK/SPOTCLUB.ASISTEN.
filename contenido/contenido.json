@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "prueba-video-voz",
+      "titulo": "PRUEBA · Video con voz IA (Liam)",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-prueba-video-voz.mp4"
+      ],
+      "poster": "spot-prueba-video-poster.png",
+      "caption": "PRUEBA con voz IA 🖤\nHacemos tu franela y tu carta con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #cartaspersonalizadas #venezuela #parati #spotclub",
+      "fecha": "2026-10-27"
+    },
+    {
       "id": "prueba-video",
       "titulo": "PRUEBA · Tu carta, tu franela",
       "tipo": "Video",
