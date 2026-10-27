@@ -385,6 +385,7 @@ td{padding:11px 14px;vertical-align:middle}
   <form class="login-card" id="loginForm" novalidate>
     <span class="mark">THE SPOT<i></i></span>
     <p class="sub">Panel de control de ventas</p>
+    <p class="sub" id="loginProyecto" hidden style="margin-top:-18px;font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase"></p>
     <div id="loginErr" class="login-err" role="alert" hidden></div>
     <div class="field"><label for="iEmail">Correo electrónico</label><input type="email" id="iEmail" placeholder="admin@thespot.com" autocomplete="email"></div>
     <div class="field"><label for="iPass">Contraseña</label><input type="password" id="iPass" placeholder="••••••••" autocomplete="current-password"></div>
@@ -865,6 +866,7 @@ function fillEstados(id,sel=''){
     $('#'+id).innerHTML=ESTADOS.map(e=>`<option value="${e}"${e===sel?' selected':''}>${e}</option>`).join('');
 }
 function fillMetodos(id){ $('#'+id).innerHTML=METODOS.map(m=>`<option>${m}</option>`).join(''); }
+if(FIREBASE_MANUAL){ const lp=document.getElementById('loginProyecto'); lp.textContent='Proyecto: '+FIREBASE_USANDO+' · '+firebaseConfig.projectId; lp.hidden=false; }
 fillEstados('selEstado'); fillEstados('editSelEstado'); fillMetodos('reg-pago-metodo');
 
 // conserva lo que el usuario está escribiendo cuando llega una actualización en tiempo real
@@ -1065,8 +1067,9 @@ function render(){
 function renderBanner(){
     const n=ventas.filter(v=>v.legacy).length;
     const el=$('#banner');
-    if(!n){el.innerHTML='';return;}
-    el.innerHTML=`<div class="banner"><div><strong>${pl(n,'pedido anterior sin número de factura','pedidos anteriores sin número de factura')}</strong><span style="color:var(--muted)">Mientras no se migren, no cuentan en cobros ni tienen comprobante.</span></div>${can('migrar')?'<button type="button" class="btn" data-act="migrar">Migrar pedidos</button>':'<span class="tag">Lo migra un administrador</span>'}</div>`;
+    const pry=FIREBASE_MANUAL?`<div class="banner" style="border-color:var(--s2);background:color-mix(in srgb,var(--s2) 10%,var(--surface))"><div><strong>Proyecto de datos: ${esc(FIREBASE_USANDO)} (${esc(firebaseConfig.projectId)})</strong><span style="color:var(--muted)">Elegido con ?proyecto= en la dirección. Lo que hagas aquí queda en ese proyecto.</span></div></div>`:'';
+    if(!n){el.innerHTML=pry;return;}
+    el.innerHTML=pry+`<div class="banner"><div><strong>${pl(n,'pedido anterior sin número de factura','pedidos anteriores sin número de factura')}</strong><span style="color:var(--muted)">Mientras no se migren, no cuentan en cobros ni tienen comprobante.</span></div>${can('migrar')?'<button type="button" class="btn" data-act="migrar">Migrar pedidos</button>':'<span class="tag">Lo migra un administrador</span>'}</div>`;
 }
 
 // ══════════════════════════════════════════════

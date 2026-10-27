@@ -64,6 +64,8 @@ Todo lo que usa el panel (Authentication y Firestore) entra en el plan gratuito 
 3. **Authentication → Sign-in method**: activar *Correo electrónico/contraseña*. Luego **Users → Add user** para crear el acceso.
 4. **Authentication → Settings → Authorized domains**: agregar `thespot.dgp-link.com`.
 5. **Firestore Database → Create database** (modo producción, región cercana) y pegar las reglas de `firestore.rules` en la pestaña **Rules**.
-6. **Project settings → Your apps → Web app**: copiar los valores de configuración y pegarlos en `firebase-config.js`.
-7. Entrar al panel con el usuario nuevo, ir a **Actividad → Restaurar desde archivo** y elegir el respaldo.
-8. Verificar ventas, inventario y clientes. Los usuarios de acceso no se restauran: se crean en Authentication.
+6. **Project settings → Your apps → Web app**: copiar los valores de configuración en `firebase-config.js` (ya están los dos proyectos: `anterior` y `nuevo`).
+7. Respaldo del proyecto actual: abrir `https://thespot.dgp-link.com/?proyecto=anterior`, entrar y descargar el respaldo desde **Actividad**.
+8. Probar el proyecto nuevo sin afectar el uso diario: abrir `https://thespot.dgp-link.com/?proyecto=nuevo`, entrar con el usuario nuevo y usar **Actividad → Restaurar desde archivo**. Una franja azul indica qué proyecto se está usando.
+9. Verificar ventas, inventario y clientes. Los usuarios de acceso no se restauran: se crean en Authentication.
+10. Cuando todo esté bien, cambiar `FIREBASE_PREDETERMINADO` a `'nuevo'` en `firebase-config.js`. El proyecto anterior queda disponible con `?proyecto=anterior`.
