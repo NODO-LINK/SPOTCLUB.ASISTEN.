@@ -672,6 +672,16 @@ td{padding:11px 14px;vertical-align:middle}
             <div class="field"><label for="eAdicR">Razón</label><input type="text" id="eAdicR" placeholder="Dejar vacío si no aplica"></div>
           </div>
         </div>
+        <div class="edit-section" id="edit-pago-sec">
+          <h4>Pago del cliente</h4>
+          <div class="adic-grid">
+            <div class="field"><label for="ePagado">Cuánto ha pagado el cliente (USD)</label><input type="text" inputmode="decimal" id="ePagado" placeholder="0.00" autocomplete="off"></div>
+            <div class="field"><label for="ePagoMet">Método (si suma al pago)</label><select id="ePagoMet"></select></div>
+          </div>
+          <div class="field"><label for="ePagoRef">Referencia (opcional)</label><input type="text" id="ePagoRef" placeholder="Ej: últimos 4 dígitos" autocomplete="off"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button type="button" class="btn ghost sm" id="ePagoTodo">Pagó todo</button><button type="button" class="btn ghost sm" id="ePagoNada">Aún no ha pagado</button></div>
+          <p id="ePagosLista" style="margin-top:10px;font-size:.82rem;color:var(--muted)"></p>
+        </div>
         <div id="edit-sum" class="sum-box"></div>
       </form>
     </div>
@@ -1701,10 +1711,18 @@ function exportCSV(){
 // ══════════════════════════════════════════════
 function renderEdit(){
     $('#edit-items-list').innerHTML=editItems.length?itemRows(editItems,'rmEdit'):'<div style="padding:12px 14px;font-size:.86rem;color:var(--muted)">Sin productos. Agrega al menos uno.</div>';
-    const ev=byId(editId); $('#edit-sum').innerHTML=sumHtml(editItems,num($('#eAdicM').value),$('#eAdicR').value,ev?(ev.empaque??EMPAQUE):EMPAQUE);
+    const ev=byId(editId), adic=num($('#eAdicM').value), emp=ev?(ev.empaque??EMPAQUE):EMPAQUE;
+    let h=sumHtml(editItems,adic,$('#eAdicR').value,emp);
+    if(ev&&!ev.legacy){
+        const total=+(itemsTotal(editItems)+adic+emp).toFixed(2), pag=Math.max(0,num($('#ePagado').value)), saldo=+(total-pag).toFixed(2);
+        h+=`<div class="sum-row"><span class="sl">Pagado por el cliente</span><span class="sv">${fmt(pag)}</span></div><div class="sum-row"><span class="sl">${saldo<-0.005?'Pagado de más':'Saldo pendiente'}</span><span class="sv" style="${saldo<-0.005?'color:var(--late);font-weight:700':''}">${fmt(Math.abs(saldo))}</span></div>`;
+    }
+    $('#edit-sum').innerHTML=h;
 }
 $('#esel-add-btn').addEventListener('click',()=>{ const it=editSel.getItem(); if(!it) return; editItems.push(it); editSel.reset(); renderEdit(); });
-$('#eAdicM').addEventListener('input',renderEdit); $('#eAdicR').addEventListener('input',renderEdit);
+$('#eAdicM').addEventListener('input',renderEdit); $('#eAdicR').addEventListener('input',renderEdit); $('#ePagado').addEventListener('input',renderEdit);
+$('#ePagoNada').addEventListener('click',()=>{ $('#ePagado').value='0.00'; renderEdit(); });
+$('#ePagoTodo').addEventListener('click',()=>{ const ev=byId(editId); if(!ev) return; $('#ePagado').value=(itemsTotal(editItems)+num($('#eAdicM').value)+(ev.empaque??EMPAQUE)).toFixed(2); renderEdit(); });
 
 function abrirEdit(id){
     const v=byId(id); if(!v||!can('registrar')) return;
@@ -1714,6 +1732,9 @@ function abrirEdit(id){
     fillEstados('editSelEstado',v.estado);
     $('#eEtapa').innerHTML=ETAPAS.map(e=>`<option value="${e.k}"${e.k===v.etapa?' selected':''}>${e.l}</option>`).join('');
     $('#eAdicM').value=v.costoAdicional||''; $('#eAdicR').value=v.razonAdicional||'';
+    $('#edit-pago-sec').classList.toggle('hidden',!!v.legacy);
+    fillMetodos('ePagoMet'); $('#ePagado').value=v.pagado.toFixed(2); $('#ePagoRef').value='';
+    $('#ePagosLista').textContent=v.pagos.length?'Pagos registrados: '+v.pagos.map(p=>fshort(p.fecha)+' · '+p.metodo+' '+fmt(p.monto)).join(' | ')+'. Si bajas el monto, se descuenta del último pago hacia atrás.':'Todavía no hay pagos registrados.';
     editItems=[...v.items]; editSel.reset(); renderEdit();
     $('#mEditarT').textContent='Editar pedido '+inv(v);
     abrir('mEditar');
@@ -1725,20 +1746,28 @@ async function guardarEdit(){
     if(!nombre||!cedula||!tel||!ag){ toast('Completa nombre, cédula, teléfono y agencia.','error'); return; }
     const adic=num($('#eAdicM').value);
     const total=+(itemsTotal(editItems)+adic+(v.empaque??EMPAQUE)).toFixed(2);
-    if(!v.legacy&&total<v.pagado-0.005){ toast('El total no puede quedar por debajo de lo ya pagado ('+fmt(v.pagado)+').','error'); return; }
+    const nuevoPagado=v.legacy?0:+Math.max(0,num($('#ePagado').value)).toFixed(2);
+    if(!v.legacy&&nuevoPagado>total+0.005){ toast('Lo pagado ('+fmt(nuevoPagado)+') no puede superar el total ('+fmt(total)+').','error'); return; }
     const btn=$('#btnSaveEdit'); btn.textContent='Guardando…'; btn.disabled=true;
     try{
         const upd={
             nombre,cedula,telefono:tel,estado:$('#editSelEstado').value,agencia:ag,guia:$('#eGuia').value.trim(),
             items:cleanItems(editItems),costoAdicional:adic||null,razonAdicional:$('#eAdicR').value.trim()||null,empaque:v.empaque??EMPAQUE,monto:total
         };
+        let cambioPago='';
+        if(!v.legacy&&Math.abs(nuevoPagado-v.pagado)>0.005){
+            const dif=+(nuevoPagado-v.pagado).toFixed(2); let pagos=v.pagos.map(p=>({...p}));
+            if(dif>0) pagos.push({fecha:Date.now(),monto:dif,metodo:$('#ePagoMet').value,referencia:$('#ePagoRef').value.trim()||'Ajuste desde edición',por:user.email});
+            else{ let resto=-dif; for(let i=pagos.length-1;i>=0&&resto>0.005;i--){ const q=Math.min(resto,+pagos[i].monto||0); pagos[i].monto=+((+pagos[i].monto||0)-q).toFixed(2); resto=+(resto-q).toFixed(2); } pagos=pagos.filter(p=>(+p.monto||0)>0.005); }
+            upd.pagos=pagos; cambioPago=`Pagado ${fmt(v.pagado)} → ${fmt(nuevoPagado)}`;
+        }
         const et=$('#eEtapa').value;
         if(et!==v.etapa){ const now=Date.now(); upd.logistica=et; upd.etapaDesde=now; upd.historial=FV.arrayUnion({etapa:et,fecha:now,por:user.email,nota:'editado'}); }
         const b=db.batch();
         if(v.stockDescontado===true) stockDiff(b,v.items,editItems);
         b.update(db.collection('ventas').doc(editId),upd);
         await b.commit();
-        log('editada',v,total!==v.total?`Total ${fmt(v.total)} → ${fmt(total)}`:'Datos del pedido');
+        log('editada',v,[total!==v.total?`Total ${fmt(v.total)} → ${fmt(total)}`:'',cambioPago].filter(Boolean).join(' · ')||'Datos del pedido');
         cerrar('mEditar'); toast('Pedido actualizado.');
     }catch(err){ console.error(err); toast('No se pudo actualizar el pedido.','error'); }
     btn.textContent='Guardar cambios'; btn.disabled=false;
