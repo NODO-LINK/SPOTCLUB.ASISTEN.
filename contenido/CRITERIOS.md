@@ -82,3 +82,8 @@ Segundo video del día, además del de las 6:30 a. m. (que sigue igual: oferta a
 - Todos los días salen 2 flyers de "Buenos días" (post y story) y 1 de "Buenas noches" (story), sin precio, además de los 3 flyers y el video de la mañana y el video de la tarde.
 - Los genera `node contenido/fuentes/saludos.js [AAAA-MM-DD]` a las 6:40 a. m. (Caracas). Rota frases, captions y fotos según el día, usa solo las fotos `foto-*` de `contenido/material/` (sin VIZZION) y no reemplaza piezas ya existentes.
 - La app avisa al dueño a las 7:00 a. m. (Buenos días) y a las 8:00 p. m. (Buenas noches) para que los publique.
+
+## Videos de animación dibujada (27 de octubre de 2026)
+- Los videos también pueden ser **animación dibujada** para variar (sin fotos): `node contenido/fuentes/video-animado.js especificacion.json` (formato en la cabecera del script). Dos plantillas: `proceso` (diseño, impresión DTF, prensa y franela lista) y `carta` (una carta que gira y se revela, con 4 fandoms en texto).
+- Todo es dibujo propio con la marca: nada de personajes ni logos con derechos de autor. Mismos efectos de sonido sencillos, 15 s, vertical 9:16, sin precio salvo en producto.
+- **Rotación del video de la tarde** (n = días desde 2026-10-27): n par → texto animado sobre fotos (`video-tarde.js`, tema según n módulo 4); n impar → animación dibujada, `proceso` si (n−1)/2 es par y `carta` si es impar. En fechas especiales manda el video especial.

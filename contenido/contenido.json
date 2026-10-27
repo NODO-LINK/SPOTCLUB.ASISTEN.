@@ -2,6 +2,32 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "prueba-animacion-carta",
+      "titulo": "PRUEBA ANIMACIÓN · Tu carta gira",
+      "tipo": "Animación",
+      "formato": "Video 9:16 · 15 s",
+      "archivos": [
+        "spot-prueba-animacion-carta.mp4"
+      ],
+      "poster": "spot-prueba-animacion-carta-poster.png",
+      "caption": "Tu carta, con tu personaje 🖤 ¿Qué mundo eliges?\nEscríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #coleccion #spotclub\nTikTok: Tu carta con tu personaje 😮 #cartas #venezuela #fyp #anime #spotclub",
+      "fecha": "2026-10-27",
+      "turno": "tarde"
+    },
+    {
+      "id": "prueba-animacion-proceso",
+      "titulo": "PRUEBA ANIMACIÓN · Así se hace tu franela",
+      "tipo": "Animación",
+      "formato": "Video 9:16 · 15 s",
+      "archivos": [
+        "spot-prueba-animacion-proceso.mp4"
+      ],
+      "poster": "spot-prueba-animacion-proceso-poster.png",
+      "caption": "Así se hace tu franela, paso a paso 🖤 Diseño, impresión DTF, prensa y lista.\nEscríbenos al DM 📩\n#franelaspersonalizadas #dtf #venezuela #parati #spotclub\nTikTok: Así se hace tu franela 🔥 #dtf #emprendedor #venezuela #fyp #spotclub",
+      "fecha": "2026-10-27",
+      "turno": "tarde"
+    },
+    {
       "id": "2026-10-27-buenas-noches",
       "titulo": "Buenas noches · Story",
       "tipo": "Comunidad",
