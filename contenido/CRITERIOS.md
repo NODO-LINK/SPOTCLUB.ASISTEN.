@@ -77,3 +77,8 @@ Segundo video del día, además del de las 6:30 a. m. (que sigue igual: oferta a
 - Si falta algo (material nuevo, una duda de tema, una fecha), decidir con estos criterios: reutilizar material antiguo, hacer una pieza sencilla con la marca o repetir un formato que funcionó. Nunca detenerse a preguntar ni entregar menos piezas por esperar una respuesta.
 - No usar AskUserQuestion ni mandar mensajes que esperen respuesta. El informe final de cada corrida es solo informativo, de 3 a 5 líneas.
 - El dueño corrige cuando quiera desde el chat o el panel; esas correcciones se anotan aquí y se aplican desde el día siguiente.
+
+## Saludos diarios (27 de octubre de 2026)
+- Todos los días salen 2 flyers de "Buenos días" (post y story) y 1 de "Buenas noches" (story), sin precio, además de los 3 flyers y el video de la mañana y el video de la tarde.
+- Los genera `node contenido/fuentes/saludos.js [AAAA-MM-DD]` a las 6:40 a. m. (Caracas). Rota frases, captions y fotos según el día, usa solo las fotos `foto-*` de `contenido/material/` (sin VIZZION) y no reemplaza piezas ya existentes.
+- La app avisa al dueño a las 7:00 a. m. (Buenos días) y a las 9:00 p. m. (Buenas noches) para que los publique.
