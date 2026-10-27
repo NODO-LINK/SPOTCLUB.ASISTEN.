@@ -20,7 +20,7 @@ const FIREBASE_PROYECTOS = {
         appId:             "1:89313528113:web:39d4251ddd7140d7060810"
     }
 };
-const FIREBASE_PREDETERMINADO = 'anterior';   // cambiar a 'nuevo' cuando el proyecto nuevo esté listo
+const FIREBASE_PREDETERMINADO = 'nuevo';   // proyecto que usa el panel; con ?proyecto=anterior se abre el otro
 const _pedido = new URLSearchParams(location.search).get('proyecto');
 const FIREBASE_USANDO = FIREBASE_PROYECTOS[_pedido] ? _pedido : FIREBASE_PREDETERMINADO;
 const FIREBASE_MANUAL = !!FIREBASE_PROYECTOS[_pedido];   // true si se eligió con ?proyecto=
