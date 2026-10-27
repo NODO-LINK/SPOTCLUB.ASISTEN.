@@ -133,10 +133,10 @@ final class Avisos {
         }
     }
 
-    // ── avisos fijos de publicación: buenos días 7:00 y buenas noches 21:00 (Caracas) ──
+    // ── avisos fijos de publicación: buenos días 7:00 y buenas noches 20:00 (Caracas) ──
     private static final String[][] DIARIOS = {
             {"diario-dias", "7", "Buenos días 🖤", "Es hora de publicar el flyer de Buenos días. Lo encuentras en Contenido."},
-            {"diario-noches", "21", "Buenas noches 🌙", "Es hora de publicar el flyer de Buenas noches. Lo encuentras en Contenido."},
+            {"diario-noches", "20", "Buenas noches 🌙", "Es hora de publicar el flyer de Buenas noches. Lo encuentras en Contenido."},
     };
 
     static long proximaHora(long ahora, int hora) {
