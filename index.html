@@ -199,6 +199,17 @@ a.btn{display:inline-flex;align-items:center;justify-content:center;text-decorat
 .anul-note{margin-top:14px;padding:10px 14px;border-radius:8px;background:color-mix(in srgb,var(--late) 10%,var(--surface));color:var(--late);font-size:.88rem}
 .hist li{display:flex;gap:10px;font-size:.84rem;padding:5px 0;color:var(--muted)}
 .hist li b{color:var(--ink);font-weight:600}
+.lines .linkbtn{margin-left:8px;color:var(--muted);padding:6px 4px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.pcard h3{font:800 1.1rem var(--display);letter-spacing:-.02em;overflow-wrap:anywhere}
+.pcard .pp{font-size:.86rem;color:var(--muted);overflow-wrap:anywhere}
+.pcard .pp b{color:var(--ink);font-weight:600}
+.pcard .acts{display:flex;gap:8px;margin-top:auto;padding-top:6px}
+.pcard .acts .btn{flex:1}
+.rowed{display:grid;grid-template-columns:minmax(0,1fr) 110px 40px;gap:8px;margin-bottom:8px;align-items:center}
+.rowed .fi{min-height:42px}
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:end;max-width:420px}
 
 /* ── ventas ── */
 .prod-block{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
@@ -326,6 +337,7 @@ td{padding:11px 14px;vertical-align:middle}
       <button class="nv" type="button" data-act="go" data-view="ent">Entregas <span class="ct" id="ctEnt"></span></button>
       <button class="nv" type="button" data-act="go" data-view="fact">Facturación <span class="ct" id="ctFact"></span></button>
       <button class="nv" type="button" data-act="go" data-view="ventas">Ventas</button>
+      <button class="nv" type="button" data-act="go" data-view="prod">Productos</button>
       <button class="nv" type="button" data-act="go" data-view="act" id="nvAct">Actividad</button>
     </nav>
     <div class="who">
@@ -360,20 +372,8 @@ td{padding:11px 14px;vertical-align:middle}
               </div>
 
               <div class="prod-block">
-                <div class="block-label lbl">Categoría</div>
-                <div class="chips" id="reg-cats">
-                  <button type="button" class="chip" data-cat="carta" aria-pressed="false">Carta <span class="pr">$5.00</span></button>
-                  <button type="button" class="chip" data-cat="poster" aria-pressed="false">Poster <span class="pr">$1.80</span></button>
-                  <button type="button" class="chip" data-cat="prenda" aria-pressed="false">Prenda (Franela / Chaqueta)</button>
-                </div>
-              </div>
-              <div id="reg-tipo-blk" class="prod-block hidden">
-                <div class="block-label lbl">Tipo de prenda</div>
-                <div class="chips" id="reg-tipos">
-                  <button type="button" class="chip" data-tipo="algodon" aria-pressed="false">Franela Algodón</button>
-                  <button type="button" class="chip" data-tipo="microdurazno" aria-pressed="false">Franela Microdurazno</button>
-                  <button type="button" class="chip" data-tipo="chaqueta" aria-pressed="false">Chaqueta</button>
-                </div>
+                <div class="block-label lbl">Producto</div>
+                <div class="chips" id="reg-prods"></div>
               </div>
               <div id="reg-talla-blk" class="prod-block hidden">
                 <div class="block-label lbl">Talla</div>
@@ -449,6 +449,7 @@ td{padding:11px 14px;vertical-align:middle}
         </div>
       </section>
 
+      <section id="v-prod" hidden></section>
       <section id="v-act" hidden></section>
     </main>
     <footer class="app-footer">Realizado por <strong>DGP GLOBAL GROUP</strong> · Ocala, Florida · <a href="mailto:dgpgroup.usa@gmail.com">dgpgroup.usa@gmail.com</a></footer>
@@ -468,6 +469,7 @@ td{padding:11px 14px;vertical-align:middle}
           <div class="field"><label for="editSelEstado">Estado</label><select id="editSelEstado"></select></div>
           <div class="field"><label for="eAgencia">Agencia</label><input type="text" id="eAgencia" required></div>
           <div class="field"><label for="eGuia">N° de guía</label><input type="text" id="eGuia" placeholder="Opcional"></div>
+          <div class="field"><label for="eEtapa">Etapa de entrega</label><select id="eEtapa"></select></div>
         </div>
 
         <div class="edit-section">
@@ -477,19 +479,7 @@ td{padding:11px 14px;vertical-align:middle}
 
         <div class="edit-section">
           <h4>Agregar producto</h4>
-          <div class="chips" id="esel-cats">
-            <button type="button" class="chip" data-cat="carta" aria-pressed="false">Carta <span class="pr">$5.00</span></button>
-            <button type="button" class="chip" data-cat="poster" aria-pressed="false">Poster <span class="pr">$1.80</span></button>
-            <button type="button" class="chip" data-cat="prenda" aria-pressed="false">Prenda</button>
-          </div>
-          <div id="esel-tipo-blk" class="hidden" style="margin-top:12px">
-            <div class="block-label lbl">Tipo</div>
-            <div class="chips" id="esel-tipos">
-              <button type="button" class="chip" data-tipo="algodon" aria-pressed="false">Franela Algodón</button>
-              <button type="button" class="chip" data-tipo="microdurazno" aria-pressed="false">Franela Microdurazno</button>
-              <button type="button" class="chip" data-tipo="chaqueta" aria-pressed="false">Chaqueta</button>
-            </div>
-          </div>
+          <div class="chips" id="esel-prods"></div>
           <div id="esel-talla-blk" class="hidden" style="margin-top:12px">
             <div class="block-label lbl">Talla</div>
             <div class="chips" id="esel-tallas"></div>
@@ -533,6 +523,76 @@ td{padding:11px 14px;vertical-align:middle}
     <div class="mf">
       <button class="btn ghost" type="button" data-act="close">Cancelar</button>
       <button class="btn danger" type="button" id="btnAnular" data-act="anularOk">Anular factura</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL: ELIMINAR ══════════ -->
+<div id="mEliminar" class="overlay" role="dialog" aria-modal="true" aria-labelledby="mEliminarT">
+  <div class="mc">
+    <div class="mh"><h3 id="mEliminarT">Eliminar</h3><button class="mcl" type="button" data-act="close" aria-label="Cerrar">×</button></div>
+    <div class="mb">
+      <p id="delInfo" style="font-weight:700"></p>
+      <p id="delWarn" style="margin-top:10px;color:var(--muted);line-height:1.6"></p>
+    </div>
+    <div class="mf">
+      <button class="btn ghost" type="button" data-act="close">Cancelar</button>
+      <button class="btn danger" type="button" id="btnDel" data-act="delOk">Sí, eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL: PAGO ══════════ -->
+<div id="mPago" class="overlay" role="dialog" aria-modal="true" aria-labelledby="mPagoT">
+  <div class="mc">
+    <div class="mh"><h3 id="mPagoT">Editar pago</h3><button class="mcl" type="button" data-act="close" aria-label="Cerrar">×</button></div>
+    <div class="mb">
+      <div class="g2">
+        <div class="field"><label for="pgMonto">Monto (USD)</label><input type="text" inputmode="decimal" id="pgMonto" autocomplete="off"></div>
+        <div class="field"><label for="pgFecha">Fecha</label><input type="date" id="pgFecha"></div>
+        <div class="field"><label for="pgMetodo">Método</label><select id="pgMetodo"></select></div>
+        <div class="field"><label for="pgRef">Referencia</label><input type="text" id="pgRef" autocomplete="off"></div>
+      </div>
+      <p class="msg" id="pgMsg" role="alert"></p>
+    </div>
+    <div class="mf">
+      <button class="btn ghost" type="button" data-act="close">Cancelar</button>
+      <button class="btn ghost" type="button" data-act="pagoDel">Quitar pago</button>
+      <button class="btn" type="button" id="btnPago" data-act="pagoSave">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL: PRODUCTO ══════════ -->
+<div id="mProd" class="overlay" role="dialog" aria-modal="true" aria-labelledby="mProdT">
+  <div class="mc wide">
+    <div class="mh"><h3 id="mProdT">Producto</h3><button class="mcl" type="button" data-act="close" aria-label="Cerrar">×</button></div>
+    <div class="mb">
+      <div class="g2">
+        <div class="field"><label for="pNombre">Nombre</label><input type="text" id="pNombre" placeholder="Ej: Gorra" autocomplete="off"></div>
+        <div class="field"><label for="pTipo">Tipo</label>
+          <select id="pTipo"><option value="simple">Precio único</option><option value="prenda">Con tallas y diseños</option></select></div>
+      </div>
+      <div id="pSimple" class="edit-section">
+        <div class="field" style="max-width:200px"><label for="pPrecio">Precio (USD)</label><input type="text" inputmode="decimal" id="pPrecio" placeholder="0.00" autocomplete="off"></div>
+      </div>
+      <div id="pPrenda" class="hidden">
+        <div class="edit-section">
+          <h4>Tallas y precio</h4>
+          <div id="pTallas"></div>
+          <button type="button" class="btn ghost sm" data-act="pRowAdd" data-kind="t">+ Talla</button>
+        </div>
+        <div class="edit-section">
+          <h4>Diseños (medida y precio extra)</h4>
+          <div id="pDisenos"></div>
+          <button type="button" class="btn ghost sm" data-act="pRowAdd" data-kind="d">+ Diseño</button>
+        </div>
+      </div>
+      <p class="msg" id="pMsg" role="alert"></p>
+    </div>
+    <div class="mf">
+      <button class="btn ghost" type="button" data-act="close">Cancelar</button>
+      <button class="btn" type="button" id="btnProd" data-act="prodSave">Guardar producto</button>
     </div>
   </div>
 </div>
@@ -585,14 +645,23 @@ const FV   = firebase.firestore.FieldValue;
 // ══════════════════════════════════════════════
 //  CONSTANTES
 // ══════════════════════════════════════════════
-const CATALOGO = {
-    carta:        { label:'Carta',               precio:5    },
-    poster:       { label:'Poster',              precio:1.80 },
-    algodon:      { label:'Franela Algodón',      tallas:{S:8,M:8,L:8,XL:10,XXL:12},  disenos:[{m:'30×40 cm',p:7},{m:'28×22 cm',p:4},{m:'10×10 cm',p:1},{m:'5×5 cm',p:.5}] },
-    microdurazno: { label:'Franela Microdurazno', tallas:{S:7,M:7,L:7,XL:9,XXL:11},   disenos:[{m:'28×22 cm',p:3},{m:'30×40 cm',p:6}] },
-    chaqueta:     { label:'Chaqueta',             tallas:{S:16,M:16,L:16},              disenos:[{m:'30×40 cm',p:7},{m:'28×22 cm',p:4},{m:'10×10 cm',p:1},{m:'5×5 cm',p:.5}] },
-};
-const EMPAQUE = 0.22;
+// Catálogo por defecto. Si existe config/catalogo en Firestore, ese lo reemplaza.
+const CATALOGO_DEF = [
+    {id:'carta',  nombre:'Carta',  tipo:'simple', precio:5},
+    {id:'poster', nombre:'Poster', tipo:'simple', precio:1.80},
+    {id:'algodon', nombre:'Franela Algodón', tipo:'prenda',
+        tallas:[{t:'S',p:8},{t:'M',p:8},{t:'L',p:8},{t:'XL',p:10},{t:'XXL',p:12}],
+        disenos:[{m:'30×40 cm',p:7},{m:'28×22 cm',p:4},{m:'10×10 cm',p:1},{m:'5×5 cm',p:.5}]},
+    {id:'microdurazno', nombre:'Franela Microdurazno', tipo:'prenda',
+        tallas:[{t:'S',p:7},{t:'M',p:7},{t:'L',p:7},{t:'XL',p:9},{t:'XXL',p:11}],
+        disenos:[{m:'28×22 cm',p:3},{m:'30×40 cm',p:6}]},
+    {id:'chaqueta', nombre:'Chaqueta', tipo:'prenda',
+        tallas:[{t:'S',p:16},{t:'M',p:16},{t:'L',p:16}],
+        disenos:[{m:'30×40 cm',p:7},{m:'28×22 cm',p:4},{m:'10×10 cm',p:1},{m:'5×5 cm',p:.5}]}
+];
+let catalogo = JSON.parse(JSON.stringify(CATALOGO_DEF));
+const nameOf = id=>(catalogo.find(p=>p.id===id)||CATALOGO_DEF.find(p=>p.id===id)||{}).nombre;
+let EMPAQUE = 0.22;
 const ESTADOS = ['Amazonas','Anzoátegui','Apure','Aragua','Barinas','Bolívar','Carabobo','Cojedes','Delta Amacuro','Distrito Capital','Falcón','Guárico','Lara','Mérida','Miranda','Monagas','Nueva Esparta','Portuguesa','Sucre','Táchira','Trujillo','Vargas','Yaracuy','Zulia'];
 const MESES   = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const METODOS = ['Zelle','Pago móvil','Transferencia','Efectivo USD','Binance'];
@@ -608,9 +677,9 @@ const DAY = 864e5;
 
 // permisos por rol (sin documento en "usuarios" se asume admin)
 const PERMISOS = {
-    admin:    {views:['panel','ent','fact','ventas','act'], registrar:1, cobrar:1, anular:1, migrar:1, entregas:1},
-    ventas:   {views:['panel','ent','fact','ventas'],        registrar:1, cobrar:1, anular:0, migrar:0, entregas:1},
-    despacho: {views:['panel','ent'],                        registrar:0, cobrar:0, anular:0, migrar:0, entregas:1}
+    admin:    {views:['panel','ent','fact','ventas','prod','act'], registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
+    ventas:   {views:['panel','ent','fact','ventas'],        registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
+    despacho: {views:['panel','ent'],                        registrar:0, cobrar:0, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1}
 };
 
 // ══════════════════════════════════════════════
@@ -675,7 +744,8 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
 // ══════════════════════════════════════════════
 //  ESTADO
 // ══════════════════════════════════════════════
-let user=null, rol='admin', ventas=[], unsub=null, unsubAct=null, actividad=[];
+let user=null, rol='admin', ventas=[], unsub=null, unsubAct=null, unsubCfg=null, actividad=[];
+let delCtx=null, pagoCtx=null, prodEditId=null, pdraft={t:[],d:[]};
 let view='panel', selId=null, lastAction=null;
 const F={ag:'all',late:false,pf:'all'};
 let regItems=[], regAdic={monto:0,razon:''}, editItems=[], editId=null, anularId=null;
@@ -686,14 +756,14 @@ const can = k=>!!(PERMISOS[rol]||PERMISOS.admin)[k];
 // ══════════════════════════════════════════════
 function getItems(v){
     if(v.items && v.items.length) return v.items;
-    if(v.categoria==='carta')  return [{categoria:'carta', label:'Carta', subtotal:CATALOGO.carta.precio, precioPrenda:CATALOGO.carta.precio, tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0}];
-    if(v.categoria==='poster') return [{categoria:'poster',label:'Poster',subtotal:CATALOGO.poster.precio,precioPrenda:CATALOGO.poster.precio,tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0}];
+    if(v.categoria==='carta')  return [{categoria:'carta', label:'Carta', subtotal:5, precioPrenda:5, tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0}];
+    if(v.categoria==='poster') return [{categoria:'poster',label:'Poster',subtotal:1.8,precioPrenda:1.8,tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0}];
     return [{
         categoria:'prenda', tipoPrenda:v.tipoPrenda, talla:v.talla,
         precioPrenda:v.precioPrenda||0, tieneDiseno:v.tieneDiseno,
         medidaDiseno:v.medidaDiseno||null, precioDiseno:v.precioDiseno||0,
         subtotal:(v.precioPrenda||0)+(v.precioDiseno||0),
-        label:`${CATALOGO[v.tipoPrenda]?.label||v.tipoPrenda} · T.${v.talla}${v.tieneDiseno&&v.medidaDiseno?' · Diseño '+v.medidaDiseno:''}`
+        label:`${nameOf(v.tipoPrenda)||v.tipoPrenda} · T.${v.talla}${v.tieneDiseno&&v.medidaDiseno?' · Diseño '+v.medidaDiseno:''}`
     }];
 }
 function descProd(v){ return v.items.map(it=>it.label||'Producto').join(' + '); }
@@ -742,13 +812,14 @@ auth.onAuthStateChanged(async u=>{
         $$('#nav .nv').forEach(b=>{ b.hidden=!PERMISOS[rol].views.includes(b.dataset.view); });
         $('#regCard').hidden=!can('registrar');
         go(rol==='despacho'?'ent':'panel');
-        startListener();
+        startListener(); startConfig();
     } else {
         user=null;
         $('#loginPage').hidden=false;
         $('#appRoot').hidden=true;
         if(unsub){unsub();unsub=null;}
         if(unsubAct){unsubAct();unsubAct=null;}
+        if(unsubCfg){unsubCfg();unsubCfg=null;}
         ventas=[];
     }
 });
@@ -793,7 +864,7 @@ function go(v,o={}){
     if(v==='ent'){F.late=!!o.late;F.ag='all';}
     if(v==='fact'){ if(o.pf) F.pf=o.pf; if(o.sel) selId=o.sel; }
     $$('#nav .nv').forEach(b=>b.dataset.view===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
-    ['panel','ent','fact','ventas','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
+    ['panel','ent','fact','ventas','prod','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
     if(v==='act') startActividad();
     render();
     window.scrollTo({top:0});
@@ -810,6 +881,7 @@ function render(){
     if(view==='ent')   renderEnt();
     if(view==='fact')  renderFact();
     if(view==='ventas') renderTabla();
+    if(view==='prod')  renderProd();
     if(view==='act')   renderActividad();
 }
 
@@ -884,7 +956,7 @@ function renderPanel(){
     const legend=ETAPAS.map(e=>`<li class="c-${e.k}">${e.l}<b>${cnt[e.k]}</b></li>`).join('');
 
     const mix={}; vs.forEach(v=>v.items.forEach(it=>{
-        const k=it.categoria==='carta'?'Carta':it.categoria==='poster'?'Poster':(CATALOGO[it.tipoPrenda]?.label||'Prenda');
+        const k=it.productoNombre||(it.categoria==='carta'?'Carta':it.categoria==='poster'?'Poster':(nameOf(it.tipoPrenda)||'Prenda'));
         mix[k]=(mix[k]||0)+1;
     }));
     const me=Object.entries(mix).sort((a,b)=>b[1]-a[1]), mx=me.length?me[0][1]:1;
@@ -1025,7 +1097,7 @@ function renderFact(){
         `<div class="amt num">${fmt(v.total)}<br><span class="bd c-${v.pstate}">${PAGO_LBL[v.pstate]}</span></div></button>`).join('')||'<p class="empty">No hay facturas con este filtro.</p>';
     keep($('#v-fact'),()=>{
         $('#v-fact').innerHTML=
-          `<div class="pane-head"><h3>Facturación</h3><span>Comprobantes internos, abonos y saldo</span></div>`+
+          `<div class="pane-head"><h3>Facturación</h3>${can('registrar')?'<button type="button" class="btn" data-act="nueva">+ Nueva factura</button>':'<span>Comprobantes internos, abonos y saldo</span>'}</div>`+
           `<div class="toolbar">${f}</div>`+
           `<div class="fact"><div class="flist">${rows}</div><div id="detail">${selId?detalle(byId(selId)):''}</div></div>`;
     });
@@ -1036,7 +1108,7 @@ function detalle(v){
         (adic?`<li><span>Adicional${v.razonAdicional?' ('+esc(v.razonAdicional)+')':''}</span><span class="num">${fmt(adic)}</span></li>`:'')+
         `<li><span>Presentación / empaque</span><span class="num">${fmt(v.empaque??EMPAQUE)}</span></li>`+
         `<li class="tot"><span>Total</span><span class="num">${fmt(v.total)}</span></li>`;
-    const pg=v.pagos.length?v.pagos.map(p=>`<li><span>${fshort(p.fecha)} · ${esc(p.metodo)}${p.referencia?' · <span class="mono">'+esc(p.referencia)+'</span>':''}</span><span class="num">${fmt(p.monto)}</span></li>`).join(''):'<li><span>Sin pagos registrados</span><span></span></li>';
+    const pg=v.pagos.length?v.pagos.map((p,i)=>`<li><span>${fshort(p.fecha)} · ${esc(p.metodo)}${p.referencia?' · <span class="mono">'+esc(p.referencia)+'</span>':''}${can('cobrar')?` <button type="button" class="linkbtn noprint" data-act="pagoEdit" data-id="${v.id}" data-i="${i}">editar</button>`:''}</span><span class="num">${fmt(p.monto)}</span></li>`).join(''):'<li><span>Sin pagos registrados</span><span></span></li>';
     const hist=v.historial.length?`<div class="sub noprint"><h4>Historial de entrega</h4><ul class="hist">${v.historial.slice().reverse().map(h=>`<li><time class="mono">${ftime(h.fecha)}</time><span><b>${esc(etapaDef(h.etapa).l)}</b>${h.nota?' ('+esc(h.nota)+')':''} · ${esc(h.por||'')}</span></li>`).join('')}</ul></div>`:'';
     let form='';
     if(!v.anulada&&v.saldo>0&&can('cobrar')){
@@ -1050,8 +1122,10 @@ function detalle(v){
         `<button type="button" class="btn ghost sm" data-act="print">Imprimir comprobante</button>`+
         `<a class="btn ghost sm" href="${waLink(v,msgEtapa(v))}" target="_blank" rel="noopener">WhatsApp: estado del envío</a>`+
         (!v.anulada&&v.saldo>0?`<a class="btn ghost sm" href="${waLink(v,msgCobro(v))}" target="_blank" rel="noopener">WhatsApp: cobrar saldo</a>`:'')+
-        (!v.anulada&&can('registrar')?`<button type="button" class="btn ghost sm" data-act="edit" data-id="${v.id}">Editar</button>`:'')+
+        (can('registrar')?`<button type="button" class="btn ghost sm" data-act="edit" data-id="${v.id}">Editar factura</button>`:'')+
         (!v.anulada&&can('anular')?`<button type="button" class="btn ghost sm" data-act="anular" data-id="${v.id}">Anular</button>`:'')+
+        (v.anulada&&can('anular')?`<button type="button" class="btn ghost sm" data-act="restaurar" data-id="${v.id}">Restaurar</button>`:'')+
+        (can('eliminar')?`<button type="button" class="btn ghost sm" data-act="delVenta" data-id="${v.id}">Eliminar</button>`:'')+
         `</div>`;
     return `<div class="paper">`+
       `<div class="ph"><span class="mark">THE SPOT<i></i></span><div class="r"><b>${esc(inv(v))}</b>${fdate(v.fechaMs)} · <span class="bd c-${v.pstate}">${PAGO_LBL[v.pstate]}</span></div></div>`+
@@ -1154,7 +1228,7 @@ function startActividad(){
         if(view==='act') renderActividad();
     },e=>console.error(e));
 }
-const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',anulada:'Factura anulada',migracion:'Migración'};
+const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',anulada:'Factura anulada',restaurada:'Factura restaurada',eliminada:'Factura eliminada',catalogo:'Catálogo modificado',migracion:'Migración'};
 function renderActividad(){
     const rows=actividad.map(a=>{
         const t=a.fecha&&a.fecha.toMillis?a.fecha.toMillis():Date.now();
@@ -1167,54 +1241,55 @@ function renderActividad(){
 //  SELECTOR DE PRODUCTO
 // ══════════════════════════════════════════════
 function makeSelector(p){
-    const s={cat:null,tipo:null,talla:null,diseno:false,medida:null};
+    const s={prod:null,talla:null,diseno:false,medida:null};
     const E=k=>document.getElementById(p+'-'+k);
-    const press=(box,attr,val)=>$$('#'+p+'-'+box+' .chip').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset[attr]===val)));
+    const P=()=>catalogo.find(x=>x.id===s.prod);
 
     function getItem(){
-        if(!s.cat) return null;
-        if(s.cat==='carta')  return {categoria:'carta', label:'Carta',  subtotal:CATALOGO.carta.precio,  precioPrenda:CATALOGO.carta.precio,  tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0};
-        if(s.cat==='poster') return {categoria:'poster',label:'Poster', subtotal:CATALOGO.poster.precio, precioPrenda:CATALOGO.poster.precio, tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0};
-        if(!s.tipo||!s.talla) return null;
+        const pr=P(); if(!pr) return null;
+        const base={productoId:pr.id,productoNombre:pr.nombre};
+        if(pr.tipo==='simple') return {...base,categoria:'simple',label:pr.nombre,subtotal:+pr.precio||0,precioPrenda:+pr.precio||0,tipoPrenda:null,talla:null,tieneDiseno:false,medidaDiseno:null,precioDiseno:0};
+        if(!s.talla) return null;
         if(s.diseno&&!s.medida) return null;
-        const c=CATALOGO[s.tipo], base=c.tallas[s.talla]||0, dis=s.diseno?(c.disenos.find(x=>x.m===s.medida)?.p||0):0;
-        return {categoria:'prenda',tipoPrenda:s.tipo,talla:s.talla,precioPrenda:base,tieneDiseno:s.diseno,medidaDiseno:s.medida||null,precioDiseno:dis,subtotal:base+dis,
-                label:`${c.label} · T.${s.talla}${s.diseno&&s.medida?' · Diseño '+s.medida:''}`};
+        const b=+((pr.tallas||[]).find(x=>x.t===s.talla)||{}).p||0;
+        const d=s.diseno?(+((pr.disenos||[]).find(x=>x.m===s.medida)||{}).p||0):0;
+        return {...base,categoria:'prenda',tipoPrenda:pr.id,talla:s.talla,precioPrenda:b,tieneDiseno:s.diseno,medidaDiseno:s.medida||null,precioDiseno:d,subtotal:b+d,
+                label:`${pr.nombre} · T.${s.talla}${s.diseno&&s.medida?' · Diseño '+s.medida:''}`};
     }
     function draw(){
-        E('tipo-blk').classList.toggle('hidden',s.cat!=='prenda');
-        E('talla-blk').classList.toggle('hidden',!(s.cat==='prenda'&&s.tipo));
-        E('diseno-blk').classList.toggle('hidden',!(s.cat==='prenda'&&s.talla));
+        if(s.prod&&!P()) Object.assign(s,{prod:null,talla:null,diseno:false,medida:null});
+        const pr=P(), pren=!!pr&&pr.tipo==='prenda';
+        E('prods').innerHTML=catalogo.map(x=>`<button type="button" class="chip" data-prod="${esc(x.id)}" aria-pressed="${s.prod===x.id}">${esc(x.nombre)}${x.tipo==='simple'?` <span class="pr">${fmt(x.precio)}</span>`:''}</button>`).join('')||'<p class="empty">No hay productos. Agrégalos en la sección Productos.</p>';
+        E('talla-blk').classList.toggle('hidden',!pren);
+        E('diseno-blk').classList.toggle('hidden',!(pren&&s.talla&&(pr.disenos||[]).length));
         E('medidas-blk').classList.toggle('hidden',!s.diseno);
         E('chk-diseno').checked=s.diseno;
-        if(s.tipo){
-            const c=CATALOGO[s.tipo];
-            E('tallas').innerHTML=Object.entries(c.tallas).map(([t,pr])=>`<button type="button" class="chip" data-talla="${t}" aria-pressed="${s.talla===t}">${t} <span class="pr">$${pr}</span></button>`).join('');
-            E('medidas').innerHTML=c.disenos.map(d=>`<button type="button" class="chip" data-med="${d.m}" aria-pressed="${s.medida===d.m}">${d.m} <span class="pr">$${d.p}</span></button>`).join('');
+        if(pren){
+            E('tallas').innerHTML=(pr.tallas||[]).map(x=>`<button type="button" class="chip" data-talla="${esc(x.t)}" aria-pressed="${s.talla===x.t}">${esc(x.t)} <span class="pr">${fmt(x.p)}</span></button>`).join('');
+            E('medidas').innerHTML=(pr.disenos||[]).map(d=>`<button type="button" class="chip" data-med="${esc(d.m)}" aria-pressed="${s.medida===d.m}">${esc(d.m)} <span class="pr">${fmt(d.p)}</span></button>`).join('');
         }
-        press('cats','cat',s.cat); press('tipos','tipo',s.tipo);
         E('add-btn').classList.toggle('hidden',!getItem());
     }
-    function reset(){ Object.assign(s,{cat:null,tipo:null,talla:null,diseno:false,medida:null}); draw(); }
+    function reset(){ Object.assign(s,{prod:null,talla:null,diseno:false,medida:null}); draw(); }
 
-    E('cats').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{cat:b.dataset.cat,tipo:null,talla:null,diseno:false,medida:null}); draw(); });
-    E('tipos').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{tipo:b.dataset.tipo,talla:null,diseno:false,medida:null}); draw(); });
+    E('prods').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{prod:b.dataset.prod,talla:null,diseno:false,medida:null}); draw(); });
     E('tallas').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; Object.assign(s,{talla:b.dataset.talla,diseno:false,medida:null}); draw(); });
     E('medidas').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; s.medida=b.dataset.med; draw(); });
     E('chk-diseno').addEventListener('change',e=>{ s.diseno=e.target.checked; s.medida=null; draw(); });
-    return {getItem,reset};
+    draw();
+    return {getItem,reset,draw};
 }
 
 const itemsTotal = a=>a.reduce((s,it)=>s+it.subtotal,0);
-const cleanItems = a=>a.map(({categoria,tipoPrenda,talla,precioPrenda,tieneDiseno,medidaDiseno,precioDiseno,subtotal,label})=>({categoria,tipoPrenda,talla,precioPrenda,tieneDiseno,medidaDiseno,precioDiseno,subtotal,label}));
+const cleanItems = a=>a.map(it=>({categoria:it.categoria??null,productoId:it.productoId??null,productoNombre:it.productoNombre??null,tipoPrenda:it.tipoPrenda??null,talla:it.talla??null,precioPrenda:it.precioPrenda??0,tieneDiseno:!!it.tieneDiseno,medidaDiseno:it.medidaDiseno??null,precioDiseno:it.precioDiseno??0,subtotal:+it.subtotal||0,label:it.label||'Producto'}));
 function itemRows(items,fn){
     return '<div class="items-list-header lbl">Productos</div>'+items.map((it,i)=>`<div class="item-row"><span class="item-num">${i+1}</span><span class="item-label">${esc(it.label)}</span><span class="item-price">${fmt(it.subtotal)}</span><button type="button" class="item-rm" data-act="${fn}" data-i="${i}" aria-label="Quitar ${esc(it.label)}">×</button></div>`).join('');
 }
-function sumHtml(items,adic,razon){
-    const total=itemsTotal(items)+adic+EMPAQUE;
+function sumHtml(items,adic,razon,emp=EMPAQUE){
+    const total=itemsTotal(items)+adic+emp;
     return items.map(it=>`<div class="sum-row"><span class="sl">${esc(it.label)}</span><span class="sv">${fmt(it.subtotal)}</span></div>`).join('')+
       (adic?`<div class="sum-row"><span class="sl">Adicional${razon?' ('+esc(razon)+')':''}</span><span class="sv">${fmt(adic)}</span></div>`:'')+
-      `<div class="sum-row"><span class="sl">Presentación / empaque</span><span class="sv">${fmt(EMPAQUE)}</span></div><hr class="sum-hr"><div class="sum-total"><span>TOTAL</span><span class="num">${fmt(total)}</span></div>`;
+      `<div class="sum-row"><span class="sl">Presentación / empaque</span><span class="sv">${fmt(emp)}</span></div><hr class="sum-hr"><div class="sum-total"><span>TOTAL</span><span class="num">${fmt(total)}</span></div>`;
 }
 
 // ══════════════════════════════════════════════
@@ -1310,7 +1385,8 @@ function renderTabla(){
         `<td><div class="abts">`+
           (!v.legacy?`<button type="button" class="btn ghost sm" data-act="go" data-view="fact" data-sel="${v.id}">Factura</button>`:'')+
           `<a class="btn ghost sm" href="${waLink(v,msgEtapa(v))}" target="_blank" rel="noopener" aria-label="WhatsApp a ${esc(v.nombre)}">WA</a>`+
-          (can('registrar')&&!v.anulada?`<button type="button" class="btn ghost sm" data-act="edit" data-id="${v.id}">Editar</button>`:'')+
+          (can('registrar')?`<button type="button" class="btn ghost sm" data-act="edit" data-id="${v.id}">Editar</button>`:'')+
+          (can('eliminar')?`<button type="button" class="btn ghost sm" data-act="delVenta" data-id="${v.id}">Eliminar</button>`:'')+
         `</div></td></tr>`).join('');
 }
 ['fDesde','fHasta','fEtapa','fPago','srch'].forEach(id=>{ $('#'+id).addEventListener('input',renderTabla); $('#'+id).addEventListener('change',renderTabla); });
@@ -1332,7 +1408,7 @@ function exportCSV(){
 // ══════════════════════════════════════════════
 function renderEdit(){
     $('#edit-items-list').innerHTML=editItems.length?itemRows(editItems,'rmEdit'):'<div style="padding:12px 14px;font-size:.86rem;color:var(--muted)">Sin productos. Agrega al menos uno.</div>';
-    $('#edit-sum').innerHTML=sumHtml(editItems,num($('#eAdicM').value),$('#eAdicR').value);
+    const ev=byId(editId); $('#edit-sum').innerHTML=sumHtml(editItems,num($('#eAdicM').value),$('#eAdicR').value,ev?(ev.empaque??EMPAQUE):EMPAQUE);
 }
 $('#esel-add-btn').addEventListener('click',()=>{ const it=editSel.getItem(); if(!it) return; editItems.push(it); editSel.reset(); renderEdit(); });
 $('#eAdicM').addEventListener('input',renderEdit); $('#eAdicR').addEventListener('input',renderEdit);
@@ -1343,6 +1419,7 @@ function abrirEdit(id){
     $('#eNombre').value=v.nombre||''; $('#eCedula').value=v.cedula||''; $('#eTel').value=v.telefono||'';
     $('#eAgencia').value=v.agencia||''; $('#eGuia').value=v.guia||'';
     fillEstados('editSelEstado',v.estado);
+    $('#eEtapa').innerHTML=ETAPAS.map(e=>`<option value="${e.k}"${e.k===v.etapa?' selected':''}>${e.l}</option>`).join('');
     $('#eAdicM').value=v.costoAdicional||''; $('#eAdicR').value=v.razonAdicional||'';
     editItems=[...v.items]; editSel.reset(); renderEdit();
     $('#mEditarT').textContent='Editar pedido '+inv(v);
@@ -1354,19 +1431,202 @@ async function guardarEdit(){
     const nombre=$('#eNombre').value.trim(), cedula=$('#eCedula').value.trim(), tel=$('#eTel').value.trim(), ag=$('#eAgencia').value.trim();
     if(!nombre||!cedula||!tel||!ag){ toast('Completa nombre, cédula, teléfono y agencia.','error'); return; }
     const adic=num($('#eAdicM').value);
-    const total=+(itemsTotal(editItems)+adic+EMPAQUE).toFixed(2);
+    const total=+(itemsTotal(editItems)+adic+(v.empaque??EMPAQUE)).toFixed(2);
     if(!v.legacy&&total<v.pagado-0.005){ toast('El total no puede quedar por debajo de lo ya pagado ('+fmt(v.pagado)+').','error'); return; }
     const btn=$('#btnSaveEdit'); btn.textContent='Guardando…'; btn.disabled=true;
     try{
-        await db.collection('ventas').doc(editId).update({
+        const upd={
             nombre,cedula,telefono:tel,estado:$('#editSelEstado').value,agencia:ag,guia:$('#eGuia').value.trim(),
-            items:cleanItems(editItems),costoAdicional:adic||null,razonAdicional:$('#eAdicR').value.trim()||null,empaque:EMPAQUE,monto:total
-        });
+            items:cleanItems(editItems),costoAdicional:adic||null,razonAdicional:$('#eAdicR').value.trim()||null,empaque:v.empaque??EMPAQUE,monto:total
+        };
+        const et=$('#eEtapa').value;
+        if(et!==v.etapa){ const now=Date.now(); upd.logistica=et; upd.etapaDesde=now; upd.historial=FV.arrayUnion({etapa:et,fecha:now,por:user.email,nota:'editado'}); }
+        await db.collection('ventas').doc(editId).update(upd);
         log('editada',v,total!==v.total?`Total ${fmt(v.total)} → ${fmt(total)}`:'Datos del pedido');
         cerrar('mEditar'); toast('Pedido actualizado.');
     }catch(err){ console.error(err); toast('No se pudo actualizar el pedido.','error'); }
     btn.textContent='Guardar cambios'; btn.disabled=false;
 }
+
+// ══════════════════════════════════════════════
+//  FACTURAS: restaurar, eliminar, editar pagos
+// ══════════════════════════════════════════════
+async function restaurar(id){
+    const v=byId(id); if(!v||!can('anular')) return;
+    try{
+        await db.collection('ventas').doc(id).update({anulada:false,motivoAnulacion:null});
+        log('restaurada',v,''); toast(inv(v)+' restaurada.');
+    }catch(e){ console.error(e); toast('No se pudo restaurar.','error'); }
+}
+function abrirEliminar(kind,id){
+    delCtx={kind,id};
+    if(kind==='venta'){
+        const v=byId(id); if(!v) return;
+        $('#mEliminarT').textContent='Eliminar factura';
+        $('#delInfo').textContent=`${inv(v)} · ${v.nombre} · ${fmt(v.total)}`;
+        $('#delWarn').textContent='Se borra el pedido con sus pagos e historial y no se puede recuperar. El número de factura queda sin usar. Si solo quieres que deje de contar, usa Anular.';
+    }else{
+        const p=catalogo.find(x=>x.id===id); if(!p) return;
+        $('#mEliminarT').textContent='Eliminar producto';
+        $('#delInfo').textContent=p.nombre;
+        $('#delWarn').textContent='Deja de aparecer al registrar ventas. Los pedidos ya hechos con este producto no cambian.';
+    }
+    abrir('mEliminar');
+}
+async function eliminarOk(){
+    if(!delCtx) return;
+    const btn=$('#btnDel'); btn.disabled=true;
+    try{
+        if(delCtx.kind==='venta'){
+            const v=byId(delCtx.id); if(!v||!can('eliminar')) throw new Error('permiso');
+            log('eliminada',v,`${inv(v)} · ${v.nombre} · ${fmt(v.total)}`);
+            await db.collection('ventas').doc(v.id).delete();
+            if(selId===v.id) selId=null;
+            toast('Factura eliminada.');
+        }else{
+            if(!can('catalogo')) throw new Error('permiso');
+            const p=catalogo.find(x=>x.id===delCtx.id);
+            await saveCatalogo(catalogo.filter(x=>x.id!==delCtx.id));
+            log('catalogo',null,'Eliminó '+(p?p.nombre:''));
+            toast('Producto eliminado.');
+        }
+        cerrar('mEliminar');
+    }catch(e){ console.error(e); toast('No se pudo eliminar.','error'); }
+    btn.disabled=false; delCtx=null;
+}
+
+const dateInput = ms=>{ const d=new Date(ms); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+function abrirPago(id,i){
+    const v=byId(id), p=v&&v.pagos[i]; if(!p||!can('cobrar')) return;
+    pagoCtx={id,i};
+    const ms=[...METODOS]; if(!ms.includes(p.metodo)) ms.push(p.metodo);
+    $('#pgMetodo').innerHTML=ms.map(m=>`<option${m===p.metodo?' selected':''}>${esc(m)}</option>`).join('');
+    $('#pgMonto').value=(+p.monto).toFixed(2); $('#pgFecha').value=dateInput(p.fecha); $('#pgRef').value=p.referencia||''; $('#pgMsg').textContent='';
+    abrir('mPago');
+}
+async function guardarPago(){
+    const v=pagoCtx&&byId(pagoCtx.id); if(!v||!can('cobrar')) return;
+    const i=pagoCtx.i, old=v.pagos[i], m=num($('#pgMonto').value);
+    if(!(m>0)){ $('#pgMsg').textContent='Escribe un monto mayor que cero.'; return; }
+    if(v.pagado-old.monto+m>v.total+0.005){ $('#pgMsg').textContent='La suma de pagos superaría el total de '+fmt(v.total)+'.'; return; }
+    const fv=$('#pgFecha').value, fecha=fv?new Date(fv+'T12:00:00').getTime():old.fecha;
+    const nuevos=v.pagos.map((p,j)=>j===i?{...p,monto:+m.toFixed(2),metodo:$('#pgMetodo').value,referencia:$('#pgRef').value.trim(),fecha}:p);
+    const btn=$('#btnPago'); btn.disabled=true;
+    try{
+        await db.collection('ventas').doc(v.id).update({pagos:nuevos});
+        log('pago',v,`Editó pago de ${fmt(old.monto)} → ${fmt(m)}`);
+        cerrar('mPago'); toast('Pago actualizado.');
+    }catch(e){ console.error(e); toast('No se pudo guardar el pago.','error'); }
+    btn.disabled=false;
+}
+async function quitarPago(){
+    const v=pagoCtx&&byId(pagoCtx.id); if(!v||!can('cobrar')) return;
+    const old=v.pagos[pagoCtx.i];
+    try{
+        await db.collection('ventas').doc(v.id).update({pagos:v.pagos.filter((_,j)=>j!==pagoCtx.i)});
+        log('pago',v,`Quitó pago de ${fmt(old.monto)} (${old.metodo})`);
+        cerrar('mPago'); toast('Pago quitado.');
+    }catch(e){ console.error(e); toast('No se pudo quitar el pago.','error'); }
+}
+
+// ══════════════════════════════════════════════
+//  PRODUCTOS (catálogo editable)
+// ══════════════════════════════════════════════
+function startConfig(){
+    if(unsubCfg) unsubCfg();
+    unsubCfg=db.collection('config').doc('catalogo').onSnapshot(s=>{
+        if(s.exists){
+            const d=s.data();
+            if(Array.isArray(d.productos)) catalogo=d.productos;
+            if(typeof d.empaque==='number') EMPAQUE=d.empaque;
+        }
+        regSel.draw(); editSel.draw(); renderReg();
+        if(view==='prod') renderProd();
+    },e=>console.warn('config',e));
+}
+async function saveCatalogo(productos,empaque){
+    if(empaque==null) empaque=EMPAQUE;
+    await db.collection('config').doc('catalogo').set({productos,empaque},{merge:true});
+    catalogo=productos; EMPAQUE=empaque;
+    regSel.draw(); editSel.draw(); renderReg(); if(view==='prod') renderProd();
+}
+function resumenProd(p){
+    if(p.tipo==='simple') return `<p class="pp"><b>${fmt(p.precio)}</b> por unidad</p>`;
+    const t=(p.tallas||[]).map(x=>esc(x.t)+' '+fmt(x.p)).join(' · ')||'ninguna';
+    const d=(p.disenos||[]).map(x=>esc(x.m)+' +'+fmt(x.p)).join(' · ')||'ninguno';
+    return `<p class="pp"><b>Tallas:</b> ${t}</p><p class="pp"><b>Diseños:</b> ${d}</p>`;
+}
+function renderProd(){
+    const cards=catalogo.map(p=>`<article class="pcard"><div><span class="tag">${p.tipo==='simple'?'Precio único':'Prenda'}</span></div><h3>${esc(p.nombre)}</h3>${resumenProd(p)}`+
+        `<div class="acts"><button type="button" class="btn ghost sm" data-act="prodEdit" data-id="${esc(p.id)}">Editar</button><button type="button" class="btn ghost sm" data-act="prodDel" data-id="${esc(p.id)}">Eliminar</button></div></article>`).join('')||'<p class="empty">Todavía no hay productos.</p>';
+    keep($('#v-prod'),()=>{
+        $('#v-prod').innerHTML=
+          `<div class="pane-head"><h3>Productos</h3><button type="button" class="btn" data-act="prodNew">+ Agregar producto</button></div>`+
+          `<div class="pgrid">${cards}</div>`+
+          `<div class="card"><div class="ch"><h2>Presentación / empaque</h2></div><div class="cb"><div class="dgrid"><div class="field"><label for="eEmp">Costo por pedido (USD)</label><input type="text" inputmode="decimal" id="eEmp" value="${(+EMPAQUE).toFixed(2)}" autocomplete="off"></div><button type="button" class="btn" data-act="empSave">Guardar</button></div><p style="margin-top:10px;font-size:.86rem;color:var(--muted)">Se suma a cada pedido nuevo. Los pedidos ya registrados conservan el que tenían.</p></div></div>`;
+    });
+}
+function rowsHtml(kind,list){
+    return list.map((r,i)=>`<div class="rowed"><input class="fi" data-f="n" value="${esc(kind==='t'?r.t:r.m)}" placeholder="${kind==='t'?'Talla (ej: M)':'Medida (ej: 30×40 cm)'}" aria-label="${kind==='t'?'Talla':'Medida'} ${i+1}" autocomplete="off"><input class="fi" data-f="p" inputmode="decimal" value="${r.p}" placeholder="0.00" aria-label="Precio ${i+1}" autocomplete="off"><button type="button" class="item-rm" data-act="pRowDel" data-kind="${kind}" data-i="${i}" aria-label="Quitar fila ${i+1}">×</button></div>`).join('');
+}
+function collectRows(kind){
+    return $$('#'+(kind==='t'?'pTallas':'pDisenos')+' .rowed').map(r=>{
+        const n=$('[data-f=n]',r).value.trim(), p=num($('[data-f=p]',r).value);
+        return kind==='t'?{t:n,p}:{m:n,p};
+    });
+}
+function drawRows(){ $('#pTallas').innerHTML=rowsHtml('t',pdraft.t); $('#pDisenos').innerHTML=rowsHtml('d',pdraft.d); }
+function syncTipo(){
+    const pren=$('#pTipo').value==='prenda';
+    $('#pSimple').classList.toggle('hidden',pren); $('#pPrenda').classList.toggle('hidden',!pren);
+    if(pren&&!pdraft.t.length){ pdraft.t=[{t:'',p:0}]; drawRows(); }
+}
+function abrirProd(id){
+    if(!can('catalogo')) return;
+    prodEditId=id||null;
+    const p=id?catalogo.find(x=>x.id===id):null;
+    $('#mProdT').textContent=p?'Editar producto':'Agregar producto';
+    $('#pNombre').value=p?p.nombre:''; $('#pTipo').value=p?p.tipo:'simple';
+    $('#pPrecio').value=p&&p.tipo==='simple'?(+p.precio).toFixed(2):'';
+    pdraft={t:p&&p.tipo==='prenda'?(p.tallas||[]).map(x=>({...x})):[],d:p&&p.tipo==='prenda'?(p.disenos||[]).map(x=>({...x})):[]};
+    drawRows(); $('#pMsg').textContent=''; syncTipo();
+    abrir('mProd');
+}
+async function guardarProd(){
+    if(!can('catalogo')) return;
+    const msg=$('#pMsg'), nombre=$('#pNombre').value.trim(), tipo=$('#pTipo').value;
+    if(!nombre){ msg.textContent='Escribe el nombre del producto.'; return; }
+    if(catalogo.some(x=>x.id!==prodEditId&&x.nombre.toLowerCase()===nombre.toLowerCase())){ msg.textContent='Ya existe un producto con ese nombre.'; return; }
+    const base=prodEditId?catalogo.find(x=>x.id===prodEditId):null;
+    let prod;
+    if(tipo==='simple'){
+        const pr=num($('#pPrecio').value);
+        if($('#pPrecio').value.trim()===''||pr<0){ msg.textContent='Escribe el precio.'; return; }
+        prod={id:base?base.id:'p'+Date.now().toString(36),nombre,tipo:'simple',precio:+pr.toFixed(2)};
+    }else{
+        const t=collectRows('t').filter(r=>r.t), d=collectRows('d').filter(r=>r.m);
+        if(!t.length){ msg.textContent='Agrega al menos una talla con su precio.'; return; }
+        if(new Set(t.map(r=>r.t.toLowerCase())).size!==t.length){ msg.textContent='Hay tallas repetidas.'; return; }
+        if(new Set(d.map(r=>r.m.toLowerCase())).size!==d.length){ msg.textContent='Hay medidas de diseño repetidas.'; return; }
+        prod={id:base?base.id:'p'+Date.now().toString(36),nombre,tipo:'prenda',tallas:t,disenos:d};
+    }
+    const lista=base?catalogo.map(x=>x.id===base.id?prod:x):[...catalogo,prod];
+    const btn=$('#btnProd'); btn.disabled=true;
+    try{
+        await saveCatalogo(lista);
+        log('catalogo',null,(base?'Editó ':'Agregó ')+nombre);
+        cerrar('mProd'); toast(base?'Producto actualizado.':'Producto agregado.');
+    }catch(e){ console.error(e); toast('No se pudo guardar el producto.','error'); }
+    btn.disabled=false;
+}
+async function guardarEmpaque(){
+    if(!can('catalogo')) return;
+    const v=num($('#eEmp').value);
+    if($('#eEmp').value.trim()===''||v<0){ toast('Escribe un costo válido.','error'); return; }
+    try{ await saveCatalogo(catalogo,+v.toFixed(2)); log('catalogo',null,'Empaque '+fmt(v)); toast('Empaque actualizado.'); }
+    catch(e){ console.error(e); toast('No se pudo guardar.','error'); }
+}
+$('#pTipo').addEventListener('change',syncTipo);
 
 // ══════════════════════════════════════════════
 //  EVENTOS
@@ -1395,6 +1655,20 @@ document.addEventListener('click',e=>{
         case 'rmReg': regItems.splice(+t.dataset.i,1); renderReg(); break;
         case 'rmEdit': editItems.splice(+t.dataset.i,1); renderEdit(); break;
         case 'exportCSV': exportCSV(); break;
+        case 'nueva': go('ventas'); $('#regCard').scrollIntoView({block:'start'}); $('#rNombre').focus({preventScroll:true}); break;
+        case 'restaurar': restaurar(id); break;
+        case 'delVenta': abrirEliminar('venta',id); break;
+        case 'prodDel': abrirEliminar('prod',id); break;
+        case 'delOk': eliminarOk(); break;
+        case 'pagoEdit': abrirPago(id,+t.dataset.i); break;
+        case 'pagoSave': guardarPago(); break;
+        case 'pagoDel': quitarPago(); break;
+        case 'prodNew': abrirProd(); break;
+        case 'prodEdit': abrirProd(id); break;
+        case 'prodSave': guardarProd(); break;
+        case 'empSave': guardarEmpaque(); break;
+        case 'pRowAdd': pdraft.t=collectRows('t'); pdraft.d=collectRows('d'); pdraft[t.dataset.kind].push(t.dataset.kind==='t'?{t:'',p:0}:{m:'',p:0}); drawRows(); { const rows=$$('#'+(t.dataset.kind==='t'?'pTallas':'pDisenos')+' .rowed'); const l=rows[rows.length-1]; if(l) $('input',l).focus(); } break;
+        case 'pRowDel': pdraft.t=collectRows('t'); pdraft.d=collectRows('d'); pdraft[t.dataset.kind].splice(+t.dataset.i,1); drawRows(); break;
         case 'clearFilters': ['fDesde','fHasta','srch'].forEach(i=>$('#'+i).value=''); $('#fEtapa').value='all'; $('#fPago').value='all'; renderTabla(); break;
     }
 });

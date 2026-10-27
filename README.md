@@ -7,7 +7,8 @@ Aplicación de un solo archivo (`index.html`) con Firebase Auth y Firestore. Dom
 - **Panel**: qué atender hoy, facturado del mes, cobrado hoy, por cobrar, entregas atrasadas, caja de hoy y gráficas.
 - **Entregas**: tablero por etapa (procesado, enviado, en agencia, entregado) con guía, alertas por días sin avanzar, historial y opción de deshacer.
 - **Facturación**: comprobante interno correlativo (F-000001), abonos con método y referencia, saldo, anulación con motivo e impresión. No tiene validez fiscal.
-- **Ventas**: registro de pedidos con pago inicial opcional, historial con filtros y exportación a CSV.
+- **Ventas**: registro de pedidos con pago inicial opcional, historial con filtros y exportación a CSV. Cada factura se puede editar (datos, productos, etapa de entrega, pagos), anular, restaurar o eliminar.
+- **Productos** (solo administración): agregar, editar y eliminar productos, tallas y diseños, y el costo de empaque.
 - **Actividad** (solo administración): quién cambió qué y cuándo.
 
 ## Modelo de datos (Firestore)
@@ -17,6 +18,7 @@ ventas/{id}   numero, nombre, cedula, telefono, estado, agencia, items[], costoA
               razonAdicional, empaque, monto, pagos[{fecha,monto,metodo,referencia,por}],
               logistica (procesado|enviado|agencia|entregado), etapaDesde, guia,
               historial[{etapa,fecha,por,nota?}], anulada, motivoAnulacion, fecha
+config/catalogo     { productos[], empaque }   catálogo editable (si no existe se usa el de fábrica)
 contadores/ventas   { ultimo }            correlativo de facturas
 auditoria/{id}      { accion, ventaId, numero, por, fecha, detalle }
 usuarios/{uid}      { rol: "admin" | "ventas" | "despacho" }

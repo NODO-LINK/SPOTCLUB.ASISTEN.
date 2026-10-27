@@ -14,7 +14,7 @@ service cloud.firestore {
     function esAdmin()  { return signedIn() && rol() == 'admin'; }
     function esVentas() { return signedIn() && rol() in ['admin', 'ventas']; }
 
-    // Pedidos: nadie puede borrar. Se anulan con motivo.
+    // Pedidos: solo administración puede borrar. Los demás anulan con motivo (la anulación la hace administración).
     match /ventas/{id} {
       allow read: if signedIn();
       allow create: if esVentas();
@@ -25,7 +25,12 @@ service cloud.firestore {
          request.resource.data.diff(resource.data).affectedKeys()
            .hasOnly(['logistica', 'etapaDesde', 'historial', 'guia']))
       );
-      allow delete: if false;
+      allow delete: if esAdmin();
+    }
+
+    match /config/{id} {
+      allow read: if signedIn();
+      allow write: if esAdmin();
     }
 
     match /contadores/{id} {
