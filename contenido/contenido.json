@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-27-video-tarde",
+      "titulo": "Lo quiero para ayer",
+      "tipo": "Humor",
+      "formato": "Video 9:16 · 17.5 s",
+      "archivos": [
+        "spot-2026-10-27-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-10-27-video-tarde-poster.png",
+      "caption": "Todos tenemos un cliente que lo quiere para ayer 😅 Pídelo con tiempo y sale perfecto 🖤\n#franelaspersonalizadas #cartaspersonalizadas #venezuela #humor #spotclub\nTikTok: Cuando lo quieren para ayer 😭 #emprendedor #venezuela #fyp #humor #spotclub",
+      "fecha": "2026-10-27",
+      "turno": "tarde"
+    },
+    {
       "id": "prueba-animacion-carta",
       "titulo": "PRUEBA ANIMACIÓN · Tu carta gira",
       "tipo": "Animación",
