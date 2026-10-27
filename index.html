@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0c0d0e">
 <link rel="manifest" href="manifest.webmanifest">
@@ -28,6 +28,8 @@
     --s1:#a4abb0;--s2:#86adec;--s3:#e3b45a;--s4:#6fcf9f;--late:#f08a84;color-scheme:dark}
 }
 body{font:400 15px/1.5 var(--body);background:var(--bg);color:var(--ink);min-height:100vh;-webkit-text-size-adjust:100%}
+html,body{touch-action:pan-x pan-y;overflow-x:clip}
+.shell,.shell *{-webkit-tap-highlight-color:transparent}
 button,input,select,textarea{font:inherit;color:inherit}
 ul,ol{list-style:none}
 :focus-visible{outline:2px solid var(--ink);outline-offset:2px}
@@ -344,6 +346,7 @@ td{padding:11px 14px;vertical-align:middle}
   .app-footer{padding-bottom:calc(84px + var(--sb))}
 }
 @media (max-width:640px){
+  input,select,textarea,.field input,.field select,.field textarea,.fi{font-size:16px}
   .g3,.g2{grid-template-columns:minmax(0,1fr)}
   .adic-grid,.abono{grid-template-columns:minmax(0,1fr)}
   .legend{grid-template-columns:minmax(0,1fr)}
@@ -2141,6 +2144,10 @@ function rebuildPiezas(){
     piezasBase=piezasBase.map((p,i)=>({p,i})).sort((a,b)=>(b.p.fecha||'').localeCompare(a.p.fecha||'')||a.i-b.i).map(x=>x.p);
     piezas=[...piezasGen.map(g=>({id:'g_'+g.id,gid:g.id,generada:true,titulo:g.titulo||'Diseño nuevo',tipo:g.tipo||'Generado',formato:g.formato||'',archivos:[g.img],caption:g.caption||''})),...piezasBase];
 }
+
+// sin zoom en el teléfono: ni pellizco ni doble toque (el doble toque ya lo bloquea touch-action)
+['gesturestart','gesturechange','gestureend'].forEach(e=>document.addEventListener(e,ev=>ev.preventDefault()));
+document.addEventListener('touchmove',ev=>{ if(ev.touches&&ev.touches.length>1) ev.preventDefault(); },{passive:false});
 // vuelve a leer la lista de piezas del repositorio para que las nuevas aparezcan sin cerrar la app
 async function refrescarContenido(){
     if(!can('registrar')) return;
