@@ -1,0 +1,49 @@
+rules_version = '2';
+// Reglas propuestas para THE SPOT. NO están desplegadas: revisar y publicar desde
+// Firebase Console > Firestore > Reglas (o con `firebase deploy --only firestore:rules`).
+// Sin documento en usuarios/{uid} se asume rol "admin", igual que el panel, para no dejar a nadie fuera.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function rol() {
+      return exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+        ? get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol
+        : 'admin';
+    }
+    function esAdmin()  { return signedIn() && rol() == 'admin'; }
+    function esVentas() { return signedIn() && rol() in ['admin', 'ventas']; }
+
+    // Pedidos: nadie puede borrar. Se anulan con motivo.
+    match /ventas/{id} {
+      allow read: if signedIn();
+      allow create: if esVentas();
+      allow update: if signedIn() && (
+        esVentas() ||
+        // despacho solo cambia la entrega
+        (rol() == 'despacho' &&
+         request.resource.data.diff(resource.data).affectedKeys()
+           .hasOnly(['logistica', 'etapaDesde', 'historial', 'guia']))
+      );
+      allow delete: if false;
+    }
+
+    match /contadores/{id} {
+      allow read: if signedIn();
+      allow write: if esVentas();
+    }
+
+    // Registro de cambios: cualquiera con sesión escribe, solo administración lee.
+    match /auditoria/{id} {
+      allow create: if signedIn();
+      allow read: if esAdmin();
+      allow update, delete: if false;
+    }
+
+    // Roles: cada persona lee el suyo, solo administración los asigna.
+    match /usuarios/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || esAdmin());
+      allow write: if esAdmin();
+    }
+  }
+}
