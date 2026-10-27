@@ -38,3 +38,19 @@ Definidos con el dueño el 27 de octubre de 2026. La rutina diaria y quien edite
 - Segundo: franela de Evanescence, 500 reproducciones.
 - Promedio del resto: 90 a 300 reproducciones.
 - Lo que funciona: fandom reconocible en el primer segundo, duración corta (10 a 14 s), producto en la mano o puesto.
+
+## Voz y estilo del dueño (27 de octubre de 2026)
+Respuestas del dueño para que el contenido suene como él, porque su comunidad se parece a él.
+- **Tono:** cercano y cálido, de amigo, sin tanta jerga. Hablar normal, sin muletillas inventadas.
+- **Estética:** meme y cultura de internet. Humor visual y formatos de meme, sin perder el negro, blanco y rojo ni el logo.
+- **Humor:** situaciones de cliente, fandom y gustos, humor venezolano del día a día y autohumor del negocio.
+- **Cara:** casi nunca sale. Hablan el producto, las manos y el empaque. No usar fotos con caras de personas.
+- **Lo que mejor pegó:** las cartas personalizadas. Dar prioridad a la carta en la mano y al antes/después.
+- **Historias:** copiar la forma de pantallazos de chats con clientes (con nombre y número tapados), entregas y empaques, y texto simple en pantalla.
+- **Ritmo:** 1 de cada 4 piezas es algo personal o cotidiano (humor, vida del negocio), no solo producto.
+- **No quiere:** texto corporativo ni vender todo el tiempo (nada de "somos líderes en calidad").
+- **Aprendizaje:** el dueño corrige cada pieza; cada corrección se anota aquí abajo y se aplica desde el día siguiente.
+- **Referentes:** el dueño pasará 2 o 3 cuentas para copiar el estilo.
+
+### Correcciones del dueño
+(Se agregan aquí con fecha.)
