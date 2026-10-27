@@ -8,6 +8,7 @@ Aplicación de un solo archivo (`index.html`) con Firebase Auth y Firestore. Dom
 - **Entregas**: tablero por etapa (procesado, enviado, en agencia, entregado) con guía, alertas por días sin avanzar, historial y opción de deshacer.
 - **Facturación**: comprobante interno correlativo (F-000001), abonos con método y referencia, saldo, anulación con motivo e impresión. No tiene validez fiscal.
 - **Ventas**: registro de pedidos con pago inicial opcional, historial con filtros y exportación a CSV. Cada factura se puede editar (datos, productos, etapa de entrega, pagos), anular, restaurar o eliminar.
+- **Clientes**: ficha armada con las ventas, agrupadas por cédula. Muestra pedidos, facturado, pagado, saldo, ticket medio, tiempo de entrega, productos que más compra y notas propias. Al registrar una venta con una cédula conocida ofrece cargar sus datos.
 - **Inventario**: existencias por producto y talla. Cada venta las descuenta; anular o eliminar una factura las repone. Entradas, mermas y conteos con nota, y alertas de poco stock. Vende igual si no alcanza, pero avisa.
 - **Productos** (solo administración): agregar, editar y eliminar productos, tallas y diseños, y el costo de empaque.
 - **Actividad** (solo administración): quién cambió qué y cuándo.
@@ -20,6 +21,7 @@ ventas/{id}   numero, nombre, cedula, telefono, estado, agencia, items[], costoA
               logistica (procesado|enviado|agencia|entregado), etapaDesde, guia,
               historial[{etapa,fecha,por,nota?}], anulada, motivoAnulacion, fecha
 config/catalogo     { productos[], empaque }   catálogo editable (si no existe se usa el de fábrica)
+clientes/{cedula}   { notas, nombre, cedula, actualizado, por }   solo notas; el resto se calcula
 inventario/{id}     { productoId, talla, cantidad, minimo, cargado }   id = producto o producto::talla
 contadores/ventas   { ultimo }            correlativo de facturas
 auditoria/{id}      { accion, ventaId, numero, por, fecha, detalle }

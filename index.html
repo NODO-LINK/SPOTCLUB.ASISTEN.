@@ -209,6 +209,19 @@ a.btn{display:inline-flex;align-items:center;justify-content:center;text-decorat
 .pcard .acts .btn{flex:1}
 .rowed{display:grid;grid-template-columns:minmax(0,1fr) 110px 40px;gap:8px;margin-bottom:8px;align-items:center}
 .rowed .fi{min-height:42px}
+.hint{margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:.88rem}
+.hint[hidden]{display:none}
+.cli-head{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:2px solid var(--ink)}
+.cli-head h3{font:800 1.5rem/1.1 var(--display);letter-spacing:-.02em;overflow-wrap:anywhere}
+.cli-head .meta{margin-top:6px;color:var(--muted);font-size:.9rem;overflow-wrap:anywhere}
+.cli-head .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
+.cstats div{background:var(--bg);border-radius:8px;padding:10px 12px;min-width:0}
+.cstats b{display:block;font:700 1.1rem var(--display);margin-top:4px;overflow-wrap:anywhere}
+.cped li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.cped small{display:block;color:var(--muted);overflow-wrap:anywhere}
+.cped .r{text-align:right}
+.cped .tags{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;margin-top:4px}
 .inv-sum{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:16px;font-size:.9rem;color:var(--muted)}
 .inv-sum b{color:var(--ink);font-family:var(--mono);font-weight:600}
 .cnt{width:90px;min-height:38px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);text-align:right}
@@ -345,6 +358,7 @@ td{padding:11px 14px;vertical-align:middle}
       <button class="nv" type="button" data-act="go" data-view="ent">Entregas <span class="ct" id="ctEnt"></span></button>
       <button class="nv" type="button" data-act="go" data-view="fact">Facturación <span class="ct" id="ctFact"></span></button>
       <button class="nv" type="button" data-act="go" data-view="ventas">Ventas</button>
+      <button class="nv" type="button" data-act="go" data-view="cli">Clientes</button>
       <button class="nv" type="button" data-act="go" data-view="inv">Inventario</button>
       <button class="nv" type="button" data-act="go" data-view="prod">Productos</button>
       <button class="nv" type="button" data-act="go" data-view="act" id="nvAct">Actividad</button>
@@ -379,6 +393,8 @@ td{padding:11px 14px;vertical-align:middle}
                 <div class="field"><label for="selEstado">Estado</label><select id="selEstado" name="estado" required></select></div>
                 <div class="field"><label for="rAgencia">Agencia (código)</label><input type="text" id="rAgencia" name="agencia" placeholder="Ej: MRW-001" required autocomplete="off"></div>
               </div>
+
+              <div id="cliHint" class="hint" hidden></div>
 
               <div class="prod-block">
                 <div class="block-label lbl">Producto</div>
@@ -458,6 +474,7 @@ td{padding:11px 14px;vertical-align:middle}
         </div>
       </section>
 
+      <section id="v-cli" hidden></section>
       <section id="v-inv" hidden></section>
       <section id="v-prod" hidden></section>
       <section id="v-act" hidden></section>
@@ -709,8 +726,8 @@ const DAY = 864e5;
 
 // permisos por rol (sin documento en "usuarios" se asume admin)
 const PERMISOS = {
-    admin:    {views:['panel','ent','fact','ventas','inv','prod','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
-    ventas:   {views:['panel','ent','fact','ventas','inv'],  inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
+    admin:    {views:['panel','ent','fact','ventas','cli','inv','prod','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
+    ventas:   {views:['panel','ent','fact','ventas','cli','inv'],inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
     despacho: {views:['panel','ent'],                        inventario:0, registrar:0, cobrar:0, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1}
 };
 
@@ -778,6 +795,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
 // ══════════════════════════════════════════════
 let user=null, rol='admin', ventas=[], unsub=null, unsubAct=null, unsubCfg=null, actividad=[];
 let delCtx=null, pagoCtx=null, prodEditId=null, pdraft={t:[],d:[]};
+let cliNotas={}, unsubCli=null, selCli=null, cliQ='', cliSort='rec';
 let invMap={}, unsubInv=null, invEdit=false, invFilter='all', stockCtx=null;
 let view='panel', selId=null, lastAction=null;
 const F={ag:'all',late:false,pf:'all'};
@@ -845,7 +863,7 @@ auth.onAuthStateChanged(async u=>{
         $$('#nav .nv').forEach(b=>{ b.hidden=!PERMISOS[rol].views.includes(b.dataset.view); });
         $('#regCard').hidden=!can('registrar');
         go(rol==='despacho'?'ent':'panel');
-        startListener(); startConfig(); startInv();
+        startListener(); startConfig(); startInv(); startCli();
     } else {
         user=null;
         $('#loginPage').hidden=false;
@@ -854,7 +872,8 @@ auth.onAuthStateChanged(async u=>{
         if(unsubAct){unsubAct();unsubAct=null;}
         if(unsubCfg){unsubCfg();unsubCfg=null;}
         if(unsubInv){unsubInv();unsubInv=null;}
-        invMap={}; ventas=[];
+        if(unsubCli){unsubCli();unsubCli=null;}
+        invMap={}; cliNotas={}; ventas=[];
     }
 });
 
@@ -897,8 +916,9 @@ function go(v,o={}){
     view=v;
     if(v==='ent'){F.late=!!o.late;F.ag='all';}
     if(v==='fact'){ if(o.pf) F.pf=o.pf; if(o.sel) selId=o.sel; }
+    if(v==='cli'&&o.cli) selCli=o.cli;
     $$('#nav .nv').forEach(b=>b.dataset.view===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
-    ['panel','ent','fact','ventas','inv','prod','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
+    ['panel','ent','fact','ventas','cli','inv','prod','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
     if(v==='act') startActividad();
     render();
     window.scrollTo({top:0});
@@ -917,6 +937,7 @@ function render(){
     if(view==='ventas') renderTabla();
     if(view==='prod')  renderProd();
     if(view==='inv')   renderInv();
+    if(view==='cli')   renderCli();
     if(view==='ventas') renderReg();
     if(view==='act')   renderActividad();
 }
@@ -1160,6 +1181,7 @@ function detalle(v){
     }
     const acts=`<div class="actrow noprint">`+
         `<button type="button" class="btn ghost sm" data-act="print">Imprimir comprobante</button>`+
+        (can('registrar')?`<button type="button" class="btn ghost sm" data-act="go" data-view="cli" data-cli="${cedKey(v.cedula)}">Ver cliente</button>`:'')+
         `<a class="btn ghost sm" href="${waLink(v,msgEtapa(v))}" target="_blank" rel="noopener">WhatsApp: estado del envío</a>`+
         (!v.anulada&&v.saldo>0?`<a class="btn ghost sm" href="${waLink(v,msgCobro(v))}" target="_blank" rel="noopener">WhatsApp: cobrar saldo</a>`:'')+
         (can('registrar')?`<button type="button" class="btn ghost sm" data-act="edit" data-id="${v.id}">Editar factura</button>`:'')+
@@ -1271,7 +1293,7 @@ function startActividad(){
         if(view==='act') renderActividad();
     },e=>console.error(e));
 }
-const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',stock:'Inventario',anulada:'Factura anulada',restaurada:'Factura restaurada',eliminada:'Factura eliminada',catalogo:'Catálogo modificado',migracion:'Migración'};
+const ACC={etapa:'Cambio de entrega',pago:'Pago registrado',venta:'Venta registrada',editada:'Pedido editado',stock:'Inventario',cliente:'Ficha de cliente',anulada:'Factura anulada',restaurada:'Factura restaurada',eliminada:'Factura eliminada',catalogo:'Catálogo modificado',migracion:'Migración'};
 function renderActividad(){
     const rows=actividad.map(a=>{
         const t=a.fecha&&a.fecha.toMillis?a.fecha.toMillis():Date.now();
@@ -1394,7 +1416,7 @@ $('#regForm').addEventListener('submit', async e=>{
         log('venta',{id:vref.id,numero},fmt(total));
         e.target.reset(); regItems=[]; regAdic={monto:0,razon:''};
         $('#reg-chk-adic').checked=false; $('#reg-adic-blk').classList.add('hidden');
-        regSel.reset(); renderReg();
+        regSel.reset(); renderReg(); checkCliente();
         toast(`Venta registrada como F-${String(numero).padStart(6,'0')}.`+(faltan.length?' Atención: no alcanza el stock de '+faltan.length+' producto(s).':''));
     }catch(err){ console.error(err); toast('No se pudo registrar la venta.','error'); }
     btn.textContent='Registrar venta'; btn.disabled=!regItems.length;
@@ -1422,7 +1444,7 @@ function renderTabla(){
     tb.innerHTML=data.map(v=>`<tr class="${v.anulada?'anul':''}">`+
         `<td class="mono">${esc(inv(v))}</td>`+
         `<td style="white-space:nowrap;color:var(--muted)">${fdate(v.fechaMs)}</td>`+
-        `<td><strong>${esc(v.nombre)}</strong><br><span style="font-size:.78rem;color:var(--muted)">${esc(v.cedula)}</span></td>`+
+        `<td>${can('registrar')?`<button type="button" class="linkbtn" style="font-size:.88rem;font-weight:700;text-decoration:none" data-act="go" data-view="cli" data-cli="${cedKey(v.cedula)}">${esc(v.nombre)}</button>`:`<strong>${esc(v.nombre)}</strong>`}<br><span style="font-size:.78rem;color:var(--muted)">${esc(v.cedula)}</span></td>`+
         `<td style="max-width:240px;font-size:.84rem">${esc(descProd(v))}</td>`+
         `<td class="num" style="font-weight:700;white-space:nowrap">${fmt(v.total)}</td>`+
         `<td><span class="bd c-${v.pstate}">${PAGO_LBL[v.pstate]}</span></td>`+
@@ -1812,13 +1834,122 @@ async function guardarStock(){
 $('#sMov').addEventListener('change',()=>{ $('#sCantL').textContent=$('#sMov').value==='fijar'?'Cantidad real':'Cantidad'; });
 
 // ══════════════════════════════════════════════
+//  CLIENTES (ficha armada con las ventas, agrupadas por cédula)
+// ══════════════════════════════════════════════
+function cedKey(c){
+    const a=String(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+    const m=a.match(/^[VEJGP]?(\d+)$/);
+    return m?m[1]:a;
+}
+const prodDe = it=>it.productoNombre||(it.categoria==='carta'?'Carta':it.categoria==='poster'?'Poster':(nameOf(it.tipoPrenda)||'Prenda'));
+function clientes(){
+    const m=new Map();
+    ventas.forEach(v=>{ const k=cedKey(v.cedula); if(!k) return; if(!m.has(k)) m.set(k,[]); m.get(k).push(v); });
+    return [...m.entries()].map(([key,list])=>{
+        const vs=list.slice().sort((a,b)=>b.fechaMs-a.fechaMs), act=vs.filter(v=>!v.anulada), l=vs[0];
+        const total=act.reduce((s,v)=>s+v.total,0);
+        return {key,nombre:l.nombre,cedula:l.cedula,telefono:l.telefono,estado:l.estado,agencia:l.agencia,
+            pedidos:vs,n:act.length,total,pagado:act.filter(v=>!v.legacy).reduce((s,v)=>s+v.pagado,0),
+            saldo:act.reduce((s,v)=>s+v.saldo,0),ultima:l.fechaMs,primera:vs[vs.length-1].fechaMs};
+    });
+}
+function startCli(){
+    if(unsubCli){unsubCli();unsubCli=null;}
+    if(!can('registrar')) return;
+    unsubCli=db.collection('clientes').onSnapshot(s=>{
+        cliNotas={}; s.docs.forEach(d=>{ cliNotas[d.id]=d.data(); });
+        if(view==='cli') renderCli();
+    },e=>console.warn('clientes',e));
+}
+function listaClientes(){
+    const q=cliQ.toLowerCase().trim();
+    let l=clientes().filter(c=>!q||c.nombre.toLowerCase().includes(q)||String(c.cedula).toLowerCase().includes(q)||cedKey(q)&&c.key.includes(cedKey(q))||String(c.telefono).replace(/\D/g,'').includes(q.replace(/\D/g,'')||'§'));
+    if(cliSort==='tot') l.sort((a,b)=>b.total-a.total);
+    else if(cliSort==='sal') l=l.filter(c=>c.saldo>0).sort((a,b)=>b.saldo-a.saldo);
+    else l.sort((a,b)=>b.ultima-a.ultima);
+    return l;
+}
+function cliRows(l){
+    return l.map(c=>`<button type="button" class="frow" data-act="cliSel" data-k="${esc(c.key)}" aria-current="${c.key===selCli}">`+
+        `<div><strong>${esc(c.nombre)}</strong><small>${esc(c.cedula)} · ${pl(c.n,'pedido','pedidos')}</small></div>`+
+        `<div class="amt num">${fmt(c.total)}${c.saldo>0?`<br><span class="bd c-parcial">Debe ${fmt(c.saldo)}</span>`:''}</div></button>`).join('')||'<p class="empty">No hay clientes con este filtro.</p>';
+}
+function renderCli(){
+    const todos=clientes(), l=listaClientes();
+    if(!todos.some(c=>c.key===selCli)) selCli=l.length?l[0].key:null;
+    const chips=[['rec','Más recientes'],['tot','Mayor compra'],['sal','Con saldo']].map(x=>`<button type="button" class="chip" data-act="cliSort" data-s="${x[0]}" aria-pressed="${cliSort===x[0]}">${x[1]}</button>`).join('');
+    const c=todos.find(x=>x.key===selCli);
+    keep($('#v-cli'),()=>{
+        $('#v-cli').innerHTML=
+          `<div class="pane-head"><h3>Clientes</h3><span>${pl(todos.length,'cliente','clientes')} · agrupados por cédula</span></div>`+
+          `<div class="toolbar"><input type="search" id="cliQ" class="fi" style="width:260px" placeholder="Buscar nombre, cédula o teléfono" aria-label="Buscar cliente" value="${esc(cliQ)}">${chips}</div>`+
+          `<div class="fact"><div class="flist" id="cliRows">${cliRows(l)}</div><div>${c?fichaCli(c):'<p class="empty">Aún no hay clientes.</p>'}</div></div>`;
+    });
+}
+function fichaCli(c){
+    const nota=cliNotas[c.key]?cliNotas[c.key].notas||'':'';
+    const pend=c.pedidos.filter(v=>v.saldo>0);
+    const fav={}; c.pedidos.filter(v=>!v.anulada).forEach(v=>v.items.forEach(it=>{ const k=prodDe(it); fav[k]=(fav[k]||0)+1; }));
+    const favs=Object.entries(fav).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,n])=>`${esc(k)} (${n})`).join(' · ')||'—';
+    const entreg=c.pedidos.filter(v=>v.etapa==='entregado'&&!v.legacy&&!v.anulada&&v.historial.length).map(v=>(v.desde-v.fechaMs)/DAY).filter(x=>x>=0);
+    const dias=entreg.length?(entreg.reduce((a,b)=>a+b,0)/entreg.length).toFixed(1).replace('.',',')+' d':'—';
+    const cobro=pend.length?`Hola ${c.nombre.split(' ')[0]}, te escribimos de The Spot. Tienes ${pl(pend.length,'pedido','pedidos')} con saldo pendiente por ${fmt(c.saldo)} (${pend.map(inv).join(', ')}). ¡Gracias!`:'';
+    const wa=txt=>'https://wa.me/'+waNum(c.telefono)+'?text='+encodeURIComponent(txt);
+    const peds=c.pedidos.map(v=>`<li><div><strong>${esc(inv(v))}</strong> · ${fdate(v.fechaMs)}<small>${esc(descProd(v))}</small></div><div class="r"><span class="num" style="font-weight:700">${fmt(v.total)}</span><div class="tags"><span class="bd c-${v.pstate}">${PAGO_LBL[v.pstate]}</span><span class="bd c-${v.etapa}">${etapaDef(v.etapa).l}</span></div>${v.legacy?'':`<button type="button" class="linkbtn" data-act="go" data-view="fact" data-sel="${v.id}">Ver factura</button>`}</div></li>`).join('');
+    return `<div class="paper">`+
+      `<div class="cli-head"><div><h3>${esc(c.nombre)}</h3><p class="meta"><span class="mono">${esc(c.cedula)}</span> · <span class="mono">${esc(c.telefono)}</span><br>${esc(c.estado||'')} · ${esc(c.agencia||'')}</p>`+
+      `<div class="tags">${c.n>=3?'<span class="bd c-ok">Cliente frecuente</span>':''}${c.saldo>0?`<span class="bd c-parcial">Saldo ${fmt(c.saldo)}</span>`:''}${c.n===1?'<span class="bd c-sin">Primera compra</span>':''}</div></div>`+
+      `<div class="actrow" style="margin:0"><a class="btn ghost sm" href="${wa('Hola '+c.nombre.split(' ')[0]+', te escribimos de The Spot.')}" target="_blank" rel="noopener">WhatsApp</a>${cobro?`<a class="btn ghost sm" href="${wa(cobro)}" target="_blank" rel="noopener">Cobrar saldo</a>`:''}</div></div>`+
+      `<div class="cstats">`+
+        `<div><h4>Pedidos</h4><b class="num">${c.n}</b></div><div><h4>Facturado</h4><b class="num">${fmt(c.total)}</b></div>`+
+        `<div><h4>Pagado</h4><b class="num">${fmt(c.pagado)}</b></div><div><h4>Saldo</h4><b class="num">${fmt(c.saldo)}</b></div>`+
+        `<div><h4>Ticket medio</h4><b class="num">${c.n?fmt(c.total/c.n):'—'}</b></div><div><h4>Entrega media</h4><b class="num">${dias}</b></div>`+
+        `<div><h4>Primera compra</h4><b>${fshort(c.primera)}</b></div><div><h4>Última compra</h4><b>${fshort(c.ultima)}</b></div>`+
+      `</div>`+
+      `<div class="sub"><h4>Compra más seguido</h4><p style="margin-top:4px">${favs}</p></div>`+
+      `<div class="sub"><h4>Pedidos</h4><ul class="cped" style="border-top:1px solid var(--line);margin-top:6px">${peds}</ul></div>`+
+      `<div class="sub"><div class="field"><label for="cliNota">Notas del cliente</label><textarea id="cliNota" data-k="${esc(c.key)}" placeholder="Ej: prefiere retirar en agencia, pide factura a nombre de empresa…">${esc(nota)}</textarea></div><div class="actrow"><button type="button" class="btn sm" data-act="cliNota" data-k="${esc(c.key)}">Guardar notas</button></div></div>`+
+    `</div>`;
+}
+async function guardarNota(k){
+    if(!can('registrar')) return;
+    const c=clientes().find(x=>x.key===k); if(!c) return;
+    const txt=$('#cliNota').value.trim();
+    try{
+        await db.collection('clientes').doc(k).set({notas:txt,nombre:c.nombre,cedula:c.cedula,actualizado:FV.serverTimestamp(),por:user.email},{merge:true});
+        log('cliente',null,c.nombre+': notas actualizadas');
+        $('#cliNota').defaultValue=txt; toast('Notas guardadas.');
+    }catch(e){ console.error(e); toast('No se pudieron guardar las notas.','error'); }
+}
+// aviso en el registro cuando la cédula ya existe
+function checkCliente(){
+    const hint=$('#cliHint'), k=cedKey($('#rCedula').value);
+    const c=k.length>=5?clientes().find(x=>x.key===k):null;
+    if(!c){ hint.hidden=true; hint.innerHTML=''; return; }
+    hint.hidden=false;
+    hint.innerHTML=`<span>Cliente existente: <strong>${esc(c.nombre)}</strong> · ${pl(c.n,'pedido','pedidos')}${c.saldo>0?' · debe '+fmt(c.saldo):''}</span>`+
+        `<button type="button" class="btn ghost sm" data-act="cliUsar" data-k="${esc(c.key)}">Usar sus datos</button>`+
+        `<button type="button" class="linkbtn" data-act="go" data-view="cli" data-cli="${esc(c.key)}">Ver ficha</button>`;
+}
+function usarCliente(k){
+    const c=clientes().find(x=>x.key===k); if(!c) return;
+    $('#rNombre').value=c.nombre||''; $('#rTel').value=c.telefono||''; $('#rAgencia').value=c.agencia||'';
+    if(ESTADOS.includes(c.estado)) $('#selEstado').value=c.estado;
+    toast('Datos del cliente cargados.');
+}
+$('#rCedula').addEventListener('input',checkCliente);
+document.addEventListener('input',e=>{
+    if(e.target.id==='cliQ'){ cliQ=e.target.value; $('#cliRows').innerHTML=cliRows(listaClientes()); }
+});
+
+// ══════════════════════════════════════════════
 //  EVENTOS
 // ══════════════════════════════════════════════
 document.addEventListener('click',e=>{
     const t=e.target.closest('[data-act]'); if(!t) return;
     const id=t.dataset.id;
     switch(t.dataset.act){
-        case 'go':   go(t.dataset.view,{late:!!t.dataset.late,pf:t.dataset.pf,sel:t.dataset.sel}); break;
+        case 'go':   go(t.dataset.view,{late:!!t.dataset.late,pf:t.dataset.pf,sel:t.dataset.sel,cli:t.dataset.cli}); break;
         case 'logout': auth.signOut(); break;
         case 'adv':  { const v=byId(id); if(v) setEtapa(id,ETAPAS[etapaIdx(v.etapa)+1].k); } break;
         case 'back': { const v=byId(id); if(v) setEtapa(id,ETAPAS[etapaIdx(v.etapa)-1].k,'corrección'); } break;
@@ -1838,6 +1969,10 @@ document.addEventListener('click',e=>{
         case 'rmReg': regItems.splice(+t.dataset.i,1); renderReg(); break;
         case 'rmEdit': editItems.splice(+t.dataset.i,1); renderEdit(); break;
         case 'exportCSV': exportCSV(); break;
+        case 'cliSel': selCli=t.dataset.k; renderCli(); break;
+        case 'cliSort': cliSort=t.dataset.s; renderCli(); break;
+        case 'cliNota': guardarNota(t.dataset.k); break;
+        case 'cliUsar': usarCliente(t.dataset.k); break;
         case 'invEditar': invEdit=true; renderInv(); break;
         case 'invCancel': invEdit=false; renderInv(); break;
         case 'invSave': guardarConteo(); break;

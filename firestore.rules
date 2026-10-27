@@ -39,6 +39,11 @@ service cloud.firestore {
       allow write: if esVentas();
     }
 
+    // Notas de clientes (la ficha en sí se arma con las ventas).
+    match /clientes/{id} {
+      allow read, write: if esVentas();
+    }
+
     match /contadores/{id} {
       allow read: if signedIn();
       allow write: if esVentas();
