@@ -2,6 +2,17 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-28-buenas-noches",
+      "titulo": "Buenas noches · Story",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-28-buenas-noches.png"
+      ],
+      "caption": "Story: agrega el sticker de música o una cuenta regresiva para mañana.\nCerramos el día 🖤 Descansa que mañana hay más.\nCuéntanos cómo te fue hoy 👇\n#buenasnoches #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-10-28"
+    },
+    {
       "id": "2026-10-28-video-animado",
       "titulo": "Así se hace tu franela",
       "tipo": "Animación",
