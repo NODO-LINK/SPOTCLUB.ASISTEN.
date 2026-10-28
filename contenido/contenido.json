@@ -2,6 +2,51 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-28-video",
+      "titulo": "¿Qué banda llevarías?",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-10-28-video.mp4"
+      ],
+      "poster": "spot-2026-10-28-video-poster.png",
+      "caption": "¿Qué sonido llevarías en tu franela? 1, 2 o 3 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #rock #streetwear",
+      "fecha": "2026-10-28"
+    },
+    {
+      "id": "2026-10-28-flyer-3",
+      "titulo": "Estilo sin permiso",
+      "tipo": "Marca",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-28-flyer-3.png"
+      ],
+      "caption": "Estilo sin pedir permiso 🖤 Tú pones la idea, nosotros la estampamos.\nEscríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #estilo #streetwear",
+      "fecha": "2026-10-28"
+    },
+    {
+      "id": "2026-10-28-flyer-2",
+      "titulo": "Tu diseño en 3 pasos",
+      "tipo": "Proceso",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-28-flyer-2.png"
+      ],
+      "caption": "Story: agrega el sticker de enlace a tu DM con el texto «Pídela por DM».",
+      "fecha": "2026-10-28"
+    },
+    {
+      "id": "2026-10-28-flyer-1",
+      "titulo": "¿Qué artista no puede faltar?",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-28-flyer-1.png"
+      ],
+      "caption": "¿Cuál es ese artista que no puede faltar en tu vida? Cuéntanos 👇🖤\nHacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #musica #streetwear",
+      "fecha": "2026-10-28"
+    },
+    {
       "id": "2026-10-28-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
