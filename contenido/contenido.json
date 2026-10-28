@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-28-video-animado",
+      "titulo": "Así se hace tu franela",
+      "tipo": "Animación",
+      "formato": "Video 9:16 · 15 s",
+      "archivos": [
+        "spot-2026-10-28-video-animado.mp4"
+      ],
+      "poster": "spot-2026-10-28-video-animado-poster.png",
+      "caption": "Así se hace tu franela, paso a paso 🖤 Tú pones el diseño, nosotros hacemos el resto.\nEscríbenos al DM 📩\n#franelaspersonalizadas #dtf #venezuela #parati #spotclub\nTikTok: Así se hace tu franela personalizada 🔥 #dtf #emprendedor #venezuela #fyp #spotclub",
+      "fecha": "2026-10-28",
+      "turno": "tarde"
+    },
+    {
       "id": "2026-10-28-video",
       "titulo": "¿Qué banda llevarías?",
       "tipo": "Video",
