@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-29-video-tarde",
+      "titulo": "Pedir en Spot es fácil",
+      "tipo": "Proceso",
+      "formato": "Video 9:16 · 17.5 s",
+      "archivos": [
+        "spot-2026-10-29-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-10-29-video-tarde-poster.png",
+      "caption": "Pedir tu franela es más fácil de lo que crees 🖤 Escríbenos y empezamos.\n#franelaspersonalizadas #dtf #venezuela #parati #spotclub\nTikTok: Así de fácil es pedir tu franela 👀 #emprendedor #venezuela #fyp #dtf #spotclub",
+      "fecha": "2026-10-29",
+      "turno": "tarde"
+    },
+    {
       "id": "2026-10-29-video",
       "titulo": "¿Qué pides primero?",
       "tipo": "Video",
