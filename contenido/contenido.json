@@ -2,6 +2,28 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-30-buenos-dias-2",
+      "titulo": "Buenos días · Story",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-30-buenos-dias-2.png"
+      ],
+      "caption": "Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.",
+      "fecha": "2026-10-30"
+    },
+    {
+      "id": "2026-10-30-buenos-dias-1",
+      "titulo": "Buenos días · Post",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-30-buenos-dias-1.png"
+      ],
+      "caption": "Buenos días 🖤 Que sea un día bueno para ti y los tuyos.\n¿Qué estás escuchando para empezar? 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-10-30"
+    },
+    {
       "id": "2026-10-29-buenas-noches",
       "titulo": "Buenas noches · Story",
       "tipo": "Comunidad",
