@@ -2,6 +2,51 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-30-video",
+      "titulo": "¿Qué estrenas este finde?",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-10-30-video.mp4"
+      ],
+      "poster": "spot-2026-10-30-video-poster.png",
+      "caption": "¿Qué estrenas este finde? 1, 2 o 3 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #finde #streetwear",
+      "fecha": "2026-10-30"
+    },
+    {
+      "id": "2026-10-30-flyer-3",
+      "titulo": "VIZZION Vol. 01",
+      "tipo": "Drop privado",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-30-flyer-3.png"
+      ],
+      "caption": "Story de teaser: agrega el sticker de cuenta regresiva o de música. No se vende todavía: es un drop privado.\n#vizzion #spotclub",
+      "fecha": "2026-10-30"
+    },
+    {
+      "id": "2026-10-30-flyer-2",
+      "titulo": "Tu póster, tu pared",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-30-flyer-2.png"
+      ],
+      "caption": "Tu cuarto merece verse como tú 👇🖤\nHacemos pósters, cartas y franelas personalizadas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #decoracion #streetwear",
+      "fecha": "2026-10-30"
+    },
+    {
+      "id": "2026-10-30-flyer-1",
+      "titulo": "¿Qué serie verías de nuevo?",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-30-flyer-1.png"
+      ],
+      "caption": "¿Cuál es esa serie que verías mil veces? Cuéntanos 👇🖤\nHacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #anime #streetwear",
+      "fecha": "2026-10-30"
+    },
+    {
       "id": "2026-10-30-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
