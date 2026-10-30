@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-30-video-animado",
+      "titulo": "Tu carta gira",
+      "tipo": "Animación",
+      "formato": "Video 9:16 · 15 s",
+      "archivos": [
+        "spot-2026-10-30-video-animado.mp4"
+      ],
+      "poster": "spot-2026-10-30-video-animado-poster.png",
+      "caption": "Tu carta, con tu personaje 🖤 ¿Qué mundo eliges?\nEscríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #coleccion #spotclub\nTikTok: Tu carta con tu personaje favorito 😮 #cartas #venezuela #fyp #anime #spotclub",
+      "fecha": "2026-10-30",
+      "turno": "tarde"
+    },
+    {
       "id": "2026-10-30-video",
       "titulo": "¿Qué estrenas este finde?",
       "tipo": "Video",
