@@ -2,6 +2,62 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-31-video",
+      "titulo": "¿De qué te disfrazas?",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-10-31-video.mp4"
+      ],
+      "poster": "spot-2026-10-31-video-poster.png",
+      "caption": "¿De qué te disfrazas esta noche? 1, 2 o 3 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#halloween #franelaspersonalizadas #venezuela #parati #streetwear",
+      "fecha": "2026-10-31"
+    },
+    {
+      "id": "2026-10-31-festivo",
+      "titulo": "Feliz Halloween",
+      "tipo": "Fecha especial",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-31-festivo.png"
+      ],
+      "caption": "Feliz Halloween 🎃🖤 Que tu estilo dé miedo hoy.\nEscríbenos al DM y hacemos tu franela 📩\n#halloween #franelaspersonalizadas #venezuela #parati #spotclub",
+      "fecha": "2026-10-31"
+    },
+    {
+      "id": "2026-10-31-flyer-3",
+      "titulo": "You look like success",
+      "tipo": "Marca",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-31-flyer-3.png"
+      ],
+      "caption": "You look like success 🖤\nHacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #spotclub #streetwear",
+      "fecha": "2026-10-31"
+    },
+    {
+      "id": "2026-10-31-flyer-2",
+      "titulo": "Envíos a todo el país",
+      "tipo": "Proceso",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-10-31-flyer-2.png"
+      ],
+      "caption": "Story: agrega el sticker de enlace a tu DM con el texto «Pídela por DM».",
+      "fecha": "2026-10-31"
+    },
+    {
+      "id": "2026-10-31-flyer-1",
+      "titulo": "¿Qué película verías mil veces?",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-10-31-flyer-1.png"
+      ],
+      "caption": "¿Cuál es esa película que verías mil veces? Cuéntanos 👇🖤\nHacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #peliculas #streetwear",
+      "fecha": "2026-10-31"
+    },
+    {
       "id": "2026-10-31-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
