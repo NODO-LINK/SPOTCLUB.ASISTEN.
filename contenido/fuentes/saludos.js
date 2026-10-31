@@ -27,7 +27,7 @@ const CAP_NOCHES=[
  'Buenas noches 🌙 Gracias por estar siempre.\nNos vemos mañana con más diseños 🖤'];
 const HASH_D='#buenosdias #spotclub #venezuela #parati #streetwear', HASH_N='#buenasnoches #spotclub #venezuela #parati #streetwear';
 // solo fotos limpias de producto: sin texto propio, sin personas y sin VIZZION (drop privado)
-const PERMITIDAS=['foto-17871661122584133.jpg','foto-17903121954263028.jpg','foto-17880306417689229.jpg','foto-17862699969516372.jpg','foto-17905045452222024.jpg'];
+const PERMITIDAS=['foto-17871661122584133.jpg','foto-17903121954263028.jpg','foto-17880306417689229.jpg','foto-17862699969516372.jpg'];
 const fotos=fs.readdirSync(path.join(dir,'material')).filter(f=>PERMITIDAS.includes(f)).sort();
 const ft=k=>fotos.length?'contenido/material/'+pick(fotos,k):undefined;
 const manif=JSON.parse(fs.readFileSync(path.join(dir,'contenido.json'),'utf8'));
