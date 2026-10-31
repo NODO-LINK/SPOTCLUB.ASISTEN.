@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-10-31-video-tarde",
+      "titulo": "Esta noche nadie lleva la tuya",
+      "tipo": "Fecha especial",
+      "formato": "Video 9:16 · 17.5 s",
+      "archivos": [
+        "spot-2026-10-31-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-10-31-video-tarde-poster.png",
+      "caption": "Esta noche todos se disfrazan, pero nadie lleva la tuya 🎃🖤 Feliz Halloween.\n#halloween #franelaspersonalizadas #venezuela #parati #spotclub\nTikTok: Cuando todos se disfrazan y tú llevas tu propia franela 😎 #halloween #venezuela #fyp #emprendedor #spotclub",
+      "fecha": "2026-10-31",
+      "turno": "tarde"
+    },
+    {
       "id": "2026-10-31-video",
       "titulo": "¿De qué te disfrazas?",
       "tipo": "Video",
