@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-01-video-animado",
+      "titulo": "De tu idea a tu franela",
+      "tipo": "Animación",
+      "formato": "Video 9:16 · 15 s",
+      "archivos": [
+        "spot-2026-11-01-video-animado.mp4"
+      ],
+      "poster": "spot-2026-11-01-video-animado-poster.png",
+      "caption": "De tu idea a tu franela en 4 pasos 🖤 Tú pones el diseño, nosotros hacemos el resto.\nEscríbenos al DM 📩\n#franelaspersonalizadas #dtf #venezuela #parati #spotclub\nTikTok: De tu idea a tu franela, paso a paso 🔥 #dtf #emprendedor #venezuela #fyp #spotclub",
+      "fecha": "2026-11-01",
+      "turno": "tarde"
+    },
+    {
       "id": "2026-11-01-video",
       "titulo": "¿Cómo es tu domingo?",
       "tipo": "Video",
