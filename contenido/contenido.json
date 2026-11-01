@@ -2,6 +2,51 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-01-video",
+      "titulo": "¿Cómo es tu domingo?",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-01-video.mp4"
+      ],
+      "poster": "spot-2026-11-01-video-poster.png",
+      "caption": "¿Cómo es tu domingo ideal? 1, 2 o 3 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #domingo #streetwear",
+      "fecha": "2026-11-01"
+    },
+    {
+      "id": "2026-11-01-flyer-3",
+      "titulo": "Sin filtros",
+      "tipo": "Marca",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-01-flyer-3.png"
+      ],
+      "caption": "Story: agrega el sticker de pregunta «¿Qué diseño te haría falta?».",
+      "fecha": "2026-11-01"
+    },
+    {
+      "id": "2026-11-01-flyer-2",
+      "titulo": "Tu colección de cartas",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-01-flyer-2.png"
+      ],
+      "caption": "Arma tu colección con el personaje que más te gusta 👇🖤\nHacemos cartas personalizadas. Escríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #coleccion #streetwear",
+      "fecha": "2026-11-01"
+    },
+    {
+      "id": "2026-11-01-flyer-1",
+      "titulo": "¿Qué canción te define?",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-01-flyer-1.png"
+      ],
+      "caption": "¿Cuál es la canción que te define? Cuéntanos 👇🖤\nHacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #musica #streetwear",
+      "fecha": "2026-11-01"
+    },
+    {
       "id": "2026-11-01-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
