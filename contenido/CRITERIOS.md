@@ -87,3 +87,12 @@ Segundo video del día, además del de las 6:30 a. m. (que sigue igual: oferta a
 - Los videos también pueden ser **animación dibujada** para variar (sin fotos): `node contenido/fuentes/video-animado.js especificacion.json` (formato en la cabecera del script). Dos plantillas: `proceso` (diseño, impresión DTF, prensa y franela lista) y `carta` (una carta que gira y se revela, con 4 fandoms en texto).
 - Todo es dibujo propio con la marca: nada de personajes ni logos con derechos de autor. Mismos efectos de sonido sencillos, 15 s, vertical 9:16, sin precio salvo en producto.
 - **Rotación del video de la tarde** (n = días desde 2026-10-27): n par → texto animado sobre fotos (`video-tarde.js`, tema según n módulo 4); n impar → animación dibujada, `proceso` si (n−1)/2 es par y `carta` si es impar. En fechas especiales manda el video especial.
+
+## Franela real obligatoria en los flyers (2 de noviembre de 2026)
+Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mockup con la franela real**, nunca la franela dibujada.
+- La base es la foto `contenido/mockups/base-franela-negra-frente.jpg` (franela negra de frente). `contenido/fuentes/mockup_franela.py` estampa el diseño sobre la tela real, con sus sombras y pliegues, y `contenido/fuentes/premium.js` arma el flyer o el mockup.
+- **En la corrida de las 8:00**, al menos 1 de los 3 flyers (el de Producto o Proceso) se hace con `premium.js` y no con `diario.js`: `node contenido/fuentes/premium.js /tmp/premium.json`. Lleva `id`, `titulo`, `tipo`, `caption` y `fecha` para que aparezca en el panel, `"fondo"` con una foto limpia de `contenido/material/` (nada de escenas dibujadas genéricas: el dueño no las quiere), `"diseno"` con un PNG de `contenido/disenos/` (rotar los que haya; si no hay ninguno, `contenido/logo-spotclub.png`), pretítulo "FRANELAS PERSONALIZADAS", `datos` ["DESDE 1 PIEZA","IMPRESIÓN DTF","ENVÍOS NACIONALES"], `insignia` "PÍDELA POR DM", `sello` ["3 A 5 DÍAS","HÁBILES"] y `pie` "Maracaibo · @spot__club". **Sin precio.**
+- En fechas especiales se usa el tema de la fecha (`"tema":"halloween"`, etc.) solo cuando exista una escena hecha; si no, se usa `fondo` con foto propia.
+- Revisar el PNG con Read: ningún texto cortado y la prenda sin recortes raros.
+- Los mockups de cada diseño nuevo de `contenido/disenos/` se generan con `"modo":"mockup"` y se agregan al panel como tipo "Producto".
+- Solo existe franela negra de frente. Para blanca, hoodie o espalda hace falta otra foto base limpia del dueño.

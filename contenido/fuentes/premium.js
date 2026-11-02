@@ -3,7 +3,11 @@
 // especificacion.json: { "salida":"muestra-halloween", "tema":"halloween|navidad|... (ver ESCENAS)", "formato":"post|story",
 //   "marca":"SPOT CLUB", "pretitulo":"FRANELAS PERSONALIZADAS", "l1":"TU ESTILO", "l2":"DA MIEDO",
 //   "datos":["DESDE 1 PIEZA","IMPRESIÓN DTF","ENVÍOS A TODO EL PAÍS"], "insignia":"PÍDELA POR DM", "sello":["3 A 5 DÍAS","HÁBILES"],
-//   "pie":"Maracaibo · @spot__club", "producto":"franela|carta", "diseno":"contenido/logo-spotclub.png", "colorProducto":"#0b0b0f" }
+//   "pie":"Maracaibo · @spot__club", "diseno":"contenido/disenos/x.png" (PNG transparente; si falta, logo-spotclub.png),
+//   "fondo":"contenido/material/foto-x.jpg" (opcional: foto propia o imagen generada fuera en lugar de la escena dibujada),
+//   "id","titulo","tipo","caption","fecha" (opcionales: si hay id, la pieza se agrega al panel)
+//   "modo":"mockup" (opcional: la prenda sola en estudio, 1080x1080, con "nombre" arriba) }
+// La prenda es SIEMPRE la foto real contenido/mockups/base-franela-negra-frente.jpg (ver mockup_franela.py).
 // El diseño se estampa sobre la prenda. Sin precio en los flyers (criterio del dueño).
 const {chromium}=require('playwright');
 const fs=require('fs');const path=require('path');
@@ -221,4 +225,8 @@ window.hacer=async s=>{
     spec.franelaData='data:image/png;base64,'+fs.readFileSync(tmp).toString('base64'); }
   const data=await p.evaluate(s=>spec_modo(s),spec);
   const out=path.join(dir,'spot-'+spec.salida+'.png'); fs.writeFileSync(out,Buffer.from(data.split(',')[1],'base64')); await b.close(); console.log('ok',out);
+  // si trae id, la pieza se agrega al panel (Contenido), igual que diario.js
+  if(spec.id){ const mp=path.join(dir,'contenido.json'), m=JSON.parse(fs.readFileSync(mp,'utf8')), FORM={post:'Post 4:5',story:'Story 9:16',mockup:'Mockup 1:1'};
+    const e={id:spec.id,titulo:spec.titulo,tipo:spec.tipo||'Producto',formato:FORM[spec.modo==='mockup'?'mockup':(spec.formato||'post')],archivos:['spot-'+spec.salida+'.png'],caption:spec.caption||'',fecha:spec.fecha};
+    const i=m.piezas.findIndex(q=>q.id===spec.id); if(i>=0) m.piezas[i]=e; else m.piezas.unshift(e); fs.writeFileSync(mp,JSON.stringify(m,null,2)+'\n'); console.log('en el panel:',spec.id); }
 })();
