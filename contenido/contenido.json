@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-02-video-tarde",
+      "titulo": "Tu fandom en tu franela",
+      "tipo": "Fandom",
+      "formato": "Video 9:16 · 17.5 s",
+      "archivos": [
+        "spot-2026-11-02-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-02-video-tarde-poster.png",
+      "caption": "Si te gusta algo de verdad, que se note 🖤 Anime, rock, series o lo que sea tuyo.\n#franelaspersonalizadas #fandom #venezuela #parati #spotclub\nTikTok: Tu fandom merece estar en tu franela 😮 #anime #series #venezuela #fyp #spotclub",
+      "fecha": "2026-11-02",
+      "turno": "tarde"
+    },
+    {
       "id": "mockup-retrato-collage",
       "titulo": "Mockup · Retrato Collage",
       "tipo": "Producto",
