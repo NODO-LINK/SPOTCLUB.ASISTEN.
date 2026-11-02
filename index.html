@@ -407,25 +407,48 @@ td{padding:11px 14px;vertical-align:middle}
   #printArea .rc{max-width:560px;margin:0 auto}
   #printArea *{color:#000!important;background:transparent!important}
   .noprint{display:none!important}
-  #printArea.t80,#printArea.t58{font:600 12px/1.35 'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace}
-  #printArea .tk{position:relative;padding:2mm 0}
+  #printArea.t80,#printArea.t58{font:700 10px/1.3 'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;margin:0 auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printArea.t80{width:72mm;font-size:12px}
+  #printArea.t58{width:48mm}
+  #printArea .tk{position:relative;padding:0 0 9mm}
   #printArea .tk>*:not(.tk-wm){position:relative}
-  #printArea .tk-wm{position:absolute;left:50%;top:50%;width:92%;transform:translate(-50%,-50%);opacity:.1;z-index:0}
-  #printArea .tk-lg{width:28mm;max-width:70%;height:auto;margin-bottom:1mm}
-  #printArea.t58 .tk-lg{width:22mm}
-  #printArea .tk-marca{font:900 2.1em/1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:-.02em}
-  #printArea .tk-slogan{font:800 .78em/1.2 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.12em}
-  #printArea.t80{width:72mm;margin:0 auto}
-  #printArea.t58{width:48mm;margin:0 auto;font-size:10.5px}
-  #printArea .tk hr{border:0;border-top:1px dashed #000;margin:6px 0}
-  #printArea .tk-c{text-align:center}
-  #printArea .tk-b{font-weight:800}
-  #printArea .tk-it{font-weight:700}
-  #printArea .tk-r{font-weight:700}
-  #printArea .tk-r,#printArea .tk-it{display:flex;justify-content:space-between;gap:6px}
-  #printArea .tk-it span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
+  #printArea .tk-wm{position:absolute;left:50%;top:46%;width:96%;transform:translate(-50%,-50%);opacity:.09;z-index:0}
+  #printArea .tk .inv{background:#000!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printArea .tk .inv *{color:#fff!important}
+  #printArea .tk-hd{text-align:center;padding:2.5mm 1.5mm 2mm}
+  #printArea .tk-hd img{width:15mm;height:auto;display:block;margin:0 auto 1mm}
+  #printArea.t80 .tk-hd img{width:20mm}
+  #printArea .tk-marca{font:900 23px/0.95 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:-.03em}
+  #printArea.t80 .tk-marca{font-size:30px}
+  #printArea .tk-lema{font:800 7.2px/1.2 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.14em;margin-top:1mm}
+  #printArea.t80 .tk-lema{font-size:9px}
+  #printArea .tk-fil{text-align:center;font-size:8.2px;font-weight:800;padding:1mm 0;border-bottom:.5mm solid #000;letter-spacing:.03em}
+  #printArea .tk-tag{margin:2mm 0 1.5mm;border:.6mm solid #000;text-align:center;padding:1mm 0}
+  #printArea .tk-tag small{display:block;font:800 7px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.2em}
+  #printArea .tk-tag b{display:block;font:900 15px/1.05 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:-.01em}
+  #printArea .tk-fe{text-align:center;font-size:8.5px;margin-bottom:1mm}
+  #printArea .tk-s{margin:2mm 0 1mm;font:900 8.5px/1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.16em;display:flex;align-items:center;gap:1.2mm}
+  #printArea .tk-s::after{content:"";flex:1;border-top:.7mm solid #000}
+  #printArea .tk-it,#printArea .tk-r{display:flex;justify-content:space-between;gap:1.5mm;font-weight:800}
+  #printArea .tk-it span:first-child,#printArea .tk-r span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
   #printArea .tk-it span:last-child,#printArea .tk-r span:last-child{white-space:nowrap}
-  #printArea .tk-t{font-size:1.2em;margin-top:4px}
+  #printArea .tk-it{margin:.8mm 0}
+  #printArea .tk-tot{display:flex;justify-content:space-between;align-items:center;margin:2mm 0 1mm;padding:1.3mm 1.5mm;font:900 14px/1 'Archivo','Arial Black',Arial,sans-serif}
+  #printArea .tk-saldo{margin:1mm 0;text-align:center;border:.6mm solid #000;padding:1mm;font:900 10px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.05em}
+  #printArea .tk-ent{border-left:1.4mm solid #000;padding:.5mm 0 .5mm 1.8mm;margin:1mm 0}
+  #printArea .tk-ent b{display:block;font:900 8.5px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.05em}
+  #printArea .tk-gr{text-align:center;padding:2mm 1.5mm;margin:2.5mm 0 1mm}
+  #printArea .tk-gr b{display:block;font:900 12px/1.05 'Archivo','Arial Black',Arial,sans-serif}
+  #printArea .tk-gr span{display:block;font-size:8.2px;margin-top:.8mm;font-weight:700}
+  #printArea .tk-cu{border:.5mm dashed #000;padding:1.2mm 1.5mm;margin:1.5mm 0;font-size:8.2px}
+  #printArea .tk-cu b{font:900 8px/1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.14em}
+  #printArea .tk-qr{text-align:center;margin:2mm 0 1mm}
+  #printArea .tk-qr svg{width:23mm;height:23mm;display:block;margin:0 auto 1mm}
+  #printArea.t80 .tk-qr svg{width:28mm;height:28mm}
+  #printArea .tk-qr b{font:900 9px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.02em}
+  #printArea .tk-qr small{display:block;font-size:8px;font-weight:700;margin-top:.6mm}
+  #printArea .tk-pie{text-align:center;font-size:7.6px;font-weight:700;margin-top:2mm;border-top:.5mm solid #000;padding-top:1.2mm}
+  #printArea .tk-pie b{display:block;font:900 8px/1.2 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.14em;margin-bottom:.6mm}
 }
 </style>
 </head>
@@ -813,7 +836,7 @@ td{padding:11px 14px;vertical-align:middle}
     <div class="mh"><h3 id="mReciboT">Recibo de venta</h3><button class="mcl" type="button" data-act="close" aria-label="Cerrar">×</button></div>
     <div class="mb" id="reciboContent"></div>
     <div class="mf">
-      <label class="field" style="margin:0 auto 0 0;flex-direction:row;align-items:center;gap:8px"><span style="white-space:nowrap;font-size:.82rem">Formato</span><select id="reciboFormato" aria-label="Formato de impresión"><option value="carta">Hoja carta / PDF</option><option value="t80">Ticket 80 mm</option><option value="t58">Ticket 58 mm</option></select></label>
+      <label class="field" style="margin:0 auto 0 0;flex-direction:row;align-items:center;gap:8px"><span style="white-space:nowrap;font-size:.82rem">Formato</span><select id="reciboFormato" aria-label="Formato de impresión"><option value="t58">Ticket 58 mm</option><option value="t80">Ticket 80 mm</option><option value="carta">Hoja carta / PDF</option></select></label>
       <button class="btn ghost" type="button" data-act="close">Cerrar</button>
       <button class="btn" type="button" data-act="reciboPrint">Descargar / Imprimir</button>
     </div>
@@ -865,6 +888,7 @@ td{padding:11px 14px;vertical-align:middle}
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
+<script src="qrcode.min.js"></script>
 <script src="firebase-config.js"></script>
 <script src="contenido/generador.js"></script>
 <script>
@@ -2504,22 +2528,40 @@ function logoNegro(){
     const x=c.getContext('2d'); x.drawImage(LOGO_IMG,0,0); x.globalCompositeOperation='source-in'; x.fillStyle='#000'; x.fillRect(0,0,c.width,c.height);
     return (logoNegroUrl=c.toDataURL('image/png'));
 }
+// código QR (SVG nítido) hacia el Instagram de la marca
+function qrSvg(texto){
+    try{
+        const q=qrcode(0,'M'); q.addData(texto); q.make();
+        const n=q.getModuleCount(); let d='';
+        for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(q.isDark(r,c)) d+=`M${c} ${r}h1v1h-1z`;
+        return `<svg viewBox="-2 -2 ${n+4} ${n+4}" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="-2" y="-2" width="${n+4}" height="${n+4}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
+    }catch(e){ return ''; }
+}
+const TK={ig:'@SPOT__CLUB',igUrl:'https://www.instagram.com/spot__club/',wa:'0412-5143352',zona:'MARACAIBO · ENVÍOS A TODO EL PAÍS',lema:'YOU LOOK LIKE SUCCESS'};
 function ticketHtml(v){
     const adic=v.costoAdicional||0, emp=v.empaque??EMPAQUE;
     const f=(l,x)=>`<div class="tk-r"><span>${l}</span><span>${x}</span></div>`;
-    const pagos=(v.pagos||[]).map(p=>f(fshort(p.fecha)+' '+esc(p.metodo),fmt(p.monto))).join('');
-    const lg=logoNegro();
-    return `<div class="tk">`+(lg?`<img class="tk-wm" src="${lg}" alt="">`:'')+
-      (lg?`<div class="tk-c"><img class="tk-lg" src="${lg}" alt="Spot Club"></div>`:'')+
-      `<div class="tk-c tk-marca">SPOT CLUB</div><div class="tk-c tk-slogan">YOU LOOK LIKE SUCCESS</div><div class="tk-c tk-b" style="margin-top:4px">Comprobante de venta</div>`+
-      `<div class="tk-c">N° ${esc(inv(v))}</div><div class="tk-c">${new Date(v.fechaMs).toLocaleDateString('es-VE',{day:'2-digit',month:'2-digit',year:'numeric'})}</div><hr>`+
-      `<div>${esc(v.nombre)}</div><div>CI ${esc(v.cedula)}</div><div>Tel ${esc(v.telefono)}</div><div>${esc(v.estado)} · ${esc(v.agencia)}</div>`+(v.guia?`<div>Guía ${esc(v.guia)}</div>`:'')+`<hr>`+
+    const pagos=(v.pagos||[]).map(p=>f(fshort(p.fecha)+' · '+esc(p.metodo),fmt(p.monto))).join('');
+    const lgBlanco=(LOGO_IMG.complete&&LOGO_IMG.naturalWidth)?LOGO_IMG.src:'', lgNegro=logoNegro();
+    const fecha=new Date(v.fechaMs).toLocaleDateString('es-VE',{day:'2-digit',month:'2-digit',year:'numeric'});
+    const conPago=!v.legacy&&!v.anulada;
+    const pagado=conPago&&v.saldo<=0.005;
+    return `<div class="tk">`+(lgNegro?`<img class="tk-wm" src="${lgNegro}" alt="">`:'')+
+      `<div class="tk-hd inv">`+(lgBlanco?`<img src="${lgBlanco}" alt="">`:'')+`<div class="tk-marca">SPOT CLUB</div><div class="tk-lema">${TK.lema}</div></div>`+
+      `<div class="tk-fil">${TK.ig} · WA ${TK.wa}<br>${TK.zona}</div>`+
+      `<div class="tk-tag"><small>COMPROBANTE DE VENTA</small><b>N° ${esc(inv(v))}</b></div><div class="tk-fe">${fecha}</div>`+
+      `<div class="tk-s">CLIENTE</div><div>${esc(v.nombre)}</div><div>CI ${esc(v.cedula)}</div><div>TEL ${esc(v.telefono)}</div><div>${esc(v.estado)} · ${esc(v.agencia)}</div>`+(v.guia?`<div>GUÍA ${esc(v.guia)}</div>`:'')+
+      `<div class="tk-s">TU PEDIDO</div>`+
       v.items.map((it,i)=>`<div class="tk-it"><span>${i+1}. ${esc(it.label||'Producto')}</span><span>${fmt(it.subtotal)}</span></div>`).join('')+
-      (adic?f('Adicional',fmt(adic)):'')+f('Empaque',fmt(emp))+
-      `<div class="tk-r tk-b tk-t"><span>TOTAL</span><span>${fmt(v.total)}</span></div>`+
-      (!v.legacy&&!v.anulada?`<hr>${pagos||f('Sin pagos','—')}${f('Pagado',fmt(v.pagado))}${f('Saldo',fmt(v.saldo))}`:'')+
-      (v.anulada?`<hr><div class="tk-c tk-b">ANULADA</div>`:'')+
-      `<hr><div class="tk-b">Entrega: ${esc(etapaDef(v.etapa).l)}</div><hr><div class="tk-c tk-b" style="font-size:1.1em">¡GRACIAS POR TU COMPRA!</div><div class="tk-c tk-slogan" style="margin-top:3px">YOU LOOK LIKE SUCCESS</div><div class="tk-c tk-b">@SPOT__CLUB</div><div class="tk-c" style="font-size:.8em;margin-top:3px">Comprobante interno, sin validez fiscal</div></div>`;
+      (adic?f('Adicional'+(v.razonAdicional?' ('+esc(v.razonAdicional)+')':''),fmt(adic)):'')+f('Empaque',fmt(emp))+
+      `<div class="tk-tot inv"><span>TOTAL</span><span>${fmt(v.total)}</span></div>`+
+      (conPago?`<div class="tk-s">PAGOS</div>${pagos||f('Sin pagos','—')}${f('Pagado',fmt(v.pagado))}<div class="tk-saldo">${pagado?'PAGADO COMPLETO':'SALDO PENDIENTE '+fmt(v.saldo)}</div>`:'')+
+      (v.anulada?`<div class="tk-saldo">ANULADA</div>`:'')+
+      `<div class="tk-s">ENTREGA</div><div class="tk-ent"><b>3 A 5 DÍAS HÁBILES</b>desde que se confirma el pago.<br>Estado: ${esc(etapaDef(v.etapa).l)}</div>`+
+      `<div class="tk-gr inv"><b>¡GRACIAS POR SER PARTE DEL CLUB!</b><span>Tu diseño, tu franela, tu estilo.</span></div>`+
+      `<div class="tk-cu"><b>CUIDA TU PIEZA</b><br>Lávala del revés · Agua fría · Sin cloro · No planches sobre el diseño.</div>`+
+      `<div class="tk-qr">${qrSvg(TK.igUrl)}<b>ETIQUÉTANOS ${TK.ig}</b><small>cuando la estrenes y escanea para seguirnos</small></div>`+
+      `<div class="tk-pie"><b>${TK.lema}</b>Comprobante interno, sin validez fiscal.</div></div>`;
 }
 let reciboId=null;
 function imprimirRecibo(){
