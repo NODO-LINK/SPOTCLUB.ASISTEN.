@@ -2,6 +2,51 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-02-video",
+      "titulo": "¿Qué lunes tienes?",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-02-video.mp4"
+      ],
+      "poster": "spot-2026-11-02-video-poster.png",
+      "caption": "¿Qué lunes tienes hoy? 1, 2 o 3 👇🖤\nHacemos tu franela con el diseño que quieras, desde $10. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #lunes #streetwear",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "2026-11-02-flyer-3",
+      "titulo": "Tu idea, nuestra prensa",
+      "tipo": "Proceso",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-02-flyer-3.png"
+      ],
+      "caption": "Story: agrega el sticker de enlace a tu DM con el texto «Pídela por DM».",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "2026-11-02-flyer-2",
+      "titulo": "Cartas que se sienten tuyas",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-02-flyer-2.png"
+      ],
+      "caption": "Una carta que se siente tuya, con el personaje que tú elijas 👇🖤\nHacemos cartas personalizadas. Escríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #coleccion #streetwear",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "2026-11-02-flyer-1",
+      "titulo": "¿Qué juego te hizo fan?",
+      "tipo": "Comunidad",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-02-flyer-1.png"
+      ],
+      "caption": "¿Cuál fue el juego que te hizo fan para siempre? Cuéntanos 👇🖤\nHacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #videojuegos #streetwear",
+      "fecha": "2026-11-02"
+    },
+    {
       "id": "2026-11-02-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
