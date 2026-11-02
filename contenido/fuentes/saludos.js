@@ -12,7 +12,12 @@ const pick=(a,k)=>a[((n+k)%a.length+a.length)%a.length];
 const DIAS=[
  ['BUENOS','DÍAS','Hoy toca crear algo grande'],['ARRANCA','CON ESTILO','Buenos días, Spot Club'],['NUEVO DÍA','NUEVO ESTILO','Buenos días, familia'],
  ['BUEN DÍA','PARA TODOS','Que hoy te salga todo con estilo'],['A DARLE','CON TODO','Buenos días, Spot Club'],['HOY SE','CREA','Buenos días, y a diseñar'],
- ['BUENOS DÍAS','FAMILIA','Que sea un día con estilo']];
+ ['BUENOS DÍAS','FAMILIA','Que sea un día con estilo'],
+ ['ARRANCA EL DÍA','CON TODO','Spot Club te acompaña'],['HOY TOCA','BRILLAR','Buenos días, familia'],['UN DÍA MÁS','PARA CREAR','Vamos con todo, Spot Club'],
+ ['ENERGÍA','POSITIVA','Buenos días, Spot Club'],['DESPIERTA','Y CREA','Hoy es un buen día'],['BUEN DÍA,','BUEN ESTILO','Que nada te frene hoy'],
+ ['MODO','CREATIVO ON','Buenos días, familia'],['HOY LA','ROMPEMOS','Buenos días, y con estilo'],['A PONERSE','LAS PILAS','Buenos días, Spot Club'],
+ ['HOY ES TU','TURNO','Buenos días, Spot Club'],['QUE EMPIECE','EL DÍA','Con estilo y con ganas'],['DÍA NUEVO,','IDEAS NUEVAS','Buenos días, familia'],
+ ['VAMOS CON','TODO HOY','Buenos días, Spot Club']];
 const CAP_DIAS=[
  'Buenos días, familia 🖤 Que hoy te salga todo con estilo.\nCuéntanos en los comentarios qué vas a estrenar hoy 👇',
  'Arrancamos el día con todo 🖤 ¿Cuál es tu plan de hoy?\nCuéntanos aquí abajo 👇',
@@ -20,7 +25,10 @@ const CAP_DIAS=[
  'Buenos días 🖤 Que sea un día bueno para ti y los tuyos.\n¿Qué estás escuchando para empezar? 👇'];
 const NOCHES=[
  ['BUENAS','NOCHES','Descansa, que mañana seguimos creando'],['A DESCANSAR','MAÑANA MÁS','Gracias por estar, familia'],['CIERRA EL DÍA','CON ESTILO','Buenas noches, Spot Club'],
- ['DUERME BIEN','SUEÑA GRANDE','Mañana arrancamos de nuevo'],['BUENAS','NOCHES','Gracias por otro día, familia'],['CIERRE DE','DÍA','Que descanses, Spot Club']];
+ ['DUERME BIEN','SUEÑA GRANDE','Mañana arrancamos de nuevo'],['BUENAS','NOCHES','Gracias por otro día, familia'],['CIERRE DE','DÍA','Que descanses, Spot Club'],
+ ['HASTA','MAÑANA','Gracias por estar, familia'],['A SOÑAR','EN GRANDE','Mañana seguimos creando'],['DESCONECTA','Y DESCANSA','Buenas noches, Spot Club'],
+ ['NOCHE DE','RECARGAR','Mañana más y mejor'],['QUE LA NOCHE','TE RECARGUE','Buenas noches, familia'],['SUEÑA CON','ESTILO','Hasta mañana, Spot Club'],
+ ['BUENA NOCHE','PARA TODOS','Descansen, que mañana hay más'],['LUCES','APAGADAS','Mañana volvemos con todo'],['DULCES','SUEÑOS','Gracias por otro día, Spot Club']];
 const CAP_NOCHES=[
  'Buenas noches, familia 🖤 Gracias por otro día.\nQue descanses y mañana seguimos 🌙',
  'Cerramos el día 🖤 Descansa que mañana hay más.\nCuéntanos cómo te fue hoy 👇',
@@ -32,7 +40,7 @@ const fotos=fs.readdirSync(path.join(dir,'material')).filter(f=>PERMITIDAS.inclu
 const ft=k=>fotos.length?'contenido/material/'+pick(fotos,k):undefined;
 const manif=JSON.parse(fs.readFileSync(path.join(dir,'contenido.json'),'utf8'));
 const ya=id=>manif.piezas.some(p=>p.id===id);
-const d1=pick(DIAS,0), d2=pick(DIAS,3), nn=pick(NOCHES,0);
+const d1=pick(DIAS,0), d2=pick(DIAS,Math.floor(DIAS.length/2)), nn=pick(NOCHES,0);   // post y story van a mitad del banco, así no coinciden
 const piezas=[
  {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',plantilla:'frase',l1:d1[0],l2:d1[1],sub:d1[2],cta:false,foto:ft(0),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
  {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',plantilla:'frase',l1:d2[0],l2:d2[1],sub:d2[2],glitch:true,cta:false,caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
