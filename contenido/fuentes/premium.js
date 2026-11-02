@@ -145,20 +145,23 @@ window.hacer=async s=>{
   const c=document.getElementById('c'), W=1080, H=s.formato==='story'?1920:1350; c.width=W; c.height=H; const x=c.getContext('2d');
   const E=ESCENAS[s.tema]||ESCENAS.neon;
   // cielo
+  let fondoImg=null; if(s.fondoData){ fondoImg=new Image(); fondoImg.src=s.fondoData; await fondoImg.decode(); }
   const cielo=x.createLinearGradient(0,0,0,H); cielo.addColorStop(0,E.cielo[0]); cielo.addColorStop(.35,E.cielo[1]); cielo.addColorStop(.62,E.cielo[2]); cielo.addColorStop(1,E.cielo[3]); x.fillStyle=cielo; x.fillRect(0,0,W,H);
-  if(E.luna){ const L=E.luna, lx=W*L.x, ly=H*L.y*(s.formato==='story'?.8:1); glow(x,lx,ly,L.r*3.4,E.luna.halo,.55); const lg=x.createRadialGradient(lx-L.r*.25,ly-L.r*.25,L.r*.1,lx,ly,L.r); lg.addColorStop(0,'#ffffff'); lg.addColorStop(.7,L.col); lg.addColorStop(1,'#b79de0'); x.fillStyle=lg; x.beginPath(); x.arc(lx,ly,L.r,0,7); x.fill();
+  if(fondoImg){ const k=Math.max(W/fondoImg.naturalWidth,H/fondoImg.naturalHeight), dw=fondoImg.naturalWidth*k, dh=fondoImg.naturalHeight*k; x.drawImage(fondoImg,(W-dw)*(s.focoX==null?.5:s.focoX),(H-dh)*(s.focoY==null?.5:s.focoY),dw,dh);
+    const ve=x.createLinearGradient(0,0,0,H); ve.addColorStop(0,'rgba(6,4,14,'+(s.velo==null?.55:s.velo)+')'); ve.addColorStop(.55,'rgba(6,4,14,'+((s.velo==null?.55:s.velo)*.6)+')'); ve.addColorStop(1,'rgba(6,4,14,.85)'); x.fillStyle=ve; x.fillRect(0,0,W,H); glow(x,W/2,H*.62,560,E.luna?E.luna.halo:'rgba(229,33,46,A)',.25); }
+  if(!fondoImg&&E.luna){ const L=E.luna, lx=W*L.x, ly=H*L.y*(s.formato==='story'?.8:1); glow(x,lx,ly,L.r*3.4,E.luna.halo,.55); const lg=x.createRadialGradient(lx-L.r*.25,ly-L.r*.25,L.r*.1,lx,ly,L.r); lg.addColorStop(0,'#ffffff'); lg.addColorStop(.7,L.col); lg.addColorStop(1,'#b79de0'); x.fillStyle=lg; x.beginPath(); x.arc(lx,ly,L.r,0,7); x.fill();
     x.fillStyle='rgba(120,90,170,.22)'; seed=14; for(let i=0;i<9;i++){ const a=rr(0,6.28), d=rr(0,L.r*.7); x.beginPath(); x.arc(lx+Math.cos(a)*d,ly+Math.sin(a)*d,rr(10,34),0,7); x.fill(); } }
-  seed=2; x.fillStyle='#fff'; for(let i=0;i<70;i++){ x.globalAlpha=rr(.15,.8); x.beginPath(); x.arc(rr(0,W),rr(0,H*.5),rr(.6,1.8),0,7); x.fill(); } x.globalAlpha=1;
-  x.save(); if(s.formato==='story'){ x.translate(0,(H-1350)*.55); } E.dibujar(x,W,1350); x.restore();
+  if(!fondoImg){ seed=2; x.fillStyle='#fff'; for(let i=0;i<70;i++){ x.globalAlpha=rr(.15,.8); x.beginPath(); x.arc(rr(0,W),rr(0,H*.5),rr(.6,1.8),0,7); x.fill(); } x.globalAlpha=1;
+  x.save(); if(s.formato==='story'){ x.translate(0,(H-1350)*.55); } E.dibujar(x,W,1350); x.restore(); }
   // degradado oscuro detrás del título para que siempre se lea
   const sc=x.createLinearGradient(0,0,0,H*.40); sc.addColorStop(0,'rgba(4,3,12,.62)'); sc.addColorStop(1,'rgba(4,3,12,0)'); x.fillStyle=sc; x.fillRect(0,0,W,H*.40);
   // producto
   const pw=520, ph=520, py=H-(s.formato==='story'?640:520), pxm=W/2;
-  const yLosa=py+ph*.5-6; losa(x,W,H,yLosa,'#2a1f44');
+  const yLosa=py+ph*.5-6; if(!fondoImg) losa(x,W,H,yLosa,'#2a1f44'); else { blur(x,18,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(pxm,yLosa+6,330,30,0,0,7); x.fill(); }); }
   glow(x,pxm,py,520,'rgba(190,120,255,A)',.22);
   let img=null; if(s.disenoData){ img=new Image(); img.src=s.disenoData; await img.decode(); }
   x.save(); x.translate(pxm,py); x.rotate(-.045); x.translate(-pxm,-py); franela(x,pxm,py,pw,ph,s.colorProducto||'#0e0e14',img,{escalaDiseno:s.escalaDiseno||.40,yDiseno:s.yDiseno||.31}); x.restore();
-  if(E.dibujar===ESCENAS.halloween.dibujar){ calabaza(x,W*.16,yLosa+10,66,-.1); calabaza(x,W*.27,yLosa+34,38,.1); calabaza(x,W*.86,yLosa+6,76,.12); }
+  if(!fondoImg&&E.dibujar===ESCENAS.halloween.dibujar){ calabaza(x,W*.16,yLosa+10,66,-.1); calabaza(x,W*.27,yLosa+34,38,.1); calabaza(x,W*.86,yLosa+6,76,.12); }
   // textos
   let logo=null; if(s.logoData){ logo=new Image(); logo.src=s.logoData; await logo.decode(); }
   const top=s.formato==='story'?250:64;
@@ -189,6 +192,7 @@ window.hacer=async s=>{
   await p.setContent('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800;900&display=swap" rel="stylesheet">'+pagina);
   await p.evaluate(async()=>{ for(const w of [300,500,700,800,900]) await document.fonts.load(w+' 40px Inter'); await document.fonts.ready; });
   const lp=path.join(dir,'logo-spotclub.png'); if(fs.existsSync(lp)) spec.logoData='data:image/png;base64,'+fs.readFileSync(lp).toString('base64');
+  if(spec.fondo){ const fp=path.resolve(dir,'..',spec.fondo); spec.fondoData='data:image/'+path.extname(fp).slice(1).toLowerCase().replace('jpg','jpeg')+';base64,'+fs.readFileSync(fp).toString('base64'); }
   if(spec.diseno){ const dp=path.resolve(dir,'..',spec.diseno); spec.disenoData='data:image/png;base64,'+fs.readFileSync(dp).toString('base64'); }
   const data=await p.evaluate(s=>hacer(s),spec);
   const out=path.join(dir,'spot-'+spec.salida+'.png'); fs.writeFileSync(out,Buffer.from(data.split(',')[1],'base64')); await b.close(); console.log('ok',out);
