@@ -221,7 +221,7 @@ window.hacer=async s=>{
   if(spec.diseno){ const dp=path.resolve(dir,'..',spec.diseno); spec.disenoData='data:image/png;base64,'+fs.readFileSync(dp).toString('base64'); }
   if(spec.diseno&&!spec.franela&&spec.prenda!=='dibujada'){
     const tmp=path.join(require('os').tmpdir(),'franela-'+spec.salida+'.png');
-    require('child_process').execFileSync('python3',['-I',path.join(__dirname,'mockup_franela.py'),path.resolve(dir,'..',spec.diseno),tmp,'--escala',String(spec.escalaDiseno||.36),'--y',String(spec.yDiseno||.27)],{stdio:'pipe'});
+    require('child_process').execFileSync('python3',['-I',path.join(__dirname,'mockup_franela.py'),path.resolve(dir,'..',spec.diseno),tmp,...(spec.escalaDiseno?['--escala',String(spec.escalaDiseno)]:[]),...(spec.yDiseno?['--y',String(spec.yDiseno)]:[]),...(spec.prenda==='blanca'?['--blanca']:spec.prenda==='negra'?['--negra']:[])],{stdio:'pipe'});
     spec.franelaData='data:image/png;base64,'+fs.readFileSync(tmp).toString('base64'); }
   const data=await p.evaluate(s=>spec_modo(s),spec);
   const out=path.join(dir,'spot-'+spec.salida+'.png'); fs.writeFileSync(out,Buffer.from(data.split(',')[1],'base64')); await b.close(); console.log('ok',out);

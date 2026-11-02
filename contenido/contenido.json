@@ -2,6 +2,83 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "mockup-retrato-collage",
+      "titulo": "Mockup · Retrato Collage",
+      "tipo": "Producto",
+      "formato": "Mockup 1:1",
+      "archivos": [
+        "spot-mockup-retrato-collage.png"
+      ],
+      "caption": "Mockup del diseño «Retrato Collage». Hacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #spotclub",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "mockup-outer-banks-pogue-life",
+      "titulo": "Mockup · Outer Banks · Pogue Life",
+      "tipo": "Producto",
+      "formato": "Mockup 1:1",
+      "archivos": [
+        "spot-mockup-outer-banks-pogue-life.png"
+      ],
+      "caption": "Mockup del diseño «Outer Banks · Pogue Life». Hacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #spotclub",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "mockup-no-me-arrepiento-de-sentir-tanto",
+      "titulo": "Mockup · No Me Arrepiento De Sentir Tanto",
+      "tipo": "Producto",
+      "formato": "Mockup 1:1",
+      "archivos": [
+        "spot-mockup-no-me-arrepiento-de-sentir-tanto.png"
+      ],
+      "caption": "Mockup del diseño «No Me Arrepiento De Sentir Tanto». Hacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #spotclub",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "mockup-greys-save-lives",
+      "titulo": "Mockup · Grey'S · Save Lives",
+      "tipo": "Producto",
+      "formato": "Mockup 1:1",
+      "archivos": [
+        "spot-mockup-greys-save-lives.png"
+      ],
+      "caption": "Mockup del diseño «Grey'S · Save Lives». Hacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #spotclub",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "mockup-greys-anatomy",
+      "titulo": "Mockup · Grey'S Anatomy",
+      "tipo": "Producto",
+      "formato": "Mockup 1:1",
+      "archivos": [
+        "spot-mockup-greys-anatomy.png"
+      ],
+      "caption": "Mockup del diseño «Grey'S Anatomy». Hacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #spotclub",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "mockup-don-kbrn",
+      "titulo": "Mockup · Don Kbrn",
+      "tipo": "Producto",
+      "formato": "Mockup 1:1",
+      "archivos": [
+        "spot-mockup-don-kbrn.png"
+      ],
+      "caption": "Mockup del diseño «Don Kbrn». Hacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #spotclub",
+      "fecha": "2026-11-02"
+    },
+    {
+      "id": "mockup-don-kbrn-lista-eladio",
+      "titulo": "Mockup · Eladio Carrion · Lista",
+      "tipo": "Producto",
+      "formato": "Mockup 1:1",
+      "archivos": [
+        "spot-mockup-don-kbrn-lista-eladio.png"
+      ],
+      "caption": "Mockup del diseño «Eladio Carrion · Lista». Hacemos tu franela con el diseño que quieras. Escríbenos al DM 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #spotclub",
+      "fecha": "2026-11-02"
+    },
+    {
       "id": "2026-11-02-video",
       "titulo": "¿Qué lunes tienes?",
       "tipo": "Video",

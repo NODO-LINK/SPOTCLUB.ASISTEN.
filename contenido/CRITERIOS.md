@@ -95,4 +95,7 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - En fechas especiales se usa el tema de la fecha (`"tema":"halloween"`, etc.) solo cuando exista una escena hecha; si no, se usa `fondo` con foto propia.
 - Revisar el PNG con Read: ningún texto cortado y la prenda sin recortes raros.
 - Los mockups de cada diseño nuevo de `contenido/disenos/` se generan con `"modo":"mockup"` y se agregan al panel como tipo "Producto".
-- Solo existe franela negra de frente. Para blanca, hoodie o espalda hace falta otra foto base limpia del dueño.
+- Franela **negra y blanca** de frente (la blanca se derivó de la foto negra). `mockup_franela.py` elige sola: diseño oscuro → blanca, claro → negra; con `"prenda":"blanca"|"negra"` en el JSON de `premium.js` se fuerza. Para hoodie o espalda hace falta otra foto base limpia del dueño.
+- **Diseños disponibles** (`contenido/disenos/`, PNG transparentes, ya con su mockup en el panel): no-me-arrepiento-de-sentir-tanto, don-kbrn, don-kbrn-lista-eladio, greys-save-lives, greys-anatomy, retrato-collage, outer-banks-pogue-life. Rotarlos en los flyers de producto; no repetir el mismo en 5 días.
+- **Cuidado con derechos y personas:** Grey's Anatomy y Outer Banks son marcas ajenas, y retrato-collage y las cartas llevan fotos de personas reales. Pueden salir como producto del dueño en mockups, pero en flyers evitar poner la marca ajena como titular y no usar rostros con nombre propio sin su permiso.
+- **Cartas** (`contenido/cartas/`) y **etiquetas de talla** (`contenido/etiquetas/`) no son diseños de franela: no se estampan. El juego de cartas "Spot Club Card" con tema de Hora de Aventura (Finn, Jake) tiene derechos de autor: no usarlo en flyers.
