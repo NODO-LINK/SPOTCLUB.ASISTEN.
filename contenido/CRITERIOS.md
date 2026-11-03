@@ -118,3 +118,9 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - El modelo viejo (`video.js`: "ELIGE TU MODO 1-2-3" sobre un clip borroso) queda descartado por genérico.
 - Usar `contenido/fuentes/video-coleccion.js`: muro de cartas/franelas en movimiento + 3 cartas que entran con golpe (cada una con su etiqueta) + franela real con el diseño + cierre "TU DISEÑO. TU FRANELA." con precio solo en el video.
 - Todo el material sale de `contenido/biblioteca/` y `contenido/disenos/`; rotar cartas y diseños (no repetir en 5 días). Variar el gancho y el tema (artistas, anime, fandom, fecha especial) y las etiquetas de las cartas.
+
+## Calidad diaria = las muestras con biblioteca (orden del dueño, 2026-11-03)
+- Es la calidad que se busca TODOS los días. Ya no van fondos genéricos ni dibujados, en NINGUNA pieza (flyers ni videos).
+- Flyers: `premium.js` con `montaje` (muro de cartas o de promos de franelas) + `cartas` (abanico) o `diseno` (franela real). Sin fotos sueltas con logo viejo.
+- Video de las 8:00 y video de la tarde: `video-coleccion.js` (muro + cartas + franela real). El video de "animación dibujada" (`video-animado.js`) queda retirado; para variar en la tarde, usar `video-coleccion.js` con otro gancho/tema, o `video-tarde.js` sobre fotos reales del dueño.
+- Reutilizar las imágenes de `contenido/biblioteca/` y `contenido/disenos/` con rotación (≥5 días sin repetir carta/diseño).
