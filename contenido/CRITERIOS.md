@@ -99,3 +99,11 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - **Diseños disponibles** (`contenido/disenos/`, PNG transparentes, ya con su mockup en el panel): no-me-arrepiento-de-sentir-tanto, don-kbrn, don-kbrn-lista-eladio, greys-save-lives, greys-anatomy, retrato-collage, outer-banks-pogue-life. Rotarlos en los flyers de producto; no repetir el mismo en 5 días.
 - **Cuidado con derechos y personas:** Grey's Anatomy y Outer Banks son marcas ajenas, y retrato-collage y las cartas llevan fotos de personas reales. Pueden salir como producto del dueño en mockups, pero en flyers evitar poner la marca ajena como titular y no usar rostros con nombre propio sin su permiso.
 - **Cartas** (`contenido/cartas/`) y **etiquetas de talla** (`contenido/etiquetas/`) no son diseños de franela: no se estampan. El juego de cartas "Spot Club Card" con tema de Hora de Aventura (Finn, Jake) tiene derechos de autor: no usarlo en flyers.
+
+## Biblioteca real del dueño (sin fondos genéricos)
+- Prohibido usar fondos dibujados/genéricos. Todo flyer usa material real de `contenido/biblioteca/` (`indice.json` lo describe) o fotos del dueño:
+  - `cartas/` (≈175 cartas de artistas): fondo = `montaje` (muro de cartas inclinado y oscurecido) y/o producto héroe = `cartas` (abanico de 3–5 cartas). Plantilla en `premium.js` (campos `montaje`, `cartas`, `cartaAncho`).
+  - `promos/` (21 flyers con franelas blancas + diseños): usar como fondo/inspiración de composición, o como pieza de "así queda".
+  - `otros/` y `contenido/disenos/`: diseños para mockup con franela real (negra/blanca).
+- Rotación: no repetir la misma carta ni el mismo diseño en menos de 5 días (registrar en `material/usado.json`).
+- Cautelas: las cartas llevan rostros/nombres de artistas reales (usar solo como ejemplo de producto personalizado, nunca insinuar aval); evitar personas no artistas, marcas ajenas visibles y personajes con copyright evidente (Pokémon, Hora de Aventura) en publicaciones automáticas.
