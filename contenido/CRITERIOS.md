@@ -113,3 +113,8 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - No escribir nombres de marcas, estudios ni series en titulares ni captions; si hace falta, aludir ("tu anime favorito", "ese personaje que ya sabes", "para fans de…" sin marca). Nombrar a un artista solo como ejemplo de carta personalizada, sin aval.
 - Los personajes salen de los diseños propios (recortes de `contenido/disenos/`), como figura creativa: nunca como si fuera producto licenciado.
 - Textos tipo meme/alusión permitidos ("tu personaje favorito, en tu pecho").
+
+## Video de las 8:00: modelo "colección" (reemplaza el de lista de texto)
+- El modelo viejo (`video.js`: "ELIGE TU MODO 1-2-3" sobre un clip borroso) queda descartado por genérico.
+- Usar `contenido/fuentes/video-coleccion.js`: muro de cartas/franelas en movimiento + 3 cartas que entran con golpe (cada una con su etiqueta) + franela real con el diseño + cierre "TU DISEÑO. TU FRANELA." con precio solo en el video.
+- Todo el material sale de `contenido/biblioteca/` y `contenido/disenos/`; rotar cartas y diseños (no repetir en 5 días). Variar el gancho y el tema (artistas, anime, fandom, fecha especial) y las etiquetas de las cartas.
