@@ -124,3 +124,4 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Flyers: `premium.js` con `montaje` (muro de cartas o de promos de franelas) + `cartas` (abanico) o `diseno` (franela real). Sin fotos sueltas con logo viejo.
 - Video de las 8:00 y video de la tarde: `video-coleccion.js` (muro + cartas + franela real). El video de "animación dibujada" (`video-animado.js`) queda retirado; para variar en la tarde, usar `video-coleccion.js` con otro gancho/tema, o `video-tarde.js` sobre fotos reales del dueño.
 - Reutilizar las imágenes de `contenido/biblioteca/` y `contenido/disenos/` con rotación (≥5 días sin repetir carta/diseño).
+- PROHIBIDOS en muros/fondos: `promos/2x12-microdurazno-1.jpg` (persona + precio "2x12$") y `promos/maria-flyer.jpg` (persona). Los demás `promos/` (franela blanca sola sobre rojo) sí valen.
