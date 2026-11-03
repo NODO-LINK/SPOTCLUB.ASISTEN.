@@ -107,3 +107,9 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
   - `otros/` y `contenido/disenos/`: diseños para mockup con franela real (negra/blanca).
 - Rotación: no repetir la misma carta ni el mismo diseño en menos de 5 días (registrar en `material/usado.json`).
 - Cautelas: las cartas llevan rostros/nombres de artistas reales (usar solo como ejemplo de producto personalizado, nunca insinuar aval); evitar personas no artistas, marcas ajenas visibles y personajes con copyright evidente (Pokémon, Hora de Aventura) en publicaciones automáticas.
+
+## Personajes y fandoms: solo alusiones
+- Nunca decir "oficial", "merch", "licencia", "colaboración" ni "en alianza con" una marca, serie, artista o personaje. Spot Club no es merch oficial ni colabora con nadie.
+- No escribir nombres de marcas, estudios ni series en titulares ni captions; si hace falta, aludir ("tu anime favorito", "ese personaje que ya sabes", "para fans de…" sin marca). Nombrar a un artista solo como ejemplo de carta personalizada, sin aval.
+- Los personajes salen de los diseños propios (recortes de `contenido/disenos/`), como figura creativa: nunca como si fuera producto licenciado.
+- Textos tipo meme/alusión permitidos ("tu personaje favorito, en tu pecho").
