@@ -2,6 +2,19 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-03-video-animado",
+      "titulo": "Tu artista, tu carta",
+      "tipo": "Animación",
+      "formato": "Video 9:16 · 15 s",
+      "archivos": [
+        "spot-2026-11-03-video-animado.mp4"
+      ],
+      "poster": "spot-2026-11-03-video-animado-poster.png",
+      "caption": "Tu artista favorito hecho carta y tuya para siempre 🃏 ¿De quién la quieres? #cartaspersonalizadas #spotclub #maracaibo #cartas #diseñopersonalizado\nTikTok: tu artista, tu carta 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-03",
+      "turno": "tarde"
+    },
+    {
       "id": "2026-11-03-video",
       "titulo": "¿Qué martes eres?",
       "tipo": "Video",
