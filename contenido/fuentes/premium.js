@@ -216,7 +216,7 @@ window.hacer=async s=>{
   // insignia y sello
   const by=H-(s.formato==='story'?330:150);
   if(s.insignia){ const bw=ancho(x,s.insignia,38,900,1)+70; x.save(); x.fillStyle='#fff'; x.beginPath(); x.roundRect(70,by-52,bw,76,12); x.fill(); x.restore(); texto(x,s.insignia,70+35,by,38,900,'#0b0b0f',1,'left'); }
-  if(s.sello){ texto(x,s.sello[0],W-90,by-24,44,900,'#fff',-1,'right'); texto(x,s.sello[1],W-90,by+14,26,700,E.acento,3,'right'); }
+  if(s.sello&&s.sello.length>1){ texto(x,s.sello[0],W-90,by-24,44,900,'#fff',-1,'right'); texto(x,s.sello[1],W-90,by+14,26,700,E.acento,3,'right'); }
   if(s.pie) texto(x,s.pie,W/2,H-(s.formato==='story'?260:46),34,500,'rgba(255,255,255,.95)',.5,'center');
   // viñeta y grano
   const vg=x.createRadialGradient(W/2,H*.5,H*.35,W/2,H*.5,H*.85); vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,.55)'); x.fillStyle=vg; x.fillRect(0,0,W,H);

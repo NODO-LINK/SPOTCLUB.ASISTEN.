@@ -129,3 +129,4 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 ## El panel solo muestra el contenido de hoy (orden del dueño, 2026-11-04)
 - Sin sección "Próximos 7 días". La lista muestra solo las piezas con la fecha de hoy (Caracas); si aún no hay de hoy, las del último día con contenido.
 - La rutina de las 6:41 ejecuta `python3 -I contenido/fuentes/limpiar_contenido.py`, que quita de `contenido.json` las piezas de otros días (y las sin fecha) y borra sus archivos. No guardar nada de días anteriores en el panel.
+- Los saludos (Buenos días y Buenas noches) TAMBIÉN usan la biblioteca: `saludos.js` ahora arma cada flyer con `premium.js` (muro de cartas o de flyers de franelas + abanico de cartas o franela real con diseño), sin precio, sin insignia ni sello. Prohibido el fondo liso negro/rojo.

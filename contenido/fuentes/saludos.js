@@ -1,8 +1,8 @@
 // Genera los saludos del día y los agrega a contenido/contenido.json:
 //   --dias   2 flyers de "Buenos días" (post y story)          --noches   1 flyer de "Buenas noches" (story)      (sin opción: los tres)
 // Uso:  node contenido/fuentes/saludos.js [--dias|--noches] [AAAA-MM-DD]      (sin fecha, usa hoy en America/Caracas)
-// Rota frases, captions y fotos según el día. Usa solo fotos de contenido/material/ que empiezan con "foto-" (seleccionadas sin caras),
-// salvo las de VIZZION. No reemplaza piezas que ya existan con el mismo id.
+// Rota frases, captions, cartas y diseños según el día. Fondo SIEMPRE con la biblioteca del dueño (muro de cartas o de flyers de franelas, abanico de cartas o franela real con diseño):
+// nunca fondos lisos ni dibujados. No reemplaza piezas que ya existan con el mismo id.
 const fs=require('fs');const path=require('path');const {execFileSync}=require('child_process');
 const dir=path.join(__dirname,'..'), raiz=path.join(dir,'..');
 const args=process.argv.slice(2), modo=args.includes('--dias')?'dias':args.includes('--noches')?'noches':'todo';
@@ -34,19 +34,21 @@ const CAP_NOCHES=[
  'Cerramos el día 🖤 Descansa que mañana hay más.\nCuéntanos cómo te fue hoy 👇',
  'Buenas noches 🌙 Gracias por estar siempre.\nNos vemos mañana con más diseños 🖤'];
 const HASH_D='#buenosdias #spotclub #venezuela #parati #streetwear', HASH_N='#buenasnoches #spotclub #venezuela #parati #streetwear';
-// solo fotos limpias de producto: sin texto propio, sin personas y sin VIZZION (drop privado)
-const PERMITIDAS=['foto-17871661122584133.jpg','foto-17903121954263028.jpg','foto-17862699969516372.jpg'];
-const fotos=fs.readdirSync(path.join(dir,'material')).filter(f=>PERMITIDAS.includes(f)).sort();
-const ft=k=>fotos.length?'contenido/material/'+pick(fotos,k):undefined;
 const manif=JSON.parse(fs.readFileSync(path.join(dir,'contenido.json'),'utf8'));
 const ya=id=>manif.piezas.some(p=>p.id===id);
+const B='contenido/biblioteca/', C=B+'cartas/', P=B+'promos/';
+// cartas de artistas limpias (sin marcas ajenas ni personajes con copyright) y diseños propios aptos para saludar
+const CARTAS=['karol-g','milo-j','doja-cat','omar-courtz','duki','young-miko-1','mora-1','lil-cry','kid-keo','royal-kid','wheez','zell-2','linkin','billie-eilish-1','alex-g','akrilla','akapellah-rojo','atorrante','juice-world','lobe','kanye','humbe','feirly','eladio-carrion','big-soto-morada','cancerbero','lil-supa','cosmic-kid'].filter(c=>fs.existsSync(path.join(raiz,C+c+'.jpg')));
+const DISENOS=['greys-save-lives','greys-anatomy','outer-banks-pogue-life','retrato-collage','no-me-arrepiento-de-sentir-tanto','don-kbrn-lista-eladio'].filter(c=>fs.existsSync(path.join(raiz,'contenido/disenos/'+c+'.png')));
+const PROMOS=fs.readdirSync(path.join(raiz,P)).filter(f=>/^2x12-.*\.jpg$/.test(f)&&f!=='2x12-microdurazno-1.jpg').sort();   // 1 y maria-flyer llevan personas/precio: prohibidos
+const toma=(a,k,m)=>Array.from({length:m},(_,i)=>a[(((n*3+k+i)%a.length)+a.length)%a.length]);
+const cartas=(k,m)=>toma(CARTAS,k,m).map(c=>C+c+'.jpg'), promos=(k,m)=>toma(PROMOS,k,m).map(f=>P+f);
 const d1=pick(DIAS,0), d2=pick(DIAS,Math.floor(DIAS.length/2)), nn=pick(NOCHES,0);   // post y story van a mitad del banco, así no coinciden
+const base={tema:'neon',datos:[],insignia:'',sello:[],pie:'Maracaibo · @spot__club',fecha:hoy};
 const piezas=[
- {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',plantilla:'frase',l1:d1[0],l2:d1[1],sub:d1[2],cta:false,foto:ft(0),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
- {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',plantilla:'frase',l1:d2[0],l2:d2[1],sub:d2[2],glitch:true,cta:false,caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
- {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',plantilla:'frase',l1:nn[0],l2:nn[1],sub:nn[2],cta:false,foto:ft(5),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
+ {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:d1[2].toUpperCase(),l1:d1[0],l2:d1[1],cartas:cartas(0,3),cartaAncho:330,montaje:cartas(7,14),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
+ {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:d2[2].toUpperCase(),l1:d2[0],l2:d2[1],diseno:'contenido/disenos/'+pick(DISENOS,0)+'.png',montaje:promos(0,12),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
+ {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:nn[2].toUpperCase(),l1:nn[0],l2:nn[1],cartas:cartas(3,3),cartaAncho:330,montaje:cartas(11,14),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
 ].filter(p=>(modo==='todo'||(modo==='dias'?p.id.includes('buenos-dias'):p.id.includes('buenas-noches')))&&!ya(p.id));
 if(!piezas.length){ console.log('los saludos de',hoy,'ya existen'); process.exit(0); }
-const spec=path.join(require('os').tmpdir(),'saludos-'+hoy+'.json');
-fs.writeFileSync(spec,JSON.stringify({fecha:hoy,piezas}));
-execFileSync('node',[path.join(__dirname,'diario.js'),spec],{stdio:'inherit',cwd:raiz});
+for(const p of piezas){ const spec=path.join(require('os').tmpdir(),'saludo-'+p.id+'.json'); fs.writeFileSync(spec,JSON.stringify({...base,...p,salida:p.id})); execFileSync('node',[path.join(__dirname,'premium.js'),spec],{stdio:'inherit',cwd:raiz}); }
