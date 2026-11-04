@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-04-video-tarde",
+      "titulo": "Tu carta, tu historia",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-04-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-04-video-tarde-poster.png",
+      "caption": "Una carta con tu artista y una franela con tu diseño: todo tuyo 🖤 ¿Cuál armamos? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: tu carta, tu historia 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-04"
+    },
+    {
       "id": "2026-11-04-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
