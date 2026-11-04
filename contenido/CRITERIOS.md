@@ -125,3 +125,7 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Video de las 8:00 y video de la tarde: `video-coleccion.js` (muro + cartas + franela real). El video de "animación dibujada" (`video-animado.js`) queda retirado; para variar en la tarde, usar `video-coleccion.js` con otro gancho/tema, o `video-tarde.js` sobre fotos reales del dueño.
 - Reutilizar las imágenes de `contenido/biblioteca/` y `contenido/disenos/` con rotación (≥5 días sin repetir carta/diseño).
 - PROHIBIDOS en muros/fondos: `promos/2x12-microdurazno-1.jpg` (persona + precio "2x12$") y `promos/maria-flyer.jpg` (persona). Los demás `promos/` (franela blanca sola sobre rojo) sí valen.
+
+## El panel solo muestra el contenido de hoy (orden del dueño, 2026-11-04)
+- Sin sección "Próximos 7 días". La lista muestra solo las piezas con la fecha de hoy (Caracas); si aún no hay de hoy, las del último día con contenido.
+- La rutina de las 6:41 ejecuta `python3 -I contenido/fuentes/limpiar_contenido.py`, que quita de `contenido.json` las piezas de otros días (y las sin fecha) y borra sus archivos. No guardar nada de días anteriores en el panel.
