@@ -1,6 +1,78 @@
 {
-  "actualizado": "2026-11-05T03:54:27Z",
+  "actualizado": "2026-11-05T10:43:17Z",
   "disenos": [
+    {
+      "id": "2Vj64CL5J2IOssX1AnTR",
+      "titulo": "MALACHI BARTON",
+      "archivo": "malachi-barton.png",
+      "partes": 1,
+      "fecha": "2026-11-05T04:01:34.115Z",
+      "nuevo": true,
+      "tipo": "diseno",
+      "prenda": "negra",
+      "grande": false,
+      "usar": true
+    },
+    {
+      "id": "gkzgWLUjFw4PxrMN82zm",
+      "titulo": "siento q meresco mas",
+      "archivo": "siento-q-meresco-mas.png",
+      "partes": 52,
+      "fecha": "2026-11-05T04:01:33.163Z",
+      "nuevo": true,
+      "tipo": "diseno",
+      "prenda": "negra",
+      "grande": false,
+      "usar": true
+    },
+    {
+      "id": "UCX1hioPOS7wjIgqUnqM",
+      "titulo": "canserbero 1",
+      "archivo": "canserbero-1.png",
+      "partes": 24,
+      "fecha": "2026-11-05T04:00:48.024Z",
+      "nuevo": true,
+      "tipo": "diseno",
+      "prenda": "blanca",
+      "grande": true,
+      "usar": true
+    },
+    {
+      "id": "ErR58cypO0d8hpOOeeEx",
+      "titulo": "evanescence",
+      "archivo": "evanescence.png",
+      "partes": 44,
+      "fecha": "2026-11-05T04:00:25.408Z",
+      "nuevo": true,
+      "tipo": "diseno",
+      "prenda": "negra",
+      "grande": false,
+      "usar": true
+    },
+    {
+      "id": "Pd7nikgilRr8DLodRLwC",
+      "titulo": "xxxtentacion",
+      "archivo": "xxxtentacion.png",
+      "partes": 29,
+      "fecha": "2026-11-05T03:59:47.824Z",
+      "nuevo": true,
+      "tipo": "diseno",
+      "prenda": "negra",
+      "grande": true,
+      "usar": true
+    },
+    {
+      "id": "roT8q70o7in36yh7yyAg",
+      "titulo": "Lilpeep rojo",
+      "archivo": "lilpeep-rojo.png",
+      "partes": 48,
+      "fecha": "2026-11-05T03:59:22.796Z",
+      "nuevo": true,
+      "tipo": "diseno",
+      "prenda": "blanca",
+      "grande": true,
+      "usar": true
+    },
     {
       "id": "amKOO3W6DnbrWny30moY",
       "titulo": "Neus Modificada Suei2",

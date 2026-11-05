@@ -2,94 +2,26 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
-      "id": "2026-11-04-buenas-noches",
-      "titulo": "Buenas noches · Story",
-      "tipo": "Comunidad",
-      "formato": "Story 9:16",
-      "archivos": [
-        "spot-2026-11-04-buenas-noches.png"
-      ],
-      "caption": "Story: agrega el sticker de música o una cuenta regresiva para mañana.\nBuenas noches 🌙 Gracias por estar siempre.\nNos vemos mañana con más diseños 🖤\n#buenasnoches #spotclub #venezuela #parati #streetwear",
-      "fecha": "2026-11-04"
-    },
-    {
-      "id": "2026-11-04-video-tarde",
-      "titulo": "Tu carta, tu historia",
-      "tipo": "Video",
-      "formato": "Video 9:16 · 12 s",
-      "archivos": [
-        "spot-2026-11-04-video-tarde.mp4"
-      ],
-      "poster": "spot-2026-11-04-video-tarde-poster.png",
-      "caption": "Una carta con tu artista y una franela con tu diseño: todo tuyo 🖤 ¿Cuál armamos? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: tu carta, tu historia 🃏 #cartas #maracaibo #spotclub",
-      "fecha": "2026-11-04"
-    },
-    {
-      "id": "2026-11-04-buenos-dias-2",
+      "id": "2026-11-05-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
       "formato": "Story 9:16",
       "archivos": [
-        "spot-2026-11-04-buenos-dias-2.png"
+        "spot-2026-11-05-buenos-dias-2.jpg"
       ],
       "caption": "Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.",
-      "fecha": "2026-11-04"
+      "fecha": "2026-11-05"
     },
     {
-      "id": "2026-11-04-buenos-dias-1",
+      "id": "2026-11-05-buenos-dias-1",
       "titulo": "Buenos días · Post",
       "tipo": "Comunidad",
       "formato": "Post 4:5",
       "archivos": [
-        "spot-2026-11-04-buenos-dias-1.png"
+        "spot-2026-11-05-buenos-dias-1.jpg"
       ],
-      "caption": "Buenos días, familia 🖤 Que hoy te salga todo con estilo.\nCuéntanos en los comentarios qué vas a estrenar hoy 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
-      "fecha": "2026-11-04"
-    },
-    {
-      "id": "2026-11-04-video",
-      "titulo": "¿Quién es tu artista?",
-      "tipo": "Video",
-      "formato": "Video 9:16 · 12 s",
-      "archivos": [
-        "spot-2026-11-04-video.mp4"
-      ],
-      "poster": "spot-2026-11-04-video-poster.png",
-      "caption": "Tu artista favorito hecho carta, y tu diseño en tu franela 🖤 #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #dtf\nTikTok: tu artista, tu carta 🃏 #cartas #maracaibo #spotclub",
-      "fecha": "2026-11-04"
-    },
-    {
-      "id": "2026-11-04-flyer-3",
-      "titulo": "Del diseño a tu pecho",
-      "tipo": "Proceso",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-04-flyer-3.png"
-      ],
-      "caption": "Tú mandas la idea, nosotros la llevamos a tu franela 👇🖤\nEscríbenos al DM y la armamos contigo 📩\n#franelaspersonalizadas #venezuela #parati #dtf #streetwear",
-      "fecha": "2026-11-04"
-    },
-    {
-      "id": "2026-11-04-flyer-2",
-      "titulo": "Tu frase, tu franela",
-      "tipo": "Producto",
-      "formato": "Story 9:16",
-      "archivos": [
-        "spot-2026-11-04-flyer-2.png"
-      ],
-      "caption": "Instrucciones: agrega el sticker de enlace al DM y una encuesta: «¿Qué frase llevarías en tu pecho?» 🖤",
-      "fecha": "2026-11-04"
-    },
-    {
-      "id": "2026-11-04-flyer-1",
-      "titulo": "¿Qué artista no puede faltar?",
-      "tipo": "Comunidad",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-04-flyer-1.png"
-      ],
-      "caption": "¿Quién es el artista que no puede faltar en tu colección? Cuéntanos 👇🖤\nHacemos tu carta con el artista que quieras. Escríbenos al DM 📩\n#cartaspersonalizadas #venezuela #parati #cartas #maracaibo",
-      "fecha": "2026-11-04"
+      "caption": "Arrancamos el día con todo 🖤 ¿Cuál es tu plan de hoy?\nCuéntanos aquí abajo 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-05"
     }
   ]
 }
