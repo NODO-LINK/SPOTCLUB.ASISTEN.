@@ -170,3 +170,10 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - `sincronizar_disenos.py` etiqueta cada archivo de `contenido/disenos/panel/indice.json`: `tipo` ("diseno" = PNG con transparencia → franelas, hoodie y pósters; "rectangular" = imagen opaca completa, p. ej. una carta, reverso de carta o foto → cartas y pósters, NUNCA estampar en franelas), `prenda` ("negra" = tinta clara, "blanca" = tinta oscura) y `usar` (false si está en `excluir.json`).
 - Para estampar en franelas/hoodie usa solo `tipo:"diseno"` con `usar:true`, respetando `prenda` (negra/blanca). Los `rectangular` con `usar:true` sirven como carta/póster (p. ej. en `cartas` o `posters`).
 - `contenido/disenos/panel/excluir.json` lista lo que NO se usa (documento falso tipo licencia de conducir, reverso de carta Pokémon, etc.). Respétalo siempre.
+
+## Diseños grandes en la ESPALDA (orden del dueño, 2026-11-05)
+- Los diseños GRANDES (collages, ilustraciones densas, cuadros con varias imágenes) van en la ESPALDA de la prenda casi siempre (~80 % de las veces; el resto de frente). Los chicos o de texto (frases, listas, logos) van al frente (pecho).
+- Qué es "grande": `grande:true` en `contenido/disenos/panel/indice.json` (lo calcula `sincronizar_disenos.py`); en los fijos de `contenido/disenos/`: retrato-collage, outer-banks-pogue-life, greys-anatomy y greys-save-lives.
+- Cómo pedirlo en `premium.js`: una prenda sola con `"espalda":true` (+ `diseno`; `prenda` opcional "negra"/"blanca"), o varias prendas con `"lados":["espalda","frente",...]` en el mismo orden que `prendas`. Para un mockup suelto: `mockup_franela.py diseno.png salida.png --negra|--blanca|--hoodie --espalda`.
+- Bases de espalda en `contenido/mockups/` (`hacer_espalda.py`): franela negra y blanca (sale de la de frente con el cuello trasero) y hoodie (foto real de espalda del dueño). El hoodie sigue llevando SOLO el diseño de Spot Club (regla anterior), por eso el hoodie no se usa para diseños grandes salvo que el dueño lo pida.
+- En los flyers con varias prendas se puede mostrar una de espalda y otra de frente. `saludos.js` ya aplica la regla.

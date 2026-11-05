@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-05T03:50:12Z",
+  "actualizado": "2026-11-05T03:54:27Z",
   "disenos": [
     {
       "id": "amKOO3W6DnbrWny30moY",
@@ -10,7 +10,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "diseno",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": true
     },
     {
       "id": "7ed7crkjyj1Bn8FZina3",
@@ -21,7 +22,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "diseno",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": true
     },
     {
       "id": "jzg7XObii2k7u5hnLKyQ",
@@ -32,7 +34,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "rectangular",
-      "prenda": "blanca"
+      "prenda": "blanca",
+      "grande": false
     },
     {
       "id": "kd4bnqbWOTZEh4hVXAe2",
@@ -43,7 +46,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "diseno",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": true
     },
     {
       "id": "KtclgG2ma0EhPpbjf2Wu",
@@ -54,7 +58,8 @@
       "nuevo": true,
       "usar": false,
       "tipo": "rectangular",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": false
     },
     {
       "id": "cMUhNZlYb8Pe9a5r7OIX",
@@ -65,7 +70,8 @@
       "nuevo": true,
       "usar": false,
       "tipo": "rectangular",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": false
     },
     {
       "id": "ExU6VsTWANQWxK9MGR7i",
@@ -76,7 +82,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "rectangular",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": false
     },
     {
       "id": "vLEtQS9p0cMaRi4FaH9M",
@@ -87,7 +94,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "rectangular",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": false
     },
     {
       "id": "udgLdlSA1rI7xdWUYF9I",
@@ -98,7 +106,8 @@
       "nuevo": true,
       "usar": false,
       "tipo": "rectangular",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": false
     },
     {
       "id": "I8GemygdtSjGVLJxPcDv",
@@ -109,7 +118,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "rectangular",
-      "prenda": "blanca"
+      "prenda": "blanca",
+      "grande": false
     },
     {
       "id": "qWg0wWwLgnNEK8CtGayR",
@@ -120,7 +130,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "diseno",
-      "prenda": "blanca"
+      "prenda": "blanca",
+      "grande": true
     },
     {
       "id": "HYcksuDyI9nzx8MMad1p",
@@ -131,7 +142,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "diseno",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": true
     },
     {
       "id": "WtiDFrtrHJx07fwWvq54",
@@ -142,7 +154,8 @@
       "nuevo": true,
       "usar": true,
       "tipo": "diseno",
-      "prenda": "negra"
+      "prenda": "negra",
+      "grande": false
     }
   ]
 }

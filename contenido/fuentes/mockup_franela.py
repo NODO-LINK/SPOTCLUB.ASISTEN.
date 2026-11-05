@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Estampa un diseño sobre la foto real de una franela (negra o blanca, elegida según el diseño) y guarda la franela recortada (PNG con fondo transparente).
-Uso:  python3 -I contenido/fuentes/mockup_franela.py diseno.png salida.png [--escala auto] [--y 0.25] [--blanca|--negra] [--dx 0] [--sin-recorte]
+Uso:  python3 -I contenido/fuentes/mockup_franela.py diseno.png salida.png [--escala auto] [--y 0.25] [--blanca|--negra|--hoodie] [--espalda] [--dx 0] [--sin-recorte]
 La tela de la foto aporta las sombras y los pliegues; el diseño se mezcla con ellos para que no se vea pegado."""
 import sys, os
 import numpy as np
@@ -9,7 +9,8 @@ from PIL import Image, ImageDraw, ImageFilter
 AQUI = os.path.dirname(os.path.abspath(__file__))
 BASE = os.path.join(AQUI, '..', 'mockups', 'base-franela-negra-frente.jpg')          # de aquí sale siempre la silueta
 BASE_BLANCA = os.path.join(AQUI, '..', 'mockups', 'base-franela-blanca-frente.jpg')
-BASE_HOODIE = os.path.join(AQUI, '..', 'mockups', 'base-hoodie-frente.jpg')          # hoodie negro (sin silueta aparte: se recorta de su propia foto)
+BASE_HOODIE = os.path.join(AQUI, '..', 'mockups', 'base-hoodie-frente.jpg')
+ESP = {n: os.path.join(AQUI, '..', 'mockups', f) for n, f in (('negra', 'base-franela-negra-espalda.jpg'), ('blanca', 'base-franela-blanca-espalda.jpg'), ('hoodie', 'base-hoodie-espalda.jpg'))}   # ver hacer_espalda.py          # hoodie negro (sin silueta aparte: se recorta de su propia foto)
 
 
 def mascara(base):
@@ -30,12 +31,16 @@ def luminosidad_diseno(png):
     return float(((0.299 * a[..., 0] + 0.587 * a[..., 1] + 0.114 * a[..., 2]) * w).sum() / w.sum())
 
 
-def componer(diseno_png, escala=None, y=None, dx=0.0, recorte=True, color='auto'):
+def componer(diseno_png, escala=None, y=None, dx=0.0, recorte=True, color='auto', espalda=False):
     if color == 'auto':
         color = 'blanca' if luminosidad_diseno(diseno_png) < 110 else 'negra'
     hoodie = color == 'hoodie'
-    base_forma = Image.open(BASE_HOODIE if hoodie else BASE).convert('RGB')
-    base = base_forma if hoodie else Image.open(BASE_BLANCA if color == 'blanca' else BASE).convert('RGB')
+    if espalda:      # la silueta sale siempre de la foto negra de espalda (o la del hoodie); la tela de la foto de su color
+        base_forma = Image.open(ESP['hoodie'] if hoodie else ESP['negra']).convert('RGB')
+        base = base_forma if hoodie else Image.open(ESP['blanca'] if color == 'blanca' else ESP['negra']).convert('RGB')
+    else:
+        base_forma = Image.open(BASE_HOODIE if hoodie else BASE).convert('RGB')
+        base = base_forma if hoodie else Image.open(BASE_BLANCA if color == 'blanca' else BASE).convert('RGB')
     W, H = base.size
     m = mascara(base_forma)
     oscura = np.asarray(base_forma.convert('L')) < (200 if hoodie else 150)          # la prenda es negra: lo claro que quede dentro es fondo (huecos bajo las mangas)
@@ -53,9 +58,12 @@ def componer(diseno_png, escala=None, y=None, dx=0.0, recorte=True, color='auto'
     d = Image.open(diseno_png).convert('RGBA')
     asp = d.height / d.width
     if escala is None:                       # se ajusta a la forma: ni más ancho que el pecho ni más alto que el torso
-        escala = min(0.36, 0.30 * bh / (asp * bw)) if hoodie else min(0.42, 0.50 * bh / (asp * bw))
+        if espalda:   # espalda: el diseño grande ocupa casi todo el torso
+            escala = min(0.44, 0.62 * bh / (asp * bw)) if hoodie else min(0.60, 0.74 * bh / (asp * bw))
+        else:
+            escala = min(0.36, 0.30 * bh / (asp * bw)) if hoodie else min(0.42, 0.50 * bh / (asp * bw))
     if y is None:
-        y = 0.31 if hoodie else 0.25
+        y = (0.20 if hoodie else 0.14) if espalda else (0.31 if hoodie else 0.25)
     dw = int(bw * escala)
     dh = int(dw * d.height / d.width)
     d = d.resize((dw, dh), Image.LANCZOS).filter(ImageFilter.GaussianBlur(0.5))
@@ -99,6 +107,6 @@ if __name__ == '__main__':
             op[args[i]] = float(args[i + 1]); i += 2
         else:
             i += 1
-    res = componer(args[0], op['--escala'], op['--y'], op['--dx'], '--sin-recorte' not in args, color)
+    res = componer(args[0], op['--escala'], op['--y'], op['--dx'], '--sin-recorte' not in args, color, '--espalda' in args)
     res.save(args[1])
     print('ok', args[1], res.size)
