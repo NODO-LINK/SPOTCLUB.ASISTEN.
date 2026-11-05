@@ -742,7 +742,7 @@ td{padding:11px 14px;vertical-align:middle}
           <h4>Pago del cliente</h4>
           <div class="adic-grid">
             <div class="field"><label for="ePagado">Cuánto ha pagado el cliente (USD)</label><input type="text" inputmode="decimal" id="ePagado" placeholder="0.00" autocomplete="off"></div>
-            <div class="field"><label for="ePagoMet">Método (si suma al pago)</label><select id="ePagoMet"></select></div>
+            <div class="field"><label for="ePagoMet">Método de pago (cambia el del último pago)</label><select id="ePagoMet"></select></div>
           </div>
           <div class="field"><label for="ePagoRef">Referencia (opcional)</label><input type="text" id="ePagoRef" placeholder="Ej: últimos 4 dígitos" autocomplete="off"></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button type="button" class="btn ghost sm" id="ePagoTodo">Pagó todo</button><button type="button" class="btn ghost sm" id="ePagoNada">Aún no ha pagado</button></div>
@@ -1800,7 +1800,7 @@ function abrirEdit(id){
     $('#eEtapa').innerHTML=ETAPAS.map(e=>`<option value="${e.k}"${e.k===v.etapa?' selected':''}>${e.l}</option>`).join('');
     $('#eAdicM').value=v.costoAdicional||''; $('#eAdicR').value=v.razonAdicional||'';
     $('#edit-pago-sec').classList.toggle('hidden',!!v.legacy);
-    fillMetodos('ePagoMet'); $('#ePagado').value=v.pagado.toFixed(2); $('#ePagoRef').value='';
+    fillMetodos('ePagoMet'); { const ult=v.pagos.length?v.pagos[v.pagos.length-1]:null; if(ult&&ult.metodo){ if(![...$('#ePagoMet').options].some(o=>o.value===ult.metodo)) $('#ePagoMet').add(new Option(ult.metodo,ult.metodo)); $('#ePagoMet').value=ult.metodo; } } $('#ePagado').value=v.pagado.toFixed(2); $('#ePagoRef').value='';
     $('#ePagosLista').textContent=v.pagos.length?'Pagos registrados: '+v.pagos.map(p=>fshort(p.fecha)+' · '+p.metodo+' '+fmt(p.monto)).join(' | ')+'. Si bajas el monto, se descuenta del último pago hacia atrás.':'Todavía no hay pagos registrados.';
     editItems=[...v.items]; editSel.reset(); renderEdit();
     $('#mEditarT').textContent='Editar pedido '+inv(v);
@@ -1827,6 +1827,14 @@ async function guardarEdit(){
             if(dif>0) pagos.push({fecha:Date.now(),monto:dif,metodo:$('#ePagoMet').value,referencia:$('#ePagoRef').value.trim()||'Ajuste desde edición',por:user.email});
             else{ let resto=-dif; for(let i=pagos.length-1;i>=0&&resto>0.005;i--){ const q=Math.min(resto,+pagos[i].monto||0); pagos[i].monto=+((+pagos[i].monto||0)-q).toFixed(2); resto=+(resto-q).toFixed(2); } pagos=pagos.filter(p=>(+p.monto||0)>0.005); }
             upd.pagos=pagos; cambioPago=`Pagado ${fmt(v.pagado)} → ${fmt(nuevoPagado)}`;
+        }
+        // cambio de método (y referencia) del último pago registrado, sin tocar el monto
+        if(!v.legacy){
+            const pg=upd.pagos||v.pagos.map(p=>({...p})), ult=pg.length-1, met=$('#ePagoMet').value, ref=$('#ePagoRef').value.trim();
+            if(ult>=0&&!(Math.abs(nuevoPagado-v.pagado)>0.005&&nuevoPagado>v.pagado)&&(pg[ult].metodo!==met||(ref&&ref!==pg[ult].referencia))){
+                const antes=pg[ult].metodo; pg[ult].metodo=met; if(ref) pg[ult].referencia=ref; upd.pagos=pg;
+                if(antes!==met) cambioPago+=(cambioPago?' · ':'')+`Método ${antes} → ${met}`;
+            }
         }
         const et=$('#eEtapa').value;
         if(et!==v.etapa){ const now=Date.now(); upd.logistica=et; upd.etapaDesde=now; upd.historial=FV.arrayUnion({etapa:et,fecha:now,por:user.email,nota:'editado'}); }
