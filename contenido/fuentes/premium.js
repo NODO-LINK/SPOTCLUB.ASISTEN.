@@ -184,7 +184,7 @@ window.hacer=async s=>{
   // degradado oscuro detrás del título para que siempre se lea
   const sc=x.createLinearGradient(0,0,0,H*.40); sc.addColorStop(0,'rgba(4,3,12,.62)'); sc.addColorStop(1,'rgba(4,3,12,0)'); x.fillStyle=sc; x.fillRect(0,0,W,H*.40);
   // producto
-  const pw=520, ph=520, py=H-(s.formato==='story'?660:560), pxm=W/2;
+  const pw=520, ph=520, py=H-(s.formato==='story'?740:565), pxm=W/2;
   const yLosa=py+ph*.5-6; if(s.cartasData&&s.cartasData.length){} else if(!fondoImg&&!hayMontaje) losa(x,W,H,yLosa,'#2a1f44'); else { blur(x,18,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(pxm,yLosa+6,330,30,0,0,7); x.fill(); }); }
   glow(x,pxm,py,520,'rgba(190,120,255,A)',.22);
   let img=null; if(s.disenoData){ img=new Image(); img.src=s.disenoData; await img.decode(); }
@@ -192,23 +192,23 @@ window.hacer=async s=>{
     const pr=[]; for(const d of s.prendasData){ const im=new Image(); im.src=d; await im.decode(); pr.push(im); }
     if(s.cartasData&&s.cartasData.length){
       const cs=[]; for(const d of s.cartasData){ const im=new Image(); im.src=d; await im.decode(); cs.push(im); }
-      const n=cs.length, cw=s.cartaAncho||250, ch=cw*1.457, cy0=py+120;
+      const n=cs.length, cw=s.cartaAncho||320, ch=cw*1.457, cy0=py+140;
       cs.forEach((im,i)=>{ const t=n===1?0:(i/(n-1)-.5), ang=t*.55, dx=t*(cw*1.7); x.save(); x.translate(pxm+dx,cy0+Math.abs(t)*60); x.rotate(ang);
         blur(x,20,()=>{ x.fillStyle='rgba(0,0,0,.7)'; x.beginPath(); x.roundRect(-cw/2+12,-ch/2+20,cw,ch,14); x.fill(); });
         x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.save(); x.clip(); x.drawImage(im,-cw/2,-ch/2,cw,ch); x.restore();
         x.strokeStyle='rgba(255,255,255,.35)'; x.lineWidth=2; x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.stroke(); x.restore(); }); }
-    const n=pr.length, conC=!!(s.cartasData&&s.cartasData.length), base=(n===1?560:n===2?470:400)*(conC?.8:1), sep=n===1?0:n===2?250:300, orden=n===3?[0,2,1]:[...Array(n).keys()];
+    const n=pr.length, conC=!!(s.cartasData&&s.cartasData.length), base=(n===1?820:n===2?650:465)*(conC?.78:1)*(s.formato==='story'?1.1:1), sep=n===1?0:n===2?290:262, orden=n===3?[0,2,1]:[...Array(n).keys()];
     orden.forEach(i=>{ const im=pr[i], t=n===1?0:(i-(n-1)/2), fw=base*(n===3&&i===1?1.12:1), fh=fw*im.naturalHeight/im.naturalWidth, cxp=pxm+t*sep, cyp=py-10+(n===3&&i!==1?24:0)-(conC?95:0);
       blur(x,26,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(cxp,cyp+fh/2-6,fw*.40,24,0,0,7); x.fill(); });
       x.save(); x.translate(cxp,cyp); x.rotate(n===1?-.035:t*.06); x.shadowColor='rgba(200,150,255,.35)'; x.shadowBlur=16; x.drawImage(im,-fw/2,-fh/2,fw,fh); x.restore(); }); }
   else if(s.cartasData&&s.cartasData.length){ // abanico de cartas con sombra
     const cs=[]; for(const d of s.cartasData){ const im=new Image(); im.src=d; await im.decode(); cs.push(im); }
-    const n=cs.length, cw=s.cartaAncho||330, ch=cw*1.457, cx0=pxm, cy0=py+60;
+    const n=cs.length, cw=s.cartaAncho||(s.formato==='story'?400:345), ch=cw*1.457, cx0=pxm, cy0=py+20;
     cs.forEach((im,i)=>{ const t=n===1?0:(i/(n-1)-.5), ang=t*.62, dx=t*(cw*1.55); x.save(); x.translate(cx0+dx,cy0+Math.abs(t)*70); x.rotate(ang);
       blur(x,22,()=>{ x.fillStyle='rgba(0,0,0,.7)'; x.beginPath(); x.roundRect(-cw/2+14,-ch/2+22,cw,ch,16); x.fill(); });
       x.shadowColor='rgba(0,0,0,.6)'; x.shadowBlur=24; x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,14); x.save(); x.clip(); x.drawImage(im,-cw/2,-ch/2,cw,ch); x.restore(); x.shadowBlur=0;
       x.strokeStyle='rgba(255,255,255,.35)'; x.lineWidth=2; x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,14); x.stroke(); x.restore(); }); }
-  else if(s.franelaData){ const fi=new Image(); fi.src=s.franelaData; await fi.decode(); const fw=pw*1.06, fh=fw*fi.naturalHeight/fi.naturalWidth;
+  else if(s.franelaData){ const fi=new Image(); fi.src=s.franelaData; await fi.decode(); const fw=(s.formato==='story'?940:820), fh=fw*fi.naturalHeight/fi.naturalWidth;
     blur(x,26,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(pxm,py+fh/2-4,fw*.42,26,0,0,7); x.fill(); });
     x.save(); x.translate(pxm,py); x.rotate(-.035); x.translate(-pxm,-py);
     x.shadowColor='rgba(200,150,255,.35)'; x.shadowBlur=16; x.drawImage(fi,pxm-fw/2,py-fh/2,fw,fh); x.shadowBlur=0; x.restore(); }

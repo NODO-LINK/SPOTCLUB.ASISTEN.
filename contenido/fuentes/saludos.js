@@ -50,9 +50,9 @@ const cartas=(k,m)=>toma(CARTAS,k,m).map(c=>C+c+'.jpg'), promos=(k,m)=>toma(PROM
 const d1=pick(DIAS,0), d2=pick(DIAS,Math.floor(DIAS.length/2)), nn=pick(NOCHES,0);   // post y story van a mitad del banco, así no coinciden
 const base={tema:'neon',datos:[],insignia:'',sello:[],pie:'Maracaibo · @spot__club',fecha:hoy};
 const piezas=[
- {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:d1[2].toUpperCase(),l1:d1[0],l2:d1[1],cartas:cartas(0,3),cartaAncho:330,montaje:cartas(7,14),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
+ {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:d1[2].toUpperCase(),l1:d1[0],l2:d1[1],cartas:cartas(0,3),montaje:cartas(7,14),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
  {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:d2[2].toUpperCase(),l1:d2[0],l2:d2[1],diseno:disenoRuta(0),montaje:promos(0,12),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
- {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:nn[2].toUpperCase(),l1:nn[0],l2:nn[1],cartas:cartas(3,3),cartaAncho:330,montaje:cartas(11,14),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
+ {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:nn[2].toUpperCase(),l1:nn[0],l2:nn[1],cartas:cartas(3,3),montaje:cartas(11,14),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
 ].filter(p=>(modo==='todo'||(modo==='dias'?p.id.includes('buenos-dias'):p.id.includes('buenas-noches')))&&!ya(p.id));
 if(!piezas.length){ console.log('los saludos de',hoy,'ya existen'); process.exit(0); }
 for(const p of piezas){ const spec=path.join(require('os').tmpdir(),'saludo-'+p.id+'.json'); fs.writeFileSync(spec,JSON.stringify({...base,...p,salida:p.id})); execFileSync('node',[path.join(__dirname,'premium.js'),spec],{stdio:'inherit',cwd:raiz}); }
