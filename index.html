@@ -499,6 +499,12 @@ td{padding:11px 14px;vertical-align:middle}
   #printArea .tk-pie{text-align:center;font-size:7.6px;font-weight:700;margin-top:2mm;border-top:.5mm solid #000;padding-top:1.2mm}
   #printArea .tk-pie b{display:block;font:900 8px/1.2 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.14em;margin-bottom:.6mm}
 }
+.dis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+  .dis-card{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+  .dis-img{aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:8px;background:repeating-conic-gradient(var(--soft) 0 25%,var(--surface) 0 50%) 0 0/16px 16px}
+  .dis-img img{max-width:100%;max-height:100%;object-fit:contain}
+  .dis-info{padding:8px 10px 4px}.dis-info strong{display:block;font-size:.84rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dis-info small{color:var(--muted);font:500 .72rem var(--mono)}
+  .dis-acc{display:flex;gap:6px;flex-wrap:wrap;padding:6px 10px 10px}
 </style>
 </head>
 <body>
@@ -530,6 +536,7 @@ td{padding:11px 14px;vertical-align:middle}
       <button class="nv sec" type="button" data-act="go" data-view="inv"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v12H3z"/><path d="M2 4h20v4H2z"/><path d="M10 12h4"/></svg>Inventario</button>
       <button class="nv sec" type="button" data-act="go" data-view="con"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M3.5 17.5 9 13l4 3.5 3-2.5 4.5 3.5"/></svg>Contenido <span class="ct" id="ctCon"></span></button>
       <button class="nv sec" type="button" data-act="go" data-view="prod"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.4"/></svg>Productos</button>
+      <button class="nv sec" type="button" data-act="go" data-view="dis"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="9" cy="9" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>Diseños</button>
       <button class="nv sec" type="button" data-act="go" data-view="act" id="nvAct"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Actividad</button>
       <button class="nv nv-mas" type="button" data-act="mas" aria-haspopup="dialog"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>Más <span class="ct" id="ctMas"></span></button>
     </nav>
@@ -696,6 +703,7 @@ td{padding:11px 14px;vertical-align:middle}
       </section>
       <section id="v-prod" hidden></section>
       <section id="v-act" hidden></section>
+      <section id="v-dis" hidden></section>
     </main>
   </div>
 </div>
@@ -989,8 +997,8 @@ const DAY = 864e5;
 
 // permisos por rol (sin documento en "usuarios" se asume admin)
 const PERMISOS = {
-    admin:    {views:['panel','ent','fact','ventas','cli','rec','inv','con','prod','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
-    ventas:   {views:['panel','ent','fact','ventas','cli','rec','inv','con'],inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
+    admin:    {views:['panel','ent','fact','ventas','cli','rec','inv','con','prod','dis','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
+    ventas:   {views:['panel','ent','fact','ventas','cli','rec','inv','con','dis'],inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
     despacho: {views:['panel','ent'],                        inventario:0, registrar:0, cobrar:0, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1}
 };
 
@@ -1071,7 +1079,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
 let user=null, rol='admin', ventas=[], unsub=null, unsubAct=null, unsubCfg=null, actividad=[];
 let delCtx=null, pagoCtx=null, prodEditId=null, pdraft={t:[],d:[]};
 let recs=[], unsubRec=null;
-let piezas=[], piezasBase=[], piezasGen=[], unsubGen=null, conMode='lib', gen=null;
+let disDB=[], disQ='', piezas=[], piezasBase=[], piezasGen=[], unsubGen=null, conMode='lib', gen=null;
 let pubMap={}, unsubPub=null, selPieza=null, conFilter='all', conImg=0, conErr='';
 let cliNotas={}, unsubCli=null, selCli=null, cliQ='', cliSort='rec';
 let invMap={}, unsubInv=null, invEdit=false, invFilter='all', stockCtx=null;
@@ -1156,7 +1164,7 @@ auth.onAuthStateChanged(async u=>{
         if(unsubGen){unsubGen();unsubGen=null;}
         if(unsubRec){unsubRec();unsubRec=null;}
         recs=[];
-        pubMap={}; piezasGen=[]; piezasBase=[];
+        pubMap={}; piezasGen=[]; disDB=[]; piezasBase=[];
         invMap={}; cliNotas={}; ventas=[];
     }
 });
@@ -1203,7 +1211,7 @@ function go(v,o={}){
     if(v==='cli'&&o.cli) selCli=o.cli;
     if(v==='con'&&o.pieza){ selPieza=o.pieza; conImg=0; }
     $$('#nav .nv').forEach(b=>b.dataset.view===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
-    ['panel','ent','fact','ventas','cli','rec','inv','con','prod','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
+    ['panel','ent','fact','ventas','cli','rec','inv','con','prod','dis','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
     if(v==='act') startActividad();
     render();
     window.scrollTo({top:0});
@@ -1225,6 +1233,7 @@ function render(){
     if(view==='cli')   renderCli();
     if(view==='rec')   renderRec();
     { const n=recPendientesHoy().length; const c=$('#ctRec'); if(c){ c.textContent=n?n:''; c.classList.toggle('alert',n>0);} }
+    if(view==='dis')   renderDis();
     if(view==='con')   renderCon();
     { const n=piezasVencidas().length; const c=$('#ctCon'); if(c){ c.textContent=n?n+' ⚠':''; c.classList.toggle('alert',!!n);} }
     if(view==='ventas') renderReg();
@@ -1880,6 +1889,11 @@ function abrirEliminar(kind,id){
         $('#mEliminarT').textContent='Eliminar factura';
         $('#delInfo').textContent=`${inv(v)} · ${v.nombre} · ${fmt(v.total)}`;
         $('#delWarn').textContent='Se borra el pedido con sus pagos e historial y no se puede recuperar. El número de factura queda sin usar. Si solo quieres que deje de contar, usa Anular.';
+    }else if(kind==='dis'){
+        const g=disDB.find(x=>x.id===id); if(!g) return;
+        $('#mEliminarT').textContent='Eliminar diseño guardado';
+        $('#delInfo').textContent=g.titulo||'Diseño';
+        $('#delWarn').textContent='Se borra de tu biblioteca de diseños y no se puede recuperar. Descárgalo antes si quieres conservarlo.';
     }else if(kind==='gen'){
         const g=piezasGen.find(x=>x.id===id); if(!g) return;
         $('#mEliminarT').textContent='Eliminar diseño';
@@ -1906,6 +1920,10 @@ async function eliminarOk(){
             await b.commit();
             if(selId===v.id) selId=null;
             toast('Factura eliminada.');
+        }else if(delCtx.kind==='dis'){
+            if(!can('registrar')) throw new Error('permiso');
+            await db.collection('piezas_gen').doc(delCtx.id).delete();
+            toast('Diseño eliminado.');
         }else if(delCtx.kind==='gen'){
             if(!can('registrar')) throw new Error('permiso');
             await db.collection('piezas_gen').doc(delCtx.id).delete();
@@ -2376,7 +2394,8 @@ async function startContenido(){
     }catch(e){ piezasBase=[]; conErr='No se pudo cargar la lista de diseños (contenido/contenido.json).'; }
     rebuildPiezas();
     unsubGen=db.collection('piezas_gen').onSnapshot(s=>{
-        piezasGen=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>((b.creado&&b.creado.toMillis?b.creado.toMillis():0)-(a.creado&&a.creado.toMillis?a.creado.toMillis():0)));
+        disDB=s.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.kind==='diseno').sort((a,b)=>String(a.titulo||'').localeCompare(String(b.titulo||''),'es'));
+        piezasGen=s.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.kind!=='diseno').sort((a,b)=>((b.creado&&b.creado.toMillis?b.creado.toMillis():0)-(a.creado&&a.creado.toMillis?a.creado.toMillis():0)));
         rebuildPiezas(); render();
     },e=>console.warn('piezas_gen',e));
     unsubPub=db.collection('publicaciones').onSnapshot(s=>{
@@ -2416,6 +2435,62 @@ function renderCon(){
                     `<div class="toolbar">${chips}</div>`+
           `<div class="fact"><div class="flist">${lista}</div><div>${sel?detallePieza(sel):'<p class="empty">Aún no hay diseños.</p>'}</div></div>`;
     });
+}
+
+// ══════════════════════════════════════════════
+//  DISEÑOS (biblioteca de PNG propios)
+// ══════════════════════════════════════════════
+function renderDis(){
+    const q=(disQ||'').toLowerCase();
+    const cards=disDB.map(d=>`<div class="dis-card" data-n="${esc((d.titulo||'').toLowerCase())}"${q&&!(d.titulo||'').toLowerCase().includes(q)?' hidden':''}>`+
+        `<div class="dis-img"><img src="${esc(d.img)}" alt="${esc(d.titulo)}" loading="lazy"></div>`+
+        `<div class="dis-info"><strong>${esc(d.titulo||'Diseño')}</strong><small>${d.w||'?'}×${d.h||'?'} px</small></div>`+
+        `<div class="dis-acc"><button type="button" class="btn ghost sm" data-act="disDl" data-id="${esc(d.id)}">Descargar</button>`+
+        `<button type="button" class="btn ghost sm" data-act="disRen" data-id="${esc(d.id)}">Nombre</button>`+
+        (can('eliminar')?`<button type="button" class="btn ghost sm" data-act="disDel" data-id="${esc(d.id)}">Eliminar</button>`:'')+`</div></div>`).join('');
+    keep($('#v-dis'),()=>{
+        $('#v-dis').innerHTML=`<div class="pane-head"><h3>Diseños</h3><button type="button" class="btn" data-act="disElegir">+ Subir diseños</button></div>`+
+          `<p class="note-ig">Guarda aquí tus diseños en PNG (con fondo transparente). Puedes subir varios a la vez. Para que el panel siga rápido, cada imagen se guarda con un máximo de 1600 px de lado y bajo 1 MB; el archivo original en tu computadora no se toca.</p>`+
+          `<input type="file" id="disFile" accept="image/png,image/*" multiple hidden>`+
+          `<div class="field" style="margin-top:10px"><label for="disQ">Buscar por nombre</label><input type="search" id="disQ" value="${esc(disQ)}" placeholder="Ej: grey's, anime…" autocomplete="off"></div>`+
+          `<p class="cnt-c" id="disCnt">${disDB.length} ${disDB.length===1?'diseño guardado':'diseños guardados'}</p>`+
+          (disDB.length?`<div class="dis-grid">${cards}</div>`:'<p class="empty">Aún no has guardado diseños. Toca «+ Subir diseños».</p>');
+    });
+}
+document.addEventListener('input',e=>{ if(e.target&&e.target.id==='disQ'){ disQ=e.target.value; const q=disQ.toLowerCase(); $$('#v-dis .dis-card').forEach(c=>{ c.hidden=!!q&&!c.dataset.n.includes(q); }); } });
+document.addEventListener('change',e=>{ if(e.target&&e.target.id==='disFile'){ const fs=[...e.target.files]; e.target.value=''; disSubir(fs); } });
+async function disProcesar(file){
+    const bmp=await createImageBitmap(file); let k=Math.min(1,1600/Math.max(bmp.width,bmp.height)), out='', w=0, h=0;
+    for(let i=0;i<12;i++){
+        w=Math.max(1,Math.round(bmp.width*k)); h=Math.max(1,Math.round(bmp.height*k));
+        const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(bmp,0,0,w,h);
+        out=c.toDataURL('image/png'); if(out.length<900000) break; k*=0.82;
+    }
+    if(out.length>=900000) throw new Error('muy pesada');
+    return {img:out,w,h};
+}
+async function disSubir(files){
+    if(!can('registrar')||!files.length) return;
+    let ok=0; const mal=[];
+    toast('Subiendo '+files.length+' diseño(s)…');
+    for(const f of files){
+        try{
+            if(!/^image\//.test(f.type)) throw new Error('no es imagen');
+            const r=await disProcesar(f);
+            await db.collection('piezas_gen').add({kind:'diseno',titulo:f.name.replace(/\.[^.]+$/,'').slice(0,80),img:r.img,w:r.w,h:r.h,creado:FV.serverTimestamp(),por:user.email});
+            ok++;
+        }catch(err){ console.error(err); mal.push(f.name); }
+    }
+    if(ok) toast(ok+(ok===1?' diseño guardado.':' diseños guardados.')+(mal.length?' No se pudo: '+mal.join(', '):'')); else toast('No se pudo guardar: '+mal.join(', '),'error');
+}
+async function disDescargar(id){
+    const d=disDB.find(x=>x.id===id); if(!d) return;
+    try{ const b=await (await fetch(d.img)).blob(); guardarArchivo(b,(d.titulo||'diseno').replace(/[^\w\-áéíóúñÁÉÍÓÚÑ ]+/g,'').trim().replace(/\s+/g,'-')+'.png'); }catch(e){ toast('No se pudo descargar.','error'); }
+}
+async function disRenombrar(id){
+    const d=disDB.find(x=>x.id===id); if(!d||!can('registrar')) return;
+    const n=(prompt('Nombre del diseño:',d.titulo||'')||'').trim().slice(0,80); if(!n||n===d.titulo) return;
+    try{ await db.collection('piezas_gen').doc(id).update({titulo:n}); toast('Nombre actualizado.'); }catch(e){ toast('No se pudo cambiar el nombre.','error'); }
 }
 function detallePieza(p){
     const e=estadoPieza(p);
@@ -2859,6 +2934,10 @@ document.addEventListener('click',e=>{
         case 'restOk': restaurarRespaldo(); break;
         case 'recibo': verRecibo(id); break;
         case 'reciboPrint': imprimirRecibo(); break;
+        case 'disDel': abrirEliminar('dis',id); break;
+        case 'disDl': disDescargar(id); break;
+        case 'disRen': disRenombrar(id); break;
+        case 'disElegir': $('#disFile').click(); break;
         case 'genAbrir': conMode='gen'; if(!gen) genIniciar(); else { genAFormulario(); genUI(); genDibujar(); } renderCon(); break;
         case 'genCerrar': conMode='lib'; renderCon(); break;
         case 'genCap': genDeFormulario(); gen.caption=generarCaption(gen.tipo,gen.tema,gen.precio); $('#gCaption').value=gen.caption; break;
