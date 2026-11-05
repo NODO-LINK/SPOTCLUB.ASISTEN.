@@ -420,6 +420,9 @@ td{padding:11px 14px;vertical-align:middle}
   .tkprev .tk-tag small{display:block;font:800 7px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.2em}
   .tkprev .tk-tag b{display:block;font:900 15px/1.05 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:-.01em}
   .tkprev .tk-fe{text-align:center;font-size:8.5px;margin-bottom:1mm}
+  .tkprev .tk-desc{margin:1.5mm 0;border:.6mm dashed #000;text-align:center;padding:1.2mm 1mm}
+  .tkprev .tk-desc small{display:block;font:800 7px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.2em}
+  .tkprev .tk-desc b{display:block;font:900 13px/1.1 'Archivo','Arial Black',Arial,sans-serif;overflow-wrap:anywhere}
   .tkprev .tk-s{margin:2mm 0 1mm;font:900 8.5px/1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.16em;display:flex;align-items:center;gap:1.2mm}
   .tkprev .tk-s::after{content:"";flex:1;border-top:.7mm solid #000}
   .tkprev .tk-it,.tkprev .tk-r{display:flex;justify-content:space-between;gap:1.5mm;font-weight:800}
@@ -470,6 +473,9 @@ td{padding:11px 14px;vertical-align:middle}
   #printArea .tk-tag small{display:block;font:800 7px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.2em}
   #printArea .tk-tag b{display:block;font:900 15px/1.05 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:-.01em}
   #printArea .tk-fe{text-align:center;font-size:8.5px;margin-bottom:1mm}
+  #printArea .tk-desc{margin:1.5mm 0;border:.6mm dashed #000;text-align:center;padding:1.2mm 1mm}
+  #printArea .tk-desc small{display:block;font:800 7px/1.1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.2em}
+  #printArea .tk-desc b{display:block;font:900 13px/1.1 'Archivo','Arial Black',Arial,sans-serif;overflow-wrap:anywhere}
   #printArea .tk-s{margin:2mm 0 1mm;font:900 8.5px/1 'Archivo','Arial Black',Arial,sans-serif;letter-spacing:.16em;display:flex;align-items:center;gap:1.2mm}
   #printArea .tk-s::after{content:"";flex:1;border-top:.7mm solid #000}
   #printArea .tk-it,#printArea .tk-r{display:flex;justify-content:space-between;gap:1.5mm;font-weight:800}
@@ -579,6 +585,7 @@ td{padding:11px 14px;vertical-align:middle}
 
               <div id="reg-items-wrap" class="hidden"><div class="items-list" id="reg-items-list"></div></div>
 
+              <div class="field" style="margin-top:12px"><label for="reg-desc">Descripción de la prenda (sale en el ticket)</label><input type="text" id="reg-desc" name="descripcion" maxlength="120" autocomplete="off" placeholder="Ej: Franela negra M · diseño Grey's · para Carlos"></div>
               <div class="prod-block">
                 <label class="tog"><input type="checkbox" id="reg-chk-adic"><span>¿Agregar costo adicional?</span></label>
                 <div id="reg-adic-blk" class="hidden">
@@ -731,6 +738,10 @@ td{padding:11px 14px;vertical-align:middle}
           <div style="margin-top:12px"><button type="button" id="esel-add-btn" class="btn ghost hidden">+ Agregar producto</button></div>
         </div>
 
+        <div class="edit-section">
+          <h4>Descripción para el ticket</h4>
+          <div class="field"><label for="eDesc">Qué franela es (sale impreso en el ticket)</label><input type="text" id="eDesc" maxlength="120" autocomplete="off" placeholder="Ej: Franela negra M · diseño Grey's · para Carlos"></div>
+        </div>
         <div class="edit-section">
           <h4>Costo adicional</h4>
           <div class="adic-grid">
@@ -1709,6 +1720,7 @@ $('#regForm').addEventListener('submit', async e=>{
                 agencia:fd.get('agencia').trim(),
                 items:cleanItems(regItems),
                 costoAdicional:regAdic.monto||null, razonAdicional:regAdic.razon||null,
+                descripcion:(fd.get('descripcion')||'').trim().slice(0,120)||null,
                 empaque:EMPAQUE, monto:total,
                 pagos:pm>0?[{fecha:now,monto:+pm.toFixed(2),metodo:$('#reg-pago-metodo').value,referencia:$('#reg-pago-ref').value.trim(),por:user.email}]:[],
                 logistica:'procesado', etapaDesde:now, guia:'',
@@ -1798,7 +1810,7 @@ function abrirEdit(id){
     $('#eAgencia').value=v.agencia||''; $('#eGuia').value=v.guia||'';
     fillEstados('editSelEstado',v.estado);
     $('#eEtapa').innerHTML=ETAPAS.map(e=>`<option value="${e.k}"${e.k===v.etapa?' selected':''}>${e.l}</option>`).join('');
-    $('#eAdicM').value=v.costoAdicional||''; $('#eAdicR').value=v.razonAdicional||'';
+    $('#eAdicM').value=v.costoAdicional||''; $('#eAdicR').value=v.razonAdicional||''; $('#eDesc').value=v.descripcion||'';
     $('#edit-pago-sec').classList.toggle('hidden',!!v.legacy);
     fillMetodos('ePagoMet'); { const ult=v.pagos.length?v.pagos[v.pagos.length-1]:null; if(ult&&ult.metodo){ if(![...$('#ePagoMet').options].some(o=>o.value===ult.metodo)) $('#ePagoMet').add(new Option(ult.metodo,ult.metodo)); $('#ePagoMet').value=ult.metodo; } } $('#ePagado').value=v.pagado.toFixed(2); $('#ePagoRef').value='';
     $('#ePagosLista').textContent=v.pagos.length?'Pagos registrados: '+v.pagos.map(p=>fshort(p.fecha)+' · '+p.metodo+' '+fmt(p.monto)).join(' | ')+'. Si bajas el monto, se descuenta del último pago hacia atrás.':'Todavía no hay pagos registrados.';
@@ -1819,7 +1831,7 @@ async function guardarEdit(){
     try{
         const upd={
             nombre,cedula,telefono:tel,estado:$('#editSelEstado').value,agencia:ag,guia:$('#eGuia').value.trim(),
-            items:cleanItems(editItems),costoAdicional:adic||null,razonAdicional:$('#eAdicR').value.trim()||null,empaque:v.empaque??EMPAQUE,monto:total
+            items:cleanItems(editItems),costoAdicional:adic||null,razonAdicional:$('#eAdicR').value.trim()||null,descripcion:$('#eDesc').value.trim().slice(0,120)||null,empaque:v.empaque??EMPAQUE,monto:total
         };
         let cambioPago='';
         if(!v.legacy&&Math.abs(nuevoPagado-v.pagado)>0.005){
@@ -2550,7 +2562,7 @@ function reciboHtml(v){
     return `<div class="rc">`+
       `<div class="rc-top"><div class="rc-brand">THE SPOT</div><div class="rc-sub">Comprobante de venta</div><div class="rc-num">N° ${esc(inv(v))} · ${new Date(v.fechaMs).toLocaleDateString('es-VE',{day:'2-digit',month:'long',year:'numeric'})}</div></div>`+
       `<div class="rc-t">Datos del cliente</div>`+
-      rcRow('Nombre',esc(v.nombre))+rcRow('Cédula',esc(v.cedula))+rcRow('Teléfono',esc(v.telefono))+rcRow('Estado / agencia',esc(v.estado)+' — '+esc(v.agencia))+(v.guia?rcRow('Guía',esc(v.guia)):'')+
+      (v.descripcion?rcRow('Prenda',esc(v.descripcion)):'')+rcRow('Nombre',esc(v.nombre))+rcRow('Cédula',esc(v.cedula))+rcRow('Teléfono',esc(v.telefono))+rcRow('Estado / agencia',esc(v.estado)+' — '+esc(v.agencia))+(v.guia?rcRow('Guía',esc(v.guia)):'')+
       `<hr class="rc-hr"><div class="rc-t">Detalle del pedido</div>`+
       `<div class="rc-items">${v.items.map((it,i)=>`<div class="rc-item"><span>${i+1}. ${esc(it.label||'Producto')}</span><span>${fmt(it.subtotal)}</span></div>`).join('')}</div>`+
       (adic?rcRow('Costo adicional'+(v.razonAdicional?' ('+esc(v.razonAdicional)+')':''),'+'+fmt(adic)):'')+
@@ -2605,7 +2617,7 @@ function ticketHtml(v){
     return `<div class="tk">`+(lgNegro?`<img class="tk-wm" src="${lgNegro}" alt="">`:'')+
       `<div class="tk-hd inv">`+(lgBlanco?`<img src="${lgBlanco}" alt="">`:'')+`<div class="tk-marca">SPOT CLUB</div><div class="tk-lema">${TK.lema}</div></div>`+
       `<div class="tk-fil">${TK.ig} · WA ${TK.wa}<br>${TK.zona}</div>`+
-      `<div class="tk-tag"><small>COMPROBANTE DE VENTA</small><b>N° ${esc(inv(v))}</b></div><div class="tk-fe">${fecha}</div>`+
+      `<div class="tk-tag"><small>COMPROBANTE DE VENTA</small><b>N° ${esc(inv(v))}</b></div><div class="tk-fe">${fecha}</div>`+(v.descripcion?`<div class="tk-desc"><small>PRENDA</small><b>${esc(v.descripcion)}</b></div>`:'')+
       `<div class="tk-s">CLIENTE</div><div>${esc(v.nombre)}</div><div>CI ${esc(v.cedula)}</div><div>TEL ${esc(v.telefono)}</div><div>${esc(v.estado)} · ${esc(v.agencia)}</div>`+(v.guia?`<div>GUÍA ${esc(v.guia)}</div>`:'')+
       `<div class="tk-s">TU PEDIDO</div>`+
       v.items.map((it,i)=>`<div class="tk-it"><span>${i+1}. ${esc(it.label||'Producto')}</span><span>${fmt(it.subtotal)}</span></div>`).join('')+
