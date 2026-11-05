@@ -188,7 +188,22 @@ window.hacer=async s=>{
   const yLosa=py+ph*.5-6; if(s.cartasData&&s.cartasData.length){} else if(!fondoImg&&!hayMontaje) losa(x,W,H,yLosa,'#2a1f44'); else { blur(x,18,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(pxm,yLosa+6,330,30,0,0,7); x.fill(); }); }
   glow(x,pxm,py,520,'rgba(190,120,255,A)',.22);
   let img=null; if(s.disenoData){ img=new Image(); img.src=s.disenoData; await img.decode(); }
-  if(s.prendasData&&s.prendasData.length){ // grupo de prendas (1 a 3), opcionalmente con cartas detrás
+  if(s.postersData&&s.postersData.length){ // pósters con marco blanco colgados en la pared: centro grande y a los lados otros más chicos
+    const ims=[]; for(const d of s.postersData){ const im=new Image(); im.src=d; await im.decode(); ims.push(im); }
+    const k=s.formato==='story'?1.22:1.14, n=ims.length;
+    // orden de dibujo: primero los de atrás (extremos), al final el central
+    const slots=[[-440,0.58,-.13,0.9,-20],[440,0.58,.13,0.9,-20],[-300,0.78,-.07,1,10],[300,0.78,.07,1,10],[0,1,0,1,-25]];
+    const pick=n>=5?slots:n===4?[slots[2],slots[3],[-120,1,-.02,1,-25],[150,0.9,.03,1,5]]:n===3?[slots[2],slots[3],slots[4]]:n===2?[[-190,.92,-.04,1,0],[190,.92,.04,1,0]]:[slots[4]];
+    pick.forEach((sl,i)=>{ const im=ims[i%n], pw2=400*k*sl[1], ph2=pw2*1.414, cx=pxm+sl[0]*k, cy=py+(s.formato==='story'?-25:35)+sl[4]*k, br=14;
+      x.save(); x.translate(cx,cy); x.rotate(sl[2]); x.globalAlpha=sl[3];
+      blur(x,28,()=>{ x.fillStyle='rgba(0,0,0,.65)'; x.fillRect(-pw2/2+10,-ph2/2+22,pw2,ph2); });
+      x.fillStyle='#f4f1ea'; x.fillRect(-pw2/2,-ph2/2,pw2,ph2);
+      const iw2=pw2-br*2, ih2=ph2-br*2; x.save(); x.beginPath(); x.rect(-iw2/2,-ih2/2,iw2,ih2); x.clip();
+      const t=document.createElement('canvas'); t.width=8; t.height=8; const tc=t.getContext('2d'); tc.drawImage(im,0,0,8,8); const transp=tc.getImageData(0,0,1,1).data[3]<250;
+      if(transp){ x.fillStyle='#0a0a0e'; x.fillRect(-iw2/2,-ih2/2,iw2,ih2); const f=Math.min(iw2*.84/im.naturalWidth,ih2*.84/im.naturalHeight); x.drawImage(im,-im.naturalWidth*f/2,-im.naturalHeight*f/2,im.naturalWidth*f,im.naturalHeight*f); }
+      else{ const f=Math.max(iw2/im.naturalWidth,ih2/im.naturalHeight); x.drawImage(im,-im.naturalWidth*f/2,-im.naturalHeight*f/2,im.naturalWidth*f,im.naturalHeight*f); }
+      x.restore(); x.restore(); }); }
+  else if(s.prendasData&&s.prendasData.length){ // grupo de prendas (1 a 3), opcionalmente con cartas detrás
     const pr=[]; for(const d of s.prendasData){ const im=new Image(); im.src=d; await im.decode(); pr.push(im); }
     if(s.cartasData&&s.cartasData.length){
       const cs=[]; for(const d of s.cartasData){ const im=new Image(); im.src=d; await im.decode(); cs.push(im); }
@@ -246,6 +261,7 @@ window.hacer=async s=>{
   const lp=path.join(dir,'logo-spotclub.png'); if(fs.existsSync(lp)) spec.logoData='data:image/png;base64,'+fs.readFileSync(lp).toString('base64');
   const leer=r=>{ const fp=path.resolve(dir,'..',r); return 'data:image/'+path.extname(fp).slice(1).toLowerCase().replace('jpg','jpeg')+';base64,'+fs.readFileSync(fp).toString('base64'); };
   if(spec.cartas) spec.cartasData=spec.cartas.map(leer);
+  if(spec.posters) spec.postersData=spec.posters.map(leer);
   if(spec.montaje) spec.montajeData=spec.montaje.map(leer);
   if(spec.fondo){ const fp=path.resolve(dir,'..',spec.fondo); spec.fondoData='data:image/'+path.extname(fp).slice(1).toLowerCase().replace('jpg','jpeg')+';base64,'+fs.readFileSync(fp).toString('base64'); }
   if(spec.diseno){ const dp=path.resolve(dir,'..',spec.diseno); spec.disenoData='data:image/png;base64,'+fs.readFileSync(dp).toString('base64'); }

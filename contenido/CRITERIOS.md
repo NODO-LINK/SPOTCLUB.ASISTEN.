@@ -152,3 +152,9 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Los flyers rotan de fondo: (1) muro de cartas, (2) muro de flyers de franelas (`promos/`, sin los 2 prohibidos) y (3) fondos propios del dueño en `contenido/biblioteca/fondos/` (campo `fondo` + `velo` ~0.5; sin `montaje`). Nunca el mismo tipo de fondo en los 3 flyers del día ni el mismo fondo propio dos días seguidos.
 - Cuando haya fondos propios en esa carpeta, deben salir en al menos 1 de los flyers de cada día (en `saludos.js` ya rotan solos). Revisar siempre que el texto y el producto se lean sobre el fondo; si no, subir `velo` o elegir otro.
 - El video usa el muro de cartas/franelas; si el dueño envía fondos pensados para video, se agregan a `video-coleccion.js`.
+
+## Pósters personalizados (orden del dueño, 2026-11-05)
+- Producto: pósters a gusto del cliente. 1 flyer diario de pósters (además del de producto-prendas y del hoodie → 5 flyers al día + festivo si aplica).
+- `premium.js`: `"posters":[hasta 5 rutas]` dibuja pósters con marco blanco colgados (centro grande y otros a los lados). Imágenes dentro: cartas de `biblioteca/cartas` o diseños de `disenos/` (los PNG transparentes se ponen sobre fondo oscuro). Alterna: cartas / diseños / mezcla. Fondo: rota como los demás (`fondo` + `velo`), y el texto no debe tapar el póster central.
+- Textos: pretitulo "PÓSTERS PERSONALIZADOS", l1 "TU PÓSTER", l2 "A TU GUSTO" (varía), insignia "PÍDELO POR DM"; datos sin inventar tamaños ni precios (ej. "DISEÑO A TU GUSTO", "TÚ ELIGES EL TEMA", "ENVÍOS NACIONALES").
+- Las fotos de referencia de paredes con pósters que mandó el dueño muestran marcas y personas reales (The Weeknd, Spotify, Vogue, Ferrari, ABBA, Arctic Monkeys...): son solo referencia de estilo, NO se usan en flyers.
