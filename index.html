@@ -2523,11 +2523,21 @@ async function disRenombrar(id){
     const n=(prompt('Nombre del diseño:',d.titulo||'')||'').trim().slice(0,80); if(!n||n===d.titulo) return;
     try{ await db.collection('piezas_gen').doc(id).update({titulo:n}); toast('Nombre actualizado.'); }catch(e){ toast('No se pudo cambiar el nombre.','error'); }
 }
+// descarga el archivo ORIGINAL tal cual está publicado (sin recomprimir ni redimensionar); en la app Android lo guarda en Descargas
+async function conDescargar(id,i){
+    const p=piezas.find(x=>x.id===id); if(!p) return; const a=p.archivos[i]; if(!a) return;
+    try{
+        toast('Preparando la descarga…');
+        const r=await fetch(srcPieza(a),{cache:'no-store'}); if(!r.ok) throw new Error(r.status);
+        const b=await r.blob(); guardarArchivo(b,String(a).startsWith('data:')?'spot-'+p.id+'.jpg':a);
+        toast('Descarga lista: '+a+' ('+(b.size/1048576).toFixed(1)+' MB, calidad original).');
+    }catch(e){ console.error(e); toast('No se pudo descargar.','error'); }
+}
 function detallePieza(p){
     const e=estadoPieza(p);
     if(conImg>=p.archivos.length) conImg=0;
     const thumbs=p.archivos.length>1?`<div class="cthumbs">${p.archivos.map((a,i)=>`<button type="button" data-act="conImg" data-i="${i}" aria-current="${i===conImg}" aria-label="Lámina ${i+1}"><img src="${esc(srcPieza(a))}" alt=""></button>`).join('')}</div>`:'';
-    const dl=p.archivos.map((a,i)=>`<a class="btn ghost sm" href="${esc(srcPieza(a))}" download="${esc(String(a).startsWith('data:')?'spot-'+p.id+'.jpg':a)}">Descargar${p.archivos.length>1?' '+(i+1):''}</a>`).join('');
+    const dl=p.archivos.map((a,i)=>`<button type="button" class="btn ghost sm" data-act="conDl" data-id="${esc(p.id)}" data-i="${i}">Descargar${p.archivos.length>1?' '+(i+1):''} (original)</button>`).join('');
     const prog=e.programada?localInput(e.programada):'';
     const acciones=e.estado==='publicada'
         ?`<p style="margin-top:6px">Publicada el ${ftime(e.publicadaEn||Date.now())}${e.enlace?` · <a href="${esc(e.enlace)}" target="_blank" rel="noopener">ver publicación</a>`:''}</p><div class="actrow"><button type="button" class="btn ghost sm" data-act="conBorrador" data-id="${esc(p.id)}">Volver a borrador</button></div>`
@@ -2965,6 +2975,7 @@ document.addEventListener('click',e=>{
         case 'restOk': restaurarRespaldo(); break;
         case 'recibo': verRecibo(id); break;
         case 'reciboPrint': imprimirRecibo(); break;
+        case 'conDl': conDescargar(id,+t.dataset.i||0); break;
         case 'disDel': abrirEliminar('dis',id); break;
         case 'disDl': disDescargar(id); break;
         case 'disRen': disRenombrar(id); break;

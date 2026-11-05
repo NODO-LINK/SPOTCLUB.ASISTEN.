@@ -20,7 +20,7 @@ const FONT="Inter,Arial,sans-serif";
 let seed=1; const R=()=>{ seed=(seed*16807)%2147483647; return (seed-1)/2147483646; }; const rr=(a,b)=>a+(b-a)*R();
 const lerp=(a,b,t)=>a+(b-a)*t;
 function glow(x,cx,cy,r,col,al){ const g=x.createRadialGradient(cx,cy,0,cx,cy,r); g.addColorStop(0,col.replace('A',al)); g.addColorStop(1,col.replace('A',0)); x.fillStyle=g; x.fillRect(cx-r,cy-r,r*2,r*2); }
-function blur(x,px,fn){ x.save(); x.filter='blur('+px+'px)'; fn(); x.restore(); }
+function blur(x,px,fn){ x.save(); x.filter='blur('+(px*(window.SS||1))+'px)'; fn(); x.restore(); }
 
 // ───────── escenas ─────────
 const ESCENAS={
@@ -163,7 +163,9 @@ window.mockup=async s=>{
   return c.toDataURL('image/png');
 };
 window.hacer=async s=>{
-  const c=document.getElementById('c'), W=1080, H=s.formato==='story'?1920:1350; c.width=W; c.height=H; const x=c.getContext('2d');
+  // se dibuja al doble de resolución (supersampling) para que textos, bordes y sombras salgan nítidos; las coordenadas siguen siendo de 1080 px
+  const SS=s.escala||2; window.SS=SS;
+  const c=document.getElementById('c'), W=1080, H=s.formato==='story'?1920:1350; c.width=W*SS; c.height=H*SS; const x=c.getContext('2d'); x.scale(SS,SS);
   const E=ESCENAS[s.tema]||ESCENAS.neon;
   // cielo
   let fondoImg=null; if(s.fondoData){ fondoImg=new Image(); fondoImg.src=s.fondoData; await fondoImg.decode(); }
@@ -278,9 +280,14 @@ window.hacer=async s=>{
     require('child_process').execFileSync('python3',['-I',path.join(__dirname,'mockup_franela.py'),path.resolve(dir,'..',spec.diseno),tmp,...(spec.escalaDiseno?['--escala',String(spec.escalaDiseno)]:[]),...(spec.yDiseno?['--y',String(spec.yDiseno)]:[]),...(spec.prenda==='blanca'?['--blanca']:spec.prenda==='negra'?['--negra']:[])],{stdio:'pipe'});
     spec.franelaData='data:image/png;base64,'+fs.readFileSync(tmp).toString('base64'); }
   const data=await p.evaluate(s=>spec_modo(s),spec);
-  const out=path.join(dir,'spot-'+spec.salida+'.png'); fs.writeFileSync(out,Buffer.from(data.split(',')[1],'base64')); await b.close(); console.log('ok',out);
+  // los flyers se entregan en JPG de máxima calidad (calidad 96, sin submuestreo de color, 2160 px de ancho); los mockups sueltos siguen en PNG
+  const EXT=spec.modo==='mockup'?'png':'jpg', out=path.join(dir,'spot-'+spec.salida+'.'+EXT);
+  if(EXT==='png') fs.writeFileSync(out,Buffer.from(data.split(',')[1],'base64'));
+  else{ const tmpPng=path.join(require('os').tmpdir(),'flyer-'+spec.salida+'.png'); fs.writeFileSync(tmpPng,Buffer.from(data.split(',')[1],'base64'));
+    require('child_process').execFileSync('python3',['-I','-c',"import sys;from PIL import Image;im=Image.open(sys.argv[1]).convert('RGB');im.save(sys.argv[2],'JPEG',quality=96,subsampling=0,optimize=True)",tmpPng,out]); fs.unlinkSync(tmpPng); }
+  await b.close(); console.log('ok',out);
   // si trae id, la pieza se agrega al panel (Contenido), igual que diario.js
   if(spec.id){ const mp=path.join(dir,'contenido.json'), m=JSON.parse(fs.readFileSync(mp,'utf8')), FORM={post:'Post 4:5',story:'Story 9:16',mockup:'Mockup 1:1'};
-    const e={id:spec.id,titulo:spec.titulo,tipo:spec.tipo||'Producto',formato:FORM[spec.modo==='mockup'?'mockup':(spec.formato||'post')],archivos:['spot-'+spec.salida+'.png'],caption:spec.caption||'',fecha:spec.fecha};
+    const e={id:spec.id,titulo:spec.titulo,tipo:spec.tipo||'Producto',formato:FORM[spec.modo==='mockup'?'mockup':(spec.formato||'post')],archivos:['spot-'+spec.salida+'.'+EXT],caption:spec.caption||'',fecha:spec.fecha};
     const i=m.piezas.findIndex(q=>q.id===spec.id); if(i>=0) m.piezas[i]=e; else m.piezas.unshift(e); fs.writeFileSync(mp,JSON.stringify(m,null,2)+'\n'); console.log('en el panel:',spec.id); }
 })();

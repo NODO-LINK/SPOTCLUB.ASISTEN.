@@ -159,3 +159,9 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Textos: pretitulo "PÓSTERS PERSONALIZADOS", l1 "TU PÓSTER", l2 "A TU GUSTO" (varía), insignia "PÍDELO POR DM"; datos sin inventar tamaños ni precios (ej. "DISEÑO A TU GUSTO", "TÚ ELIGES EL TEMA", "ENVÍOS NACIONALES").
 - Las fotos de referencia de paredes con pósters que mandó el dueño muestran marcas y personas reales (The Weeknd, Spotify, Vogue, Ferrari, ABBA, Arctic Monkeys...): son solo referencia de estilo, NO se usan en flyers.
 - `premium.js` sube el velo solo cuando el fondo propio es claro (cielo, paredes blancas), para que el título se lea; no hace falta ajustarlo a mano.
+
+## Calidad de entrega (orden del dueño, 2026-11-05)
+- Los flyers se dibujan al doble de resolución (2160×2700 en post, 2160×3840 en story) y se guardan como JPG de calidad 96 sin submuestreo de color (`premium.js`; visualmente igual a un PNG, pero ~1.5–2.5 MB). Los mockups sueltos siguen en PNG. Instagram baja a 1080, pero parte de una fuente nítida.
+- Los videos siguen a 1080×1920, 30 fps, H.264 CRF 18 (~15 Mbps); no recomprimir ni bajar la resolución.
+- El panel muestra y descarga el archivo ORIGINAL publicado: el botón «Descargar (original)» baja los mismos bytes del repositorio, sin recomprimir ni redimensionar (en la app Android lo guarda en Descargas).
+- El límite real de nitidez son las fotos base: la franela (736 px), el hoodie (368 px agrandado ×2), las cartas (≤700 px) y los fondos (~736 px). Si el dueño envía bases o cartas en mayor resolución, se reemplazan en `contenido/mockups/` y `contenido/biblioteca/`.
