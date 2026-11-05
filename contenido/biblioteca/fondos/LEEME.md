@@ -8,3 +8,5 @@ Reglas: sin personas que no sean artistas, sin marcas ajenas visibles, sin texto
 ## Descartados (no usar)
 - Muro de pósters con Spotify, McLaren, Vettel y otras personas/marcas ("CIAO!", "Parental Advisory").
 - Patrón de grafitis con marca de agua de Shutterstock.
+- Skates con pegatinas de DC, Batman, Superman y KFC (marcas ajenas).
+- Señales de tránsito con escudo y texto en ucraniano (evitar temas políticos).
