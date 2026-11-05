@@ -252,7 +252,7 @@ window.hacer=async s=>{
   if(spec.prendas&&spec.prendas.length){   // ["negra","blanca"], ["negra","blanca","hoodie"]... cada una puede llevar su diseño en spec.disenos[i]
     spec.prendasData=spec.prendas.map((t,i)=>{
       const dis=path.resolve(dir,'..',(spec.disenos&&spec.disenos[i])||spec.diseno), tmp=path.join(require('os').tmpdir(),'prenda-'+spec.salida+'-'+i+'.png');
-      require('child_process').execFileSync('python3',['-I',path.join(__dirname,'mockup_franela.py'),dis,tmp,'--'+(t==='blanca'?'blanca':t==='hoodie'?'hoodie':'negra')],{stdio:'pipe'});
+      require('child_process').execFileSync('python3',['-I',path.join(__dirname,'mockup_franela.py'),dis,tmp,'--'+(t==='blanca'?'blanca':t==='hoodie'?'hoodie':'negra'),...((spec.escalas&&spec.escalas[i])?['--escala',String(spec.escalas[i])]:[]),...((spec.ys&&spec.ys[i])?['--y',String(spec.ys[i])]:[])],{stdio:'pipe'});
       return 'data:image/png;base64,'+fs.readFileSync(tmp).toString('base64'); });
     spec.disenoData=spec.disenoData||('data:image/png;base64,'+fs.readFileSync(path.resolve(dir,'..',spec.diseno)).toString('base64')); }
   if(spec.diseno&&!spec.franela&&!spec.prendas&&spec.prenda!=='dibujada'&&!spec.cartas){
