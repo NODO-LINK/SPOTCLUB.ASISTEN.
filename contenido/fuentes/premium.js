@@ -188,7 +188,20 @@ window.hacer=async s=>{
   const yLosa=py+ph*.5-6; if(s.cartasData&&s.cartasData.length){} else if(!fondoImg&&!hayMontaje) losa(x,W,H,yLosa,'#2a1f44'); else { blur(x,18,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(pxm,yLosa+6,330,30,0,0,7); x.fill(); }); }
   glow(x,pxm,py,520,'rgba(190,120,255,A)',.22);
   let img=null; if(s.disenoData){ img=new Image(); img.src=s.disenoData; await img.decode(); }
-  if(s.cartasData&&s.cartasData.length){ // abanico de cartas con sombra
+  if(s.prendasData&&s.prendasData.length){ // grupo de prendas (1 a 3), opcionalmente con cartas detrás
+    const pr=[]; for(const d of s.prendasData){ const im=new Image(); im.src=d; await im.decode(); pr.push(im); }
+    if(s.cartasData&&s.cartasData.length){
+      const cs=[]; for(const d of s.cartasData){ const im=new Image(); im.src=d; await im.decode(); cs.push(im); }
+      const n=cs.length, cw=s.cartaAncho||250, ch=cw*1.457, cy0=py+120;
+      cs.forEach((im,i)=>{ const t=n===1?0:(i/(n-1)-.5), ang=t*.55, dx=t*(cw*1.7); x.save(); x.translate(pxm+dx,cy0+Math.abs(t)*60); x.rotate(ang);
+        blur(x,20,()=>{ x.fillStyle='rgba(0,0,0,.7)'; x.beginPath(); x.roundRect(-cw/2+12,-ch/2+20,cw,ch,14); x.fill(); });
+        x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.save(); x.clip(); x.drawImage(im,-cw/2,-ch/2,cw,ch); x.restore();
+        x.strokeStyle='rgba(255,255,255,.35)'; x.lineWidth=2; x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.stroke(); x.restore(); }); }
+    const n=pr.length, conC=!!(s.cartasData&&s.cartasData.length), base=(n===1?560:n===2?470:400)*(conC?.8:1), sep=n===1?0:n===2?250:300, orden=n===3?[0,2,1]:[...Array(n).keys()];
+    orden.forEach(i=>{ const im=pr[i], t=n===1?0:(i-(n-1)/2), fw=base*(n===3&&i===1?1.12:1), fh=fw*im.naturalHeight/im.naturalWidth, cxp=pxm+t*sep, cyp=py-10+(n===3&&i!==1?24:0)-(conC?95:0);
+      blur(x,26,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(cxp,cyp+fh/2-6,fw*.40,24,0,0,7); x.fill(); });
+      x.save(); x.translate(cxp,cyp); x.rotate(n===1?-.035:t*.06); x.shadowColor='rgba(200,150,255,.35)'; x.shadowBlur=16; x.drawImage(im,-fw/2,-fh/2,fw,fh); x.restore(); }); }
+  else if(s.cartasData&&s.cartasData.length){ // abanico de cartas con sombra
     const cs=[]; for(const d of s.cartasData){ const im=new Image(); im.src=d; await im.decode(); cs.push(im); }
     const n=cs.length, cw=s.cartaAncho||330, ch=cw*1.457, cx0=pxm, cy0=py+60;
     cs.forEach((im,i)=>{ const t=n===1?0:(i/(n-1)-.5), ang=t*.62, dx=t*(cw*1.55); x.save(); x.translate(cx0+dx,cy0+Math.abs(t)*70); x.rotate(ang);
@@ -236,7 +249,13 @@ window.hacer=async s=>{
   if(spec.montaje) spec.montajeData=spec.montaje.map(leer);
   if(spec.fondo){ const fp=path.resolve(dir,'..',spec.fondo); spec.fondoData='data:image/'+path.extname(fp).slice(1).toLowerCase().replace('jpg','jpeg')+';base64,'+fs.readFileSync(fp).toString('base64'); }
   if(spec.diseno){ const dp=path.resolve(dir,'..',spec.diseno); spec.disenoData='data:image/png;base64,'+fs.readFileSync(dp).toString('base64'); }
-  if(spec.diseno&&!spec.franela&&spec.prenda!=='dibujada'&&!spec.cartas){
+  if(spec.prendas&&spec.prendas.length){   // ["negra","blanca"], ["negra","blanca","hoodie"]... cada una puede llevar su diseño en spec.disenos[i]
+    spec.prendasData=spec.prendas.map((t,i)=>{
+      const dis=path.resolve(dir,'..',(spec.disenos&&spec.disenos[i])||spec.diseno), tmp=path.join(require('os').tmpdir(),'prenda-'+spec.salida+'-'+i+'.png');
+      require('child_process').execFileSync('python3',['-I',path.join(__dirname,'mockup_franela.py'),dis,tmp,'--'+(t==='blanca'?'blanca':t==='hoodie'?'hoodie':'negra')],{stdio:'pipe'});
+      return 'data:image/png;base64,'+fs.readFileSync(tmp).toString('base64'); });
+    spec.disenoData=spec.disenoData||('data:image/png;base64,'+fs.readFileSync(path.resolve(dir,'..',spec.diseno)).toString('base64')); }
+  if(spec.diseno&&!spec.franela&&!spec.prendas&&spec.prenda!=='dibujada'&&!spec.cartas){
     const tmp=path.join(require('os').tmpdir(),'franela-'+spec.salida+'.png');
     require('child_process').execFileSync('python3',['-I',path.join(__dirname,'mockup_franela.py'),path.resolve(dir,'..',spec.diseno),tmp,...(spec.escalaDiseno?['--escala',String(spec.escalaDiseno)]:[]),...(spec.yDiseno?['--y',String(spec.yDiseno)]:[]),...(spec.prenda==='blanca'?['--blanca']:spec.prenda==='negra'?['--negra']:[])],{stdio:'pipe'});
     spec.franelaData='data:image/png;base64,'+fs.readFileSync(tmp).toString('base64'); }

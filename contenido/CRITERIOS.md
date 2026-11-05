@@ -135,3 +135,10 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Antes de crear el contenido del día, ejecutar `python3 -I contenido/fuentes/sincronizar_disenos.py`: baja a `contenido/disenos/panel/` (copia de trabajo ≤2000 px; `indice.json` los lista del más nuevo al más viejo) los diseños con original completo. Si no puede leer el panel, sigue con los de la biblioteca fija sin dar error.
 - Los diseños del panel y los fijos de `contenido/disenos/` rotan a la par (decisión del dueño). Los marcados `"nuevo": true` o subidos hoy deben salir en las primeras 24 h. No repetir un diseño en menos de 5 días.
 - Los flyers de franela, el video y los saludos usan estos PNG con `mockup_franela.py` (franela real negra o blanca). Incluir `contenido/disenos/panel/` en el commit del día.
+
+## Prendas en los flyers: franela negra, blanca y hoodie (orden del dueño, 2026-11-05)
+- `premium.js` acepta `prendas` (hasta 3: "negra", "blanca", "hoodie"), `disenos` (un diseño por prenda, mismo orden) y puede combinarse con `cartas` (+ `cartaAncho` ~270) y `montaje`. Ejemplo: {"prendas":["negra","blanca"],"disenos":["a.png","b.png"],"diseno":"a.png","cartas":[...3],"cartaAncho":270,"montaje":[...]}.
+- El flyer de producto del día rota la combinación según n = días desde 2026-10-27 (hora de Caracas), n % 5:
+  0 → solo franela NEGRA · 1 → solo franela BLANCA · 2 → NEGRA + BLANCA juntas · 3 → las 3 prendas (negra + blanca + hoodie) · 4 → las prendas + las cartas juntas.
+- Diseño en la franela BLANCA: siempre uno OSCURO (tinta negra/color; ej. no-me-arrepiento, outer-banks, retrato claro con tinta oscura); los de letras blancas (greys-save-lives, greys-anatomy) van en la NEGRA. Usa `mockup_franela.py` para comprobarlo (elige solo por luminosidad con `--negra`/`--blanca`).
+- HOODIE: además, cada día sale 1 flyer del hoodie (cuarto flyer del día). Requiere `contenido/mockups/base-hoodie-frente.jpg` (el dueño la envía). Mientras no exista esa foto: no se genera el hoodie y las combinaciones con hoodie (n%5==3) se sustituyen por NEGRA + BLANCA.

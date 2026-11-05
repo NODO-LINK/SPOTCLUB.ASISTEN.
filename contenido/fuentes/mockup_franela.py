@@ -89,8 +89,10 @@ if __name__ == '__main__':
         print(__doc__); sys.exit(1)
     op = {'--escala': None, '--y': None, '--dx': 0.0}
     color = 'auto'
-    for c in ('negra', 'blanca'):
+    for c in ('negra', 'blanca', 'hoodie'):
         if '--' + c in args: color = c
+    if color == 'hoodie':
+        sys.exit('Falta la foto base del hoodie (contenido/mockups/base-hoodie-frente.jpg): el dueño debe enviarla.')
     i = 2
     while i < len(args):
         if args[i] in op:
