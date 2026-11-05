@@ -40,6 +40,9 @@ const B='contenido/biblioteca/', C=B+'cartas/', P=B+'promos/';
 // cartas de artistas limpias (sin marcas ajenas ni personajes con copyright) y diseños propios aptos para saludar
 const CARTAS=['karol-g','milo-j','doja-cat','omar-courtz','duki','young-miko-1','mora-1','lil-cry','kid-keo','royal-kid','wheez','zell-2','linkin','billie-eilish-1','alex-g','akrilla','akapellah-rojo','atorrante','juice-world','lobe','kanye','humbe','feirly','eladio-carrion','big-soto-morada','cancerbero','lil-supa','cosmic-kid'].filter(c=>fs.existsSync(path.join(raiz,C+c+'.jpg')));
 const DISENOS=['greys-save-lives','greys-anatomy','outer-banks-pogue-life','retrato-collage','no-me-arrepiento-de-sentir-tanto','don-kbrn-lista-eladio'].filter(c=>fs.existsSync(path.join(raiz,'contenido/disenos/'+c+'.png')));
+// diseños que el dueño sube en el apartado «Diseños» del panel (los baja sincronizar_disenos.py): tienen prioridad sobre los de la biblioteca fija
+const PANEL=(()=>{ try{ return JSON.parse(fs.readFileSync(path.join(dir,'disenos/panel/indice.json'),'utf8')).disenos.map(d=>'contenido/disenos/panel/'+d.archivo).filter(f=>fs.existsSync(path.join(raiz,f))); }catch(e){ return []; } })();
+const disenoRuta=k=>PANEL.length?pick(PANEL,k):'contenido/disenos/'+pick(DISENOS,k)+'.png';
 const PROMOS=fs.readdirSync(path.join(raiz,P)).filter(f=>/^2x12-.*\.jpg$/.test(f)&&f!=='2x12-microdurazno-1.jpg').sort();   // 1 y maria-flyer llevan personas/precio: prohibidos
 const toma=(a,k,m)=>Array.from({length:m},(_,i)=>a[(((n*3+k+i)%a.length)+a.length)%a.length]);
 const cartas=(k,m)=>toma(CARTAS,k,m).map(c=>C+c+'.jpg'), promos=(k,m)=>toma(PROMOS,k,m).map(f=>P+f);
@@ -47,7 +50,7 @@ const d1=pick(DIAS,0), d2=pick(DIAS,Math.floor(DIAS.length/2)), nn=pick(NOCHES,0
 const base={tema:'neon',datos:[],insignia:'',sello:[],pie:'Maracaibo · @spot__club',fecha:hoy};
 const piezas=[
  {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:d1[2].toUpperCase(),l1:d1[0],l2:d1[1],cartas:cartas(0,3),cartaAncho:330,montaje:cartas(7,14),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
- {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:d2[2].toUpperCase(),l1:d2[0],l2:d2[1],diseno:'contenido/disenos/'+pick(DISENOS,0)+'.png',montaje:promos(0,12),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
+ {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:d2[2].toUpperCase(),l1:d2[0],l2:d2[1],diseno:disenoRuta(0),montaje:promos(0,12),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
  {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:nn[2].toUpperCase(),l1:nn[0],l2:nn[1],cartas:cartas(3,3),cartaAncho:330,montaje:cartas(11,14),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
 ].filter(p=>(modo==='todo'||(modo==='dias'?p.id.includes('buenos-dias'):p.id.includes('buenas-noches')))&&!ya(p.id));
 if(!piezas.length){ console.log('los saludos de',hoy,'ya existen'); process.exit(0); }
