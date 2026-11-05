@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-05-video-tarde",
+      "titulo": "Tu frase, tu franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-05-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-05-video-tarde-poster.png",
+      "caption": "Una frase, una lista, un artista… y va en tu franela 🖤 ¿Qué llevarías puesto? #franelaspersonalizadas #spotclub #maracaibo #dtf #streetwear\nTikTok: tu lista, tu franela 🖤 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-05"
+    },
+    {
       "id": "2026-11-05-video",
       "titulo": "¿Cuál es tu vibra?",
       "tipo": "Video",
