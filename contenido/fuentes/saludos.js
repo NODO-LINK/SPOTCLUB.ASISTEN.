@@ -47,12 +47,16 @@ const disenoRuta=k=>pick(TODOS_DIS,k);
 const PROMOS=fs.readdirSync(path.join(raiz,P)).filter(f=>/^2x12-.*\.jpg$/.test(f)&&f!=='2x12-microdurazno-1.jpg').sort();   // 1 y maria-flyer llevan personas/precio: prohibidos
 const toma=(a,k,m)=>Array.from({length:m},(_,i)=>a[(((n*3+k+i)%a.length)+a.length)%a.length]);
 const cartas=(k,m)=>toma(CARTAS,k,m).map(c=>C+c+'.jpg'), promos=(k,m)=>toma(PROMOS,k,m).map(f=>P+f);
+// fondos: se rotan el muro de cartas, el muro de flyers de franelas y los fondos propios del dueño (contenido/biblioteca/fondos/)
+const FONDOS=(()=>{ try{ return fs.readdirSync(path.join(raiz,B,'fondos')).filter(f=>/\.(jpe?g|png|webp)$/i.test(f)).sort().map(f=>B+'fondos/'+f); }catch(e){ return []; } })();
+const MODOS=['cartas','promos',...(FONDOS.length?['propio','propio']:[])];
+const fondoDe=k=>{ const m=pick(MODOS,k); return m==='cartas'?{montaje:cartas(7+k,14)}:m==='promos'?{montaje:promos(k,12)}:{fondo:pick(FONDOS,k),velo:.5}; };
 const d1=pick(DIAS,0), d2=pick(DIAS,Math.floor(DIAS.length/2)), nn=pick(NOCHES,0);   // post y story van a mitad del banco, así no coinciden
 const base={tema:'neon',datos:[],insignia:'',sello:[],pie:'Maracaibo · @spot__club',fecha:hoy};
 const piezas=[
- {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:d1[2].toUpperCase(),l1:d1[0],l2:d1[1],cartas:cartas(0,3),montaje:cartas(7,14),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
- {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:d2[2].toUpperCase(),l1:d2[0],l2:d2[1],diseno:disenoRuta(0),montaje:promos(0,12),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
- {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:nn[2].toUpperCase(),l1:nn[0],l2:nn[1],cartas:cartas(3,3),montaje:cartas(11,14),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
+ {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:d1[2].toUpperCase(),l1:d1[0],l2:d1[1],cartas:cartas(0,3),...fondoDe(0),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
+ {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:d2[2].toUpperCase(),l1:d2[0],l2:d2[1],diseno:disenoRuta(0),...fondoDe(1),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
+ {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:nn[2].toUpperCase(),l1:nn[0],l2:nn[1],cartas:cartas(3,3),...fondoDe(2),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
 ].filter(p=>(modo==='todo'||(modo==='dias'?p.id.includes('buenos-dias'):p.id.includes('buenas-noches')))&&!ya(p.id));
 if(!piezas.length){ console.log('los saludos de',hoy,'ya existen'); process.exit(0); }
 for(const p of piezas){ const spec=path.join(require('os').tmpdir(),'saludo-'+p.id+'.json'); fs.writeFileSync(spec,JSON.stringify({...base,...p,salida:p.id})); execFileSync('node',[path.join(__dirname,'premium.js'),spec],{stdio:'inherit',cwd:raiz}); }

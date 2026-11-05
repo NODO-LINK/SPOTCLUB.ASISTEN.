@@ -147,3 +147,8 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - En TODOS los flyers (incluidos los saludos) el producto manda: la prenda o las cartas deben ocupar como mínimo la mitad del ancho del flyer y ser lo más grande después del título. Nada de prendas pequeñas flotando en el fondo.
 - `premium.js` ya usa los tamaños por defecto grandes (franela única ~820 px de ancho en post y ~940 en story; abanico de cartas ~345 px por carta; 3 prendas ~465 px cada una). No pongas `cartaAncho` menor a 320 ni reduzcas las prendas, salvo que el texto choque.
 - Al revisar cada PNG, si el producto se ve chico o tiene mucho aire alrededor, rehaz el flyer.
+
+## Fondos variados (orden del dueño, 2026-11-05)
+- Los flyers rotan de fondo: (1) muro de cartas, (2) muro de flyers de franelas (`promos/`, sin los 2 prohibidos) y (3) fondos propios del dueño en `contenido/biblioteca/fondos/` (campo `fondo` + `velo` ~0.5; sin `montaje`). Nunca el mismo tipo de fondo en los 3 flyers del día ni el mismo fondo propio dos días seguidos.
+- Cuando haya fondos propios en esa carpeta, deben salir en al menos 1 de los flyers de cada día (en `saludos.js` ya rotan solos). Revisar siempre que el texto y el producto se lean sobre el fondo; si no, subir `velo` o elegir otro.
+- El video usa el muro de cartas/franelas; si el dueño envía fondos pensados para video, se agregan a `video-coleccion.js`.
