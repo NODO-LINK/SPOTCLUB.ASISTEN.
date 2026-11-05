@@ -1922,6 +1922,8 @@ async function eliminarOk(){
             toast('Factura eliminada.');
         }else if(delCtx.kind==='dis'){
             if(!can('registrar')) throw new Error('permiso');
+            const dd=disDB.find(x=>x.id===delCtx.id);
+            if(dd&&dd.orig){ const q=await db.collection('disenos_orig').where('p','==',delCtx.id).get(); for(let i=0;i<q.docs.length;i+=400){ const b=db.batch(); q.docs.slice(i,i+400).forEach(x=>b.delete(x.ref)); await b.commit(); } }
             await db.collection('piezas_gen').doc(delCtx.id).delete();
             toast('Diseño eliminado.');
         }else if(delCtx.kind==='gen'){
@@ -2444,13 +2446,13 @@ function renderDis(){
     const q=(disQ||'').toLowerCase();
     const cards=disDB.map(d=>`<div class="dis-card" data-n="${esc((d.titulo||'').toLowerCase())}"${q&&!(d.titulo||'').toLowerCase().includes(q)?' hidden':''}>`+
         `<div class="dis-img"><img src="${esc(d.img)}" alt="${esc(d.titulo)}" loading="lazy"></div>`+
-        `<div class="dis-info"><strong>${esc(d.titulo||'Diseño')}</strong><small>${d.w||'?'}×${d.h||'?'} px</small></div>`+
+        `<div class="dis-info"><strong>${esc(d.titulo||'Diseño')}</strong><small>${d.w0||d.w||'?'}×${d.h0||d.h||'?'} px${d.orig?' · original':''}</small></div>`+
         `<div class="dis-acc"><button type="button" class="btn ghost sm" data-act="disDl" data-id="${esc(d.id)}">Descargar</button>`+
         `<button type="button" class="btn ghost sm" data-act="disRen" data-id="${esc(d.id)}">Nombre</button>`+
         (can('eliminar')?`<button type="button" class="btn ghost sm" data-act="disDel" data-id="${esc(d.id)}">Eliminar</button>`:'')+`</div></div>`).join('');
     keep($('#v-dis'),()=>{
         $('#v-dis').innerHTML=`<div class="pane-head"><h3>Diseños</h3><button type="button" class="btn" data-act="disElegir">+ Subir diseños</button></div>`+
-          `<p class="note-ig">Guarda aquí tus diseños en PNG (con fondo transparente). Puedes subir varios a la vez. Para que el panel siga rápido, cada imagen se guarda con un máximo de 1600 px de lado y bajo 1 MB; el archivo original en tu computadora no se toca.</p>`+
+          `<p class="note-ig">Guarda aquí tus diseños en PNG (con fondo transparente). Puedes subir varios a la vez. Se guarda tu archivo ORIGINAL completo, sin perder calidad (la vista previa de aquí es una copia liviana), y «Descargar» te lo devuelve idéntico.</p>`+
           `<input type="file" id="disFile" accept="image/png,image/*" multiple hidden>`+
           `<div class="field" style="margin-top:10px"><label for="disQ">Buscar por nombre</label><input type="search" id="disQ" value="${esc(disQ)}" placeholder="Ej: grey's, anime…" autocomplete="off"></div>`+
           `<p class="cnt-c" id="disCnt">${disDB.length} ${disDB.length===1?'diseño guardado':'diseños guardados'}</p>`+
@@ -2460,32 +2462,61 @@ function renderDis(){
 document.addEventListener('input',e=>{ if(e.target&&e.target.id==='disQ'){ disQ=e.target.value; const q=disQ.toLowerCase(); $$('#v-dis .dis-card').forEach(c=>{ c.hidden=!!q&&!c.dataset.n.includes(q); }); } });
 document.addEventListener('change',e=>{ if(e.target&&e.target.id==='disFile'){ const fs=[...e.target.files]; e.target.value=''; disSubir(fs); } });
 async function disProcesar(file){
-    const bmp=await createImageBitmap(file); let k=Math.min(1,1600/Math.max(bmp.width,bmp.height)), out='', w=0, h=0;
+    const bmp=await createImageBitmap(file); let k=Math.min(1,640/Math.max(bmp.width,bmp.height)), out='', w=0, h=0;
     for(let i=0;i<12;i++){
         w=Math.max(1,Math.round(bmp.width*k)); h=Math.max(1,Math.round(bmp.height*k));
         const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(bmp,0,0,w,h);
-        out=c.toDataURL('image/png'); if(out.length<900000) break; k*=0.82;
+        out=c.toDataURL('image/png'); if(out.length<260000) break; k*=0.8;
     }
-    if(out.length>=900000) throw new Error('muy pesada');
-    return {img:out,w,h};
+    if(out.length>=260000) throw new Error('muy pesada');
+    return {img:out,w,h,w0:bmp.width,h0:bmp.height};
 }
+// el original se guarda en partes (cada documento de Firestore admite ~1 MB) en la colección disenos_orig
+const DIS_PARTE=700000, DIS_MAX=40*1024*1024;
+async function disGuardarOriginal(id,file){
+    if(file.size>DIS_MAX) throw new Error('archivo muy grande');
+    const u8=new Uint8Array(await file.arrayBuffer()); let b64='';
+    for(let i=0;i<u8.length;i+=0x8000) b64+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));
+    b64=btoa(b64); const n=Math.ceil(b64.length/DIS_PARTE), col=db.collection('disenos_orig');
+    for(let i=0;i<n;i+=4){
+        const b=db.batch();
+        for(let k=i;k<Math.min(n,i+4);k++) b.set(col.doc(id+'_'+String(k).padStart(3,'0')),{p:id,n:k,d:b64.slice(k*DIS_PARTE,(k+1)*DIS_PARTE)});
+        await b.commit();
+    }
+    return {partes:n,bytes:file.size,tipo:file.type||'image/png'};
+}
+async function disPartes(id){ const q=await db.collection('disenos_orig').where('p','==',id).get(); return q.docs.map(d=>d.data()).sort((a,b)=>a.n-b.n); }
 async function disSubir(files){
     if(!can('registrar')||!files.length) return;
-    let ok=0; const mal=[];
-    toast('Subiendo '+files.length+' diseño(s)…');
+    let ok=0; const mal=[], sinOrig=[];
+    toast('Subiendo '+files.length+' diseño(s)… no cierres la app.');
     for(const f of files){
         try{
             if(!/^image\//.test(f.type)) throw new Error('no es imagen');
             const r=await disProcesar(f);
-            await db.collection('piezas_gen').add({kind:'diseno',titulo:f.name.replace(/\.[^.]+$/,'').slice(0,80),img:r.img,w:r.w,h:r.h,creado:FV.serverTimestamp(),por:user.email});
+            const ref=db.collection('piezas_gen').doc();
+            const base={kind:'diseno',titulo:f.name.replace(/\.[^.]+$/,'').slice(0,80),img:r.img,w:r.w,h:r.h,w0:r.w0,h0:r.h0,creado:FV.serverTimestamp(),por:user.email};
+            let orig=null;
+            try{ orig=await disGuardarOriginal(ref.id,f); }catch(e2){ console.warn('original',e2); sinOrig.push(f.name); }
+            await ref.set(orig?{...base,orig:orig}:base);
             ok++;
         }catch(err){ console.error(err); mal.push(f.name); }
     }
-    if(ok) toast(ok+(ok===1?' diseño guardado.':' diseños guardados.')+(mal.length?' No se pudo: '+mal.join(', '):'')); else toast('No se pudo guardar: '+mal.join(', '),'error');
+    if(sinOrig.length) toast('Guardé la vista previa, pero NO el original de: '+sinOrig.join(', ')+'. Falta publicar las reglas de Firebase (ver firestore.rules, colección disenos_orig).','error');
+    else if(ok) toast(ok+(ok===1?' diseño guardado en calidad original.':' diseños guardados en calidad original.')+(mal.length?' No se pudo: '+mal.join(', '):'')); else toast('No se pudo guardar: '+mal.join(', '),'error');
 }
 async function disDescargar(id){
     const d=disDB.find(x=>x.id===id); if(!d) return;
-    try{ const b=await (await fetch(d.img)).blob(); guardarArchivo(b,(d.titulo||'diseno').replace(/[^\w\-áéíóúñÁÉÍÓÚÑ ]+/g,'').trim().replace(/\s+/g,'-')+'.png'); }catch(e){ toast('No se pudo descargar.','error'); }
+    try{
+        let b;
+        if(d.orig){
+            toast('Preparando el original…');
+            const ps=await disPartes(id); if(ps.length!==d.orig.partes) throw new Error('faltan partes');
+            const bin=atob(ps.map(x=>x.d).join('')), u8=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);
+            b=new Blob([u8],{type:d.orig.tipo||'image/png'});
+        }else b=await (await fetch(d.img)).blob();
+        guardarArchivo(b,(d.titulo||'diseno').replace(/[^\w\-áéíóúñÁÉÍÓÚÑ ]+/g,'').trim().replace(/\s+/g,'-')+'.png');
+    }catch(e){ console.error(e); toast('No se pudo descargar.','error'); }
 }
 async function disRenombrar(id){
     const d=disDB.find(x=>x.id===id); if(!d||!can('registrar')) return;

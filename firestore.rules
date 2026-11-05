@@ -56,6 +56,11 @@ service cloud.firestore {
       allow read, write: if esVentas();
     }
 
+    // Originales de la biblioteca de Diseños (PNG completos guardados en partes).
+    match /disenos_orig/{id} {
+      allow read, write: if esVentas();
+    }
+
     // Recordatorios propios del administrador y su equipo de ventas.
     match /recordatorios/{id} {
       allow read, write: if esVentas();
