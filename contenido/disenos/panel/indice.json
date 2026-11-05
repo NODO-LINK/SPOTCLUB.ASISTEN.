@@ -1,0 +1,148 @@
+{
+  "actualizado": "2026-11-05T03:50:12Z",
+  "disenos": [
+    {
+      "id": "amKOO3W6DnbrWny30moY",
+      "titulo": "Neus Modificada Suei2",
+      "archivo": "neus-modificada-suei2.png",
+      "partes": 16,
+      "fecha": "2026-11-05T01:25:02.219Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "diseno",
+      "prenda": "negra"
+    },
+    {
+      "id": "7ed7crkjyj1Bn8FZina3",
+      "titulo": "Neus Modificada Suei",
+      "archivo": "neus-modificada-suei.png",
+      "partes": 13,
+      "fecha": "2026-11-05T01:24:49.942Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "diseno",
+      "prenda": "negra"
+    },
+    {
+      "id": "jzg7XObii2k7u5hnLKyQ",
+      "titulo": "Neeus Definitiva",
+      "archivo": "neeus-definitiva.png",
+      "partes": 5,
+      "fecha": "2026-11-05T01:24:40.072Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "rectangular",
+      "prenda": "blanca"
+    },
+    {
+      "id": "kd4bnqbWOTZEh4hVXAe2",
+      "titulo": "Neeus Azul",
+      "archivo": "neeus-azul.png",
+      "partes": 16,
+      "fecha": "2026-11-05T01:24:36.250Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "diseno",
+      "prenda": "negra"
+    },
+    {
+      "id": "KtclgG2ma0EhPpbjf2Wu",
+      "titulo": "Mc Loving 2",
+      "archivo": "mc-loving-2.png",
+      "partes": 1,
+      "fecha": "2026-11-05T01:24:24.173Z",
+      "nuevo": true,
+      "usar": false,
+      "tipo": "rectangular",
+      "prenda": "negra"
+    },
+    {
+      "id": "cMUhNZlYb8Pe9a5r7OIX",
+      "titulo": "Mc Loving 1",
+      "archivo": "mc-loving-1.png",
+      "partes": 2,
+      "fecha": "2026-11-05T01:24:23.251Z",
+      "nuevo": true,
+      "usar": false,
+      "tipo": "rectangular",
+      "prenda": "negra"
+    },
+    {
+      "id": "ExU6VsTWANQWxK9MGR7i",
+      "titulo": "Maiky Moves",
+      "archivo": "maiky-moves.png",
+      "partes": 3,
+      "fecha": "2026-11-05T01:24:21.615Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "rectangular",
+      "prenda": "negra"
+    },
+    {
+      "id": "vLEtQS9p0cMaRi4FaH9M",
+      "titulo": "Linkin",
+      "archivo": "linkin.png",
+      "partes": 2,
+      "fecha": "2026-11-05T01:24:19.534Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "rectangular",
+      "prenda": "negra"
+    },
+    {
+      "id": "udgLdlSA1rI7xdWUYF9I",
+      "titulo": "Gengar Back 1",
+      "archivo": "gengar-back-1.png",
+      "partes": 2,
+      "fecha": "2026-11-05T01:24:17.617Z",
+      "nuevo": true,
+      "usar": false,
+      "tipo": "rectangular",
+      "prenda": "negra"
+    },
+    {
+      "id": "I8GemygdtSjGVLJxPcDv",
+      "titulo": "fondo card",
+      "archivo": "fondo-card.png",
+      "partes": 2,
+      "fecha": "2026-11-05T01:24:15.683Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "rectangular",
+      "prenda": "blanca"
+    },
+    {
+      "id": "qWg0wWwLgnNEK8CtGayR",
+      "titulo": "BILLIE EILISH 1 (2)",
+      "archivo": "billie-eilish-1-2.png",
+      "partes": 13,
+      "fecha": "2026-11-05T01:22:55.403Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "diseno",
+      "prenda": "blanca"
+    },
+    {
+      "id": "HYcksuDyI9nzx8MMad1p",
+      "titulo": "PALOMA MAMI",
+      "archivo": "paloma-mami.png",
+      "partes": 15,
+      "fecha": "2026-11-05T01:19:32.705Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "diseno",
+      "prenda": "negra"
+    },
+    {
+      "id": "WtiDFrtrHJx07fwWvq54",
+      "titulo": "PALOMA MAMI FRENTE",
+      "archivo": "paloma-mami-frente.png",
+      "partes": 1,
+      "fecha": "2026-11-05T01:19:07.364Z",
+      "nuevo": true,
+      "usar": true,
+      "tipo": "diseno",
+      "prenda": "negra"
+    }
+  ]
+}

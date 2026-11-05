@@ -165,3 +165,8 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Los videos siguen a 1080×1920, 30 fps, H.264 CRF 18 (~15 Mbps); no recomprimir ni bajar la resolución.
 - El panel muestra y descarga el archivo ORIGINAL publicado: el botón «Descargar (original)» baja los mismos bytes del repositorio, sin recomprimir ni redimensionar (en la app Android lo guarda en Descargas).
 - El límite real de nitidez son las fotos base: la franela (736 px), el hoodie (368 px agrandado ×2), las cartas (≤700 px) y los fondos (~736 px). Si el dueño envía bases o cartas en mayor resolución, se reemplazan en `contenido/mockups/` y `contenido/biblioteca/`.
+
+## Clasificación de lo que sube el dueño en «Diseños» (2026-11-05)
+- `sincronizar_disenos.py` etiqueta cada archivo de `contenido/disenos/panel/indice.json`: `tipo` ("diseno" = PNG con transparencia → franelas, hoodie y pósters; "rectangular" = imagen opaca completa, p. ej. una carta, reverso de carta o foto → cartas y pósters, NUNCA estampar en franelas), `prenda` ("negra" = tinta clara, "blanca" = tinta oscura) y `usar` (false si está en `excluir.json`).
+- Para estampar en franelas/hoodie usa solo `tipo:"diseno"` con `usar:true`, respetando `prenda` (negra/blanca). Los `rectangular` con `usar:true` sirven como carta/póster (p. ej. en `cartas` o `posters`).
+- `contenido/disenos/panel/excluir.json` lista lo que NO se usa (documento falso tipo licencia de conducir, reverso de carta Pokémon, etc.). Respétalo siempre.

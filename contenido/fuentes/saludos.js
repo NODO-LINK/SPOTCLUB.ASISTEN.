@@ -41,7 +41,7 @@ const B='contenido/biblioteca/', C=B+'cartas/', P=B+'promos/';
 const CARTAS=['karol-g','milo-j','doja-cat','omar-courtz','duki','young-miko-1','mora-1','lil-cry','kid-keo','royal-kid','wheez','zell-2','linkin','billie-eilish-1','alex-g','akrilla','akapellah-rojo','atorrante','juice-world','lobe','kanye','humbe','feirly','eladio-carrion','big-soto-morada','cancerbero','lil-supa','cosmic-kid'].filter(c=>fs.existsSync(path.join(raiz,C+c+'.jpg')));
 const DISENOS=['greys-save-lives','greys-anatomy','outer-banks-pogue-life','retrato-collage','no-me-arrepiento-de-sentir-tanto','don-kbrn-lista-eladio'].filter(c=>fs.existsSync(path.join(raiz,'contenido/disenos/'+c+'.png')));
 // diseños que el dueño sube en el apartado «Diseños» del panel (los baja sincronizar_disenos.py): rotan junto con los de la biblioteca fija
-const PANEL=(()=>{ try{ return JSON.parse(fs.readFileSync(path.join(dir,'disenos/panel/indice.json'),'utf8')).disenos.map(d=>'contenido/disenos/panel/'+d.archivo).filter(f=>fs.existsSync(path.join(raiz,f))); }catch(e){ return []; } })();
+const PANEL=(()=>{ try{ return JSON.parse(fs.readFileSync(path.join(dir,'disenos/panel/indice.json'),'utf8')).disenos.filter(d=>d.usar!==false&&d.tipo!=='rectangular').map(d=>'contenido/disenos/panel/'+d.archivo).filter(f=>fs.existsSync(path.join(raiz,f))); }catch(e){ return []; } })();
 const TODOS_DIS=[...PANEL,...DISENOS.map(d=>'contenido/disenos/'+d+'.png')];   // los del panel y los fijos rotan a la par
 const disenoRuta=k=>pick(TODOS_DIS,k);
 const PROMOS=fs.readdirSync(path.join(raiz,P)).filter(f=>/^2x12-.*\.jpg$/.test(f)&&f!=='2x12-microdurazno-1.jpg').sort();   // 1 y maria-flyer llevan personas/precio: prohibidos
