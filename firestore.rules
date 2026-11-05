@@ -52,13 +52,17 @@ service cloud.firestore {
     }
 
     // Diseños creados con el generador del panel (imagen incluida).
+    // Los diseños de la biblioteca (kind == 'diseno') se leen sin sesión: así las rutinas del contenido diario pueden reutilizarlos
+    // (decisión del dueño). Todo lo demás de esta colección sigue privado.
     match /piezas_gen/{id} {
-      allow read, write: if esVentas();
+      allow read: if (resource != null && resource.data.kind == 'diseno') || esVentas();
+      allow write: if esVentas();
     }
 
     // Originales de la biblioteca de Diseños (PNG completos guardados en partes).
     match /disenos_orig/{id} {
-      allow read, write: if esVentas();
+      allow read: if true;
+      allow write: if esVentas();
     }
 
     // Recordatorios propios del administrador y su equipo de ventas.

@@ -130,3 +130,8 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Sin sección "Próximos 7 días". La lista muestra solo las piezas con la fecha de hoy (Caracas); si aún no hay de hoy, las del último día con contenido.
 - La rutina de las 6:41 ejecuta `python3 -I contenido/fuentes/limpiar_contenido.py`, que quita de `contenido.json` las piezas de otros días (y las sin fecha) y borra sus archivos. No guardar nada de días anteriores en el panel.
 - Los saludos (Buenos días y Buenas noches) TAMBIÉN usan la biblioteca: `saludos.js` ahora arma cada flyer con `premium.js` (muro de cartas o de flyers de franelas + abanico de cartas o franela real con diseño), sin precio, sin insignia ni sello. Prohibido el fondo liso negro/rojo.
+
+## Diseños que sube el dueño en el panel (apartado «Diseños»)
+- Antes de crear el contenido del día, ejecutar `python3 -I contenido/fuentes/sincronizar_disenos.py`: baja a `contenido/disenos/panel/` (copia de trabajo ≤2000 px; `indice.json` los lista del más nuevo al más viejo) los diseños con original completo. Si no puede leer el panel, sigue con los de la biblioteca fija sin dar error.
+- Los diseños del panel y los fijos de `contenido/disenos/` rotan a la par (decisión del dueño). Los marcados `"nuevo": true` o subidos hoy deben salir en las primeras 24 h. No repetir un diseño en menos de 5 días.
+- Los flyers de franela, el video y los saludos usan estos PNG con `mockup_franela.py` (franela real negra o blanca). Incluir `contenido/disenos/panel/` en el commit del día.
