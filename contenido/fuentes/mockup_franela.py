@@ -9,6 +9,7 @@ from PIL import Image, ImageDraw, ImageFilter
 AQUI = os.path.dirname(os.path.abspath(__file__))
 BASE = os.path.join(AQUI, '..', 'mockups', 'base-franela-negra-frente.jpg')          # de aquí sale siempre la silueta
 BASE_BLANCA = os.path.join(AQUI, '..', 'mockups', 'base-franela-blanca-frente.jpg')
+BASE_HOODIE = os.path.join(AQUI, '..', 'mockups', 'base-hoodie-frente.jpg')          # hoodie negro (sin silueta aparte: se recorta de su propia foto)
 
 
 def mascara(base):
@@ -32,11 +33,12 @@ def luminosidad_diseno(png):
 def componer(diseno_png, escala=None, y=None, dx=0.0, recorte=True, color='auto'):
     if color == 'auto':
         color = 'blanca' if luminosidad_diseno(diseno_png) < 110 else 'negra'
-    base_forma = Image.open(BASE).convert('RGB')
-    base = Image.open(BASE_BLANCA if color == 'blanca' else BASE).convert('RGB')
+    hoodie = color == 'hoodie'
+    base_forma = Image.open(BASE_HOODIE if hoodie else BASE).convert('RGB')
+    base = base_forma if hoodie else Image.open(BASE_BLANCA if color == 'blanca' else BASE).convert('RGB')
     W, H = base.size
     m = mascara(base_forma)
-    oscura = np.asarray(base_forma.convert('L')) < 150          # la prenda es negra: lo claro que quede dentro es fondo (huecos bajo las mangas)
+    oscura = np.asarray(base_forma.convert('L')) < (200 if hoodie else 150)          # la prenda es negra: lo claro que quede dentro es fondo (huecos bajo las mangas)
     m = Image.fromarray(((np.asarray(m) > 0) & oscura).astype('uint8') * 255)
     ys, xs = np.where(np.asarray(m) > 0)
     x0, x1, y0, y1 = xs.min(), xs.max(), ys.min(), ys.max()
@@ -51,9 +53,9 @@ def componer(diseno_png, escala=None, y=None, dx=0.0, recorte=True, color='auto'
     d = Image.open(diseno_png).convert('RGBA')
     asp = d.height / d.width
     if escala is None:                       # se ajusta a la forma: ni más ancho que el pecho ni más alto que el torso
-        escala = min(0.42, 0.50 * bh / (asp * bw))
+        escala = min(0.36, 0.30 * bh / (asp * bw)) if hoodie else min(0.42, 0.50 * bh / (asp * bw))
     if y is None:
-        y = 0.25
+        y = 0.31 if hoodie else 0.25
     dw = int(bw * escala)
     dh = int(dw * d.height / d.width)
     d = d.resize((dw, dh), Image.LANCZOS).filter(ImageFilter.GaussianBlur(0.5))
@@ -91,8 +93,6 @@ if __name__ == '__main__':
     color = 'auto'
     for c in ('negra', 'blanca', 'hoodie'):
         if '--' + c in args: color = c
-    if color == 'hoodie':
-        sys.exit('Falta la foto base del hoodie (contenido/mockups/base-hoodie-frente.jpg): el dueño debe enviarla.')
     i = 2
     while i < len(args):
         if args[i] in op:
