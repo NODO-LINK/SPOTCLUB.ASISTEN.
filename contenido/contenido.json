@@ -2,6 +2,73 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-06-video",
+      "titulo": "Tu artista, tu carta",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-06-video.mp4"
+      ],
+      "poster": "spot-2026-11-06-video-poster.png",
+      "caption": "Tu artista favorito hecho carta y tu diseño en tu franela 🖤 ¿De quién la quieres? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: tu artista, tu carta 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-06"
+    },
+    {
+      "id": "2026-11-06-flyer-5",
+      "titulo": "VIZZION Vol. 01",
+      "tipo": "Drop privado",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-06-flyer-5.jpg"
+      ],
+      "caption": "VIZZION Vol. 01 🖤\n#vizzion #spotclub",
+      "fecha": "2026-11-06"
+    },
+    {
+      "id": "2026-11-06-flyer-4",
+      "titulo": "¿Cuál es tu banda?",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-06-flyer-4.jpg"
+      ],
+      "caption": "Story: agrega el sticker de encuesta «¿Rap, rock o urbano?» y comparte las respuestas 🖤",
+      "fecha": "2026-11-06"
+    },
+    {
+      "id": "2026-11-06-flyer-3",
+      "titulo": "Pósters con tu artista",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-06-flyer-3.jpg"
+      ],
+      "caption": "¿A quién pondrías en tu pared? 👇🖤\nTu póster con el artista que tú elijas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
+      "fecha": "2026-11-06"
+    },
+    {
+      "id": "2026-11-06-flyer-2",
+      "titulo": "Hoodies Spot Club",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-06-flyer-2.jpg"
+      ],
+      "caption": "Hoodie negro, ojo de Spot Club 👇🖤\nEscríbenos al DM y pide el tuyo 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-06"
+    },
+    {
+      "id": "2026-11-06-flyer-1",
+      "titulo": "Tu franela negra",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-06-flyer-1.jpg"
+      ],
+      "caption": "¿Franela negra con tu diseño en la espalda? 👇🖤\nHacemos la tuya desde 1 pieza. Escríbenos al DM 📩\n#franelaspersonalizadas #franelanegra #venezuela #parati #streetwear",
+      "fecha": "2026-11-06"
+    },
+    {
       "id": "2026-11-06-buenos-dias-1",
       "titulo": "Buenos días · Post",
       "tipo": "Comunidad",
