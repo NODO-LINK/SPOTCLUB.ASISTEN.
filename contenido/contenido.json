@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-06-video-tarde",
+      "titulo": "Plan de viernes",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-06-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-06-video-tarde-poster.png",
+      "caption": "Viernes de cartas y franelas: tu artista, tu diseño, tu estilo 🖤 ¿Cuál armamos? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: plan de viernes 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-06"
+    },
+    {
       "id": "2026-11-06-video",
       "titulo": "Tu artista, tu carta",
       "tipo": "Video",
