@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-07-video-tarde",
+      "titulo": "Tu sábado, tu franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-07-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-07-video-tarde-poster.png",
+      "caption": "Sábado de estrenar: tu carta, tu diseño, tu franela 🖤 ¿Qué estrenas hoy? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: sábado de estrenar 🖤 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-07"
+    },
+    {
       "id": "2026-11-07-video",
       "titulo": "Sábado de franelas",
       "tipo": "Video",
