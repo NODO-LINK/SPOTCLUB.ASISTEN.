@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-08-video-tarde",
+      "titulo": "Cierre de domingo",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-08-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-08-video-tarde-poster.png",
+      "caption": "Cierre de domingo con tu carta favorita 🃏 ¿De quién la quieres? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: cierre de domingo 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-08"
+    },
+    {
       "id": "2026-11-08-video",
       "titulo": "Domingo de cartas",
       "tipo": "Video",
