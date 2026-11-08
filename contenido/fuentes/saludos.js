@@ -47,7 +47,7 @@ const TODOS_DIS=[...PANEL,...DISENOS.map(d=>({ruta:'contenido/disenos/'+d+'.png'
 const disenoDe=k=>{ const o=pick(TODOS_DIS,k); return {diseno:o.ruta,espalda:!!(o.grande&&((n+k)%5!==0))}; };   // 80 % de los diseños grandes salen en la espalda
 const PROMOS=fs.readdirSync(path.join(raiz,P)).filter(f=>/^2x12-.*\.jpg$/.test(f)&&f!=='2x12-microdurazno-1.jpg').sort();   // 1 y maria-flyer llevan personas/precio: prohibidos
 const toma=(a,k,m)=>Array.from({length:m},(_,i)=>a[(((n*3+k+i)%a.length)+a.length)%a.length]);
-const cartas=(k,m)=>toma(CARTAS,k,m).map(c=>C+c+'.jpg'), cartasInv=(k,m)=>toma([...CARTAS].reverse(),k,m).map(c=>C+c+'.jpg')   // los de la noche salen del otro extremo de la lista: no repiten las del día siguiente, promos=(k,m)=>toma(PROMOS,k,m).map(f=>P+f);
+const cartas=(k,m)=>toma(CARTAS,k,m).map(c=>C+c+'.jpg'), cartasInv=(k,m)=>toma([...CARTAS].reverse(),k,m).map(c=>C+c+'.jpg'), promos=(k,m)=>toma(PROMOS,k,m).map(f=>P+f);   // cartasInv: las de la noche salen del otro extremo de la lista, así no repiten las del día siguiente
 // fondos: se rotan el muro de cartas, el muro de flyers de franelas y los fondos propios del dueño (contenido/biblioteca/fondos/)
 const FONDOS=(()=>{ try{ return fs.readdirSync(path.join(raiz,B,'fondos')).filter(f=>/\.(jpe?g|png|webp)$/i.test(f)).sort().map(f=>B+'fondos/'+f); }catch(e){ return []; } })();
 const MODOS=['cartas','promos',...(FONDOS.length?['propio','propio']:[])];

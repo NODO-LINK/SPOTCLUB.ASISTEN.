@@ -2,116 +2,26 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
-      "id": "2026-11-07-buenas-noches",
-      "titulo": "Buenas noches · Story",
-      "tipo": "Comunidad",
-      "formato": "Story 9:16",
-      "archivos": [
-        "spot-2026-11-07-buenas-noches.jpg"
-      ],
-      "caption": "Story: agrega el sticker de música o una cuenta regresiva para mañana.\nBuenas noches 🌙 Gracias por estar siempre.\nNos vemos mañana con más diseños 🖤\n#buenasnoches #spotclub #venezuela #parati #streetwear",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-video-tarde",
-      "titulo": "Tu sábado, tu franela",
-      "tipo": "Video",
-      "formato": "Video 9:16 · 12 s",
-      "archivos": [
-        "spot-2026-11-07-video-tarde.mp4"
-      ],
-      "poster": "spot-2026-11-07-video-tarde-poster.png",
-      "caption": "Sábado de estrenar: tu carta, tu diseño, tu franela 🖤 ¿Qué estrenas hoy? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: sábado de estrenar 🖤 #franelas #maracaibo #spotclub",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-video",
-      "titulo": "Sábado de franelas",
-      "tipo": "Video",
-      "formato": "Video 9:16 · 12 s",
-      "archivos": [
-        "spot-2026-11-07-video.mp4"
-      ],
-      "poster": "spot-2026-11-07-video-poster.png",
-      "caption": "Sábado de pedir tu franela 🖤 ¿Cuál es tu frase? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: sábado de franelas 🖤 #franelas #maracaibo #spotclub",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-flyer-5",
-      "titulo": "Streetwear con historia",
-      "tipo": "Marca",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-07-flyer-5.jpg"
-      ],
-      "caption": "Tu frase, tu estilo 👇🖤\nLlevamos tu idea a tu franela. Escríbenos al DM 📩\n#franelaspersonalizadas #streetwear #venezuela #parati #maracaibo",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-flyer-4",
-      "titulo": "¿Qué rapero te define?",
-      "tipo": "Comunidad",
-      "formato": "Story 9:16",
-      "archivos": [
-        "spot-2026-11-07-flyer-4.jpg"
-      ],
-      "caption": "Story: agrega el sticker de pregunta «¿Qué artista te define?» 🖤",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-flyer-3",
-      "titulo": "Pósters con tu estilo",
-      "tipo": "Producto",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-07-flyer-3.jpg"
-      ],
-      "caption": "¿Qué pondrías en tu pared? 👇🖤\nTu póster con el diseño que tú elijas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-flyer-2",
-      "titulo": "El ojo de Spot",
-      "tipo": "Producto",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-07-flyer-2.jpg"
-      ],
-      "caption": "Hoodie negro con el ojo de Spot 👇🖤\nPide el tuyo por DM 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-flyer-1",
-      "titulo": "Franela blanca",
-      "tipo": "Producto",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-07-flyer-1.jpg"
-      ],
-      "caption": "¿Qué frase llevarías en tu franela blanca? 👇🖤\nLa hacemos desde 1 pieza. Escríbenos al DM 📩\n#franelaspersonalizadas #franelablanca #venezuela #parati #streetwear",
-      "fecha": "2026-11-07"
-    },
-    {
-      "id": "2026-11-07-buenos-dias-2",
+      "id": "2026-11-08-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
       "formato": "Story 9:16",
       "archivos": [
-        "spot-2026-11-07-buenos-dias-2.jpg"
+        "spot-2026-11-08-buenos-dias-2.jpg"
       ],
       "caption": "Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.",
-      "fecha": "2026-11-07"
+      "fecha": "2026-11-08"
     },
     {
-      "id": "2026-11-07-buenos-dias-1",
+      "id": "2026-11-08-buenos-dias-1",
       "titulo": "Buenos días · Post",
       "tipo": "Comunidad",
       "formato": "Post 4:5",
       "archivos": [
-        "spot-2026-11-07-buenos-dias-1.jpg"
+        "spot-2026-11-08-buenos-dias-1.jpg"
       ],
-      "caption": "Buenos días 🖤 Que sea un día bueno para ti y los tuyos.\n¿Qué estás escuchando para empezar? 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
-      "fecha": "2026-11-07"
+      "caption": "Buenos días, familia 🖤 Que hoy te salga todo con estilo.\nCuéntanos en los comentarios qué vas a estrenar hoy 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-08"
     }
   ]
 }
