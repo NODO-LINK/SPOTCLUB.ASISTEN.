@@ -178,3 +178,4 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - Bases de espalda en `contenido/mockups/` (`hacer_espalda.py`): franela negra y blanca (sale de la de frente con el cuello trasero) y hoodie (foto real de espalda del dueño). El hoodie sigue llevando SOLO el diseño de Spot Club (regla anterior), por eso el hoodie no se usa para diseños grandes salvo que el dueño lo pida.
 - En los flyers con varias prendas se puede mostrar una de espalda y otra de frente. `saludos.js` ya aplica la regla.
 - No usar la carta `noche.jpg` ("Primera noche": beso en primer plano) ni otras con imágenes íntimas; mirar siempre con Read las cartas antes de usarlas.
+- No usar la carta `mojame-alo.jpg` (Muhammad Ali: persona que no es artista de la comunidad). Revisar con Read el nombre de cada carta antes de usarla.
