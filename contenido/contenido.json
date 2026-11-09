@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-09-video-tarde",
+      "titulo": "Tu lunes, tu franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-09-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-09-video-tarde-poster.png",
+      "caption": "Lunes de pedir tu franela con tu diseño favorito 🖤 ¿Cuál va en la tuya? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: lunes de franela 🖤 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-09"
+    },
+    {
       "id": "2026-11-09-video",
       "titulo": "Lunes de empezar",
       "tipo": "Video",
