@@ -2,6 +2,73 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-11-video",
+      "titulo": "Miércoles de elegir",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-11-video.mp4"
+      ],
+      "poster": "spot-2026-11-11-video-poster.png",
+      "caption": "Miércoles de elegir tu carta y tu diseño 🖤 ¿Cuál va contigo? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: miércoles de elegir 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-11"
+    },
+    {
+      "id": "2026-11-11-flyer-5",
+      "titulo": "Tu frase en tu franela",
+      "tipo": "Marca",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-11-flyer-5.jpg"
+      ],
+      "caption": "Tu frase, tu estilo 👇🖤\nLlevamos tu idea a tu franela. Escríbenos al DM 📩\n#franelaspersonalizadas #streetwear #venezuela #parati #maracaibo",
+      "fecha": "2026-11-11"
+    },
+    {
+      "id": "2026-11-11-flyer-4",
+      "titulo": "¿Cuál es tu estilo?",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-11-flyer-4.jpg"
+      ],
+      "caption": "Story: agrega el sticker de encuesta «¿Streetwear o urbano?» 🖤",
+      "fecha": "2026-11-11"
+    },
+    {
+      "id": "2026-11-11-flyer-3",
+      "titulo": "Tu póster con carta",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-11-flyer-3.jpg"
+      ],
+      "caption": "¿A quién pondrías en tu pared? 👇🖤\nTu póster con el artista que tú elijas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
+      "fecha": "2026-11-11"
+    },
+    {
+      "id": "2026-11-11-flyer-2",
+      "titulo": "Hoodie de miércoles",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-11-flyer-2.jpg"
+      ],
+      "caption": "Mitad de semana, hoodie con el ojo de Spot 👇🖤\nPide el tuyo por DM 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-11"
+    },
+    {
+      "id": "2026-11-11-flyer-1",
+      "titulo": "Franela negra de miércoles",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-11-flyer-1.jpg"
+      ],
+      "caption": "¿Qué diseño llevarías en tu franela negra? 👇🖤\nLa hacemos desde 1 pieza. Escríbenos al DM 📩\n#franelaspersonalizadas #franelanegra #venezuela #parati #streetwear",
+      "fecha": "2026-11-11"
+    },
+    {
       "id": "2026-11-11-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
