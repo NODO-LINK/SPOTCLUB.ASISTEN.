@@ -2,46 +2,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,500;1,9..144,700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--lime:#d4ff3a;--red:#ff4d3a;--cream:#f3eee4;--mono:'JetBrains Mono',monospace;--serif:Fraunces,Georgia,serif;--sans:'Space Grotesk',Arial,sans-serif}
-body{width:1080px;height:1350px;overflow:hidden;position:relative;color:var(--cream);font-family:var(--sans);
-background:radial-gradient(700px 520px at 72% 52%,rgba(255,220,150,.16),transparent 70%),#0c0c0c}
-body:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;
-background-image:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 4px)}
-.top{position:absolute;top:56px;left:70px;right:70px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:20px;letter-spacing:2px;color:#9a968d}
-.top b{color:var(--red)}
+:root{--ink:#3a2f4f;--soft:#8d82a3;--lav:#cdbfff;--pink:#ffc9de;--mint:#bfeedd;--peach:#ffd7c5;--butter:#fff0a6;--deep:#7a5fd6;
+--mono:'JetBrains Mono',monospace;--serif:Fraunces,Georgia,serif;--sans:'Space Grotesk',Arial,sans-serif}
+body{width:1080px;height:1350px;overflow:hidden;position:relative;color:var(--ink);font-family:var(--sans);
+background:radial-gradient(520px 420px at 95% 8%,#e6dcff 0%,transparent 70%),radial-gradient(560px 460px at 0% 58%,#ffe1ec 0%,transparent 70%),radial-gradient(600px 420px at 100% 80%,#d9f5ea 0%,transparent 70%),#fdf7f0}
+.top{position:absolute;top:56px;left:70px;right:70px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:20px;letter-spacing:2px;color:var(--soft)}
+.top b{color:#f29bb8}
 h1{position:absolute;top:110px;left:66px;right:60px;font-family:var(--serif);font-weight:800;font-size:92px;line-height:.98;letter-spacing:-2.5px}
-h1 em{font-style:italic;font-weight:500;color:#8c877d;position:relative;white-space:nowrap}
+h1 em{font-style:italic;font-weight:500;color:#b9aec6;position:relative;white-space:nowrap}
 h1 em svg{position:absolute;left:-10px;top:42%;width:calc(100% + 20px);height:40px;overflow:visible}
-h1 .ok{color:var(--lime);font-style:italic;font-weight:700}
+h1 .ok{font-style:italic;font-weight:700;background:linear-gradient(transparent 52%,var(--pink) 52% 92%,transparent 92%);padding:0 6px}
 
-.before{position:absolute;top:520px;left:62px;width:400px;height:225px;background:#fff;transform:rotate(-7deg);
-box-shadow:0 20px 40px rgba(0,0,0,.6);padding:18px 22px;font-family:'Times New Roman',serif;color:#111;filter:saturate(.7)}
+.before{position:absolute;top:520px;left:62px;width:400px;height:225px;background:#fff;transform:rotate(-7deg);border:1px solid #e6dfe9;
+box-shadow:0 18px 40px rgba(90,70,120,.18);padding:18px 22px;font-family:'Times New Roman',serif;color:#222}
 .before h4{font-size:24px;color:#1a3fbf;text-decoration:underline;text-align:center;font-weight:700;margin-bottom:8px;font-family:'Times New Roman',serif}
 .before li{font-size:12.5px;line-height:1.3;margin-left:16px;margin-bottom:5px}
 .before .clip{position:absolute;right:14px;bottom:10px;font-size:34px}
-.label{position:absolute;font-family:var(--mono);font-weight:700;font-size:20px;letter-spacing:3px;padding:6px 14px}
-.l-bad{top:478px;left:70px;background:var(--red);color:#0c0c0c;transform:rotate(-7deg)}
-.l-good{top:452px;right:70px;background:var(--lime);color:#0c0c0c}
+.label{position:absolute;font-family:var(--mono);font-weight:700;font-size:20px;letter-spacing:3px;padding:7px 16px;border-radius:30px;color:var(--ink)}
+.l-bad{top:478px;left:70px;background:var(--peach);transform:rotate(-7deg)}
+.l-good{top:452px;right:70px;background:var(--mint)}
 
-.after{position:absolute;top:500px;right:70px;width:560px;height:315px;border-radius:6px;overflow:hidden;
-background:linear-gradient(135deg,#14213d,#1c1240);box-shadow:0 0 0 2px rgba(212,255,58,.5),0 0 90px rgba(212,255,58,.25),0 30px 60px rgba(0,0,0,.7);padding:30px 34px}
-.after .cap{font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--lime)}
-.after h5{font-family:var(--serif);font-size:40px;font-weight:800;line-height:1;margin-top:8px;color:#fff;letter-spacing:-1px}
-.after h5 i{font-weight:500;color:var(--lime)}
-.chart{position:absolute;left:34px;right:34px;bottom:30px;height:120px;display:flex;align-items:flex-end;gap:16px;border-bottom:2px solid rgba(255,255,255,.25)}
-.chart div{flex:1;background:rgba(255,255,255,.18);border-radius:4px 4px 0 0}
-.chart div.hi{background:var(--lime);position:relative}
-.chart div.hi:after{content:"↑ clave";position:absolute;top:-30px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:14px;color:var(--lime);white-space:nowrap}
+.after{position:absolute;top:500px;right:70px;width:560px;height:315px;border-radius:18px;overflow:hidden;
+background:linear-gradient(135deg,#ebe3ff,#ffe6f0);border:3px solid #fff;box-shadow:0 24px 60px rgba(122,95,214,.22);padding:30px 34px}
+.after .cap{font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--deep)}
+.after h5{font-family:var(--serif);font-size:40px;font-weight:800;line-height:1;margin-top:8px;color:var(--ink);letter-spacing:-1px}
+.after h5 i{font-weight:500;color:var(--deep)}
+.chart{position:absolute;left:34px;right:34px;bottom:30px;height:120px;display:flex;align-items:flex-end;gap:16px;border-bottom:2px solid rgba(58,47,79,.15)}
+.chart div{flex:1;background:rgba(255,255,255,.85);border-radius:8px 8px 0 0}
+.chart div:nth-child(1){background:var(--mint)}.chart div:nth-child(2){background:var(--butter)}.chart div:nth-child(3){background:var(--peach)}.chart div:nth-child(5){background:#d8ecff}
+.chart div.hi{background:#ff9fc4;position:relative}
+.chart div.hi:after{content:"↑ clave";position:absolute;top:-30px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:14px;color:var(--deep);white-space:nowrap}
 .arrow{position:absolute;top:770px;left:300px;width:170px;height:110px;z-index:5}
 
-.idx{position:absolute;top:900px;left:70px;right:70px;display:grid;grid-template-columns:repeat(3,1fr);border-top:1.5px solid #3a3833}
-.idx div{padding:22px 18px 0 0}
-.idx span{font-family:var(--mono);color:var(--lime);font-size:20px}
-.idx p{font-family:var(--serif);font-size:32px;font-weight:600;line-height:1.05;margin-top:6px}
-.tools{position:absolute;top:1078px;left:70px;right:70px;font-family:var(--mono);font-size:18px;color:#9a968d;letter-spacing:0;white-space:nowrap}
-.tools b{color:var(--cream);font-weight:500}
+.idx{position:absolute;top:890px;left:70px;right:70px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.idx div{padding:20px 22px;border-radius:20px}
+.idx div:nth-child(1){background:var(--pink)}.idx div:nth-child(2){background:var(--mint)}.idx div:nth-child(3){background:var(--butter)}
+.idx span{font-family:var(--mono);color:var(--ink);opacity:.6;font-size:18px}
+.idx p{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1.05;margin-top:6px}
+.tools{position:absolute;top:1082px;left:70px;right:70px;font-family:var(--mono);font-size:18px;color:var(--soft);letter-spacing:0;white-space:nowrap}
+.tools b{color:var(--ink);font-weight:500}
 
-.cta{position:absolute;left:70px;right:70px;bottom:62px;height:150px;background:var(--lime);color:#0c0c0c;display:flex;align-items:center;padding:0 36px;gap:26px}
+.cta{position:absolute;left:70px;right:70px;bottom:62px;height:150px;border-radius:28px;background:linear-gradient(90deg,var(--lav),#e3d9ff);color:var(--ink);display:flex;align-items:center;padding:0 36px;gap:26px;box-shadow:0 20px 50px rgba(122,95,214,.25)}
 .cta svg{width:78px;height:78px;flex:none}
 .cta small{display:block;font-family:var(--mono);font-size:19px;letter-spacing:2px;font-weight:700}
 .cta strong{display:block;font-family:var(--sans);font-size:54px;font-weight:700;letter-spacing:-1px;line-height:1.05}
@@ -50,7 +51,7 @@ background:linear-gradient(135deg,#14213d,#1c1240);box-shadow:0 0 0 2px rgba(212
 
 <div class="top"><span><b>●</b> REC · DISEÑO DE PRESENTACIONES</span><span>16:9 · VIDEO BEAM</span></div>
 
-<h1>Tu tesis merece<br>más que <em>fondo blanco<svg viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 6 C25 2,50 9,100 3" stroke="#ff4d3a" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke-width:7px"/></svg></em><br><em>y viñetas<svg viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 6 C25 2,50 9,100 3" stroke="#ff4d3a" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke-width:7px"/></svg></em>&nbsp;&nbsp;<span class="ok">diseño.</span></h1>
+<h1>Tu tesis merece<br>más que <em>fondo blanco<svg viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 6 C25 2,50 9,100 3" stroke="#f4a3b4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke-width:7px"/></svg></em><br><em>y viñetas<svg viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 6 C25 2,50 9,100 3" stroke="#f4a3b4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke-width:7px"/></svg></em>&nbsp;&nbsp;<span class="ok">diseño.</span></h1>
 
 <div class="label l-bad">ANTES</div>
 <div class="before">
@@ -63,7 +64,7 @@ background:linear-gradient(135deg,#14213d,#1c1240);box-shadow:0 0 0 2px rgba(212
   <div class="clip">📎</div>
 </div>
 
-<svg class="arrow" viewBox="0 0 170 110"><path d="M8 20 C60 100,110 100,150 50" stroke="#f3eee4" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M128 48 L152 46 L148 70" stroke="#f3eee4" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg class="arrow" viewBox="0 0 170 110"><path d="M8 20 C60 100,110 100,150 50" stroke="#3a2f4f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M128 48 L152 46 L148 70" stroke="#3a2f4f" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
 
 <div class="label l-good">DESPUÉS</div>
 <div class="after">
@@ -80,7 +81,7 @@ background:linear-gradient(135deg,#14213d,#1c1240);box-shadow:0 0 0 2px rgba(212
 <div class="tools"><b>PowerPoint</b> · <b>Canva</b> · <b>Google Slides</b> — animaciones · cambios incluidos</div>
 
 <div class="cta">
-  <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0c0c0c"/><path fill="#d4ff3a" d="M16 6.5a9.4 9.4 0 0 0-8.1 14.2L6.6 25.5l4.9-1.3A9.4 9.4 0 1 0 16 6.5zm5.5 13.3c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .3-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+  <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#3a2f4f"/><path fill="#bfeedd" d="M16 6.5a9.4 9.4 0 0 0-8.1 14.2L6.6 25.5l4.9-1.3A9.4 9.4 0 1 0 16 6.5zm5.5 13.3c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .3-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
   <div><small>ESCRÍBEME POR WHATSAPP</small><strong>0414-1907854</strong></div>
   <div class="go">Cotiza<br>gratis →</div>
 </div>
