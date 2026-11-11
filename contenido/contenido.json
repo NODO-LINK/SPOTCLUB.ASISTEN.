@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-11-video-tarde",
+      "titulo": "Tu miércoles, tu franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-11-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-11-video-tarde-poster.png",
+      "caption": "Miércoles de pedir tu franela con el diseño que más te represente 🖤 ¿Cuál es el tuyo? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: miércoles de franela 🖤 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-11"
+    },
+    {
       "id": "2026-11-11-video",
       "titulo": "Miércoles de elegir",
       "tipo": "Video",
