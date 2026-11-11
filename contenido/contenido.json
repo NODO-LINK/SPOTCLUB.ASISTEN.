@@ -2,93 +2,26 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
-      "id": "2026-11-10-video",
-      "titulo": "Martes de armar",
-      "tipo": "Video",
-      "formato": "Video 9:16 · 12 s",
-      "archivos": [
-        "spot-2026-11-10-video.mp4"
-      ],
-      "poster": "spot-2026-11-10-video-poster.png",
-      "caption": "Martes de armar tu look: carta, franela y estilo 🖤 ¿Qué armamos? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: martes de armar 🖤 #cartas #maracaibo #spotclub",
-      "fecha": "2026-11-10"
-    },
-    {
-      "id": "2026-11-10-flyer-5",
-      "titulo": "Tu estilo, en grande",
-      "tipo": "Marca",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-10-flyer-5.jpg"
-      ],
-      "caption": "Tu estilo en grande, por la espalda 👇🖤\nLlevamos tu diseño a tu franela. Escríbenos al DM 📩\n#franelaspersonalizadas #streetwear #venezuela #parati #maracaibo",
-      "fecha": "2026-11-10"
-    },
-    {
-      "id": "2026-11-10-flyer-4",
-      "titulo": "¿Qué carta te toca?",
-      "tipo": "Comunidad",
-      "formato": "Story 9:16",
-      "archivos": [
-        "spot-2026-11-10-flyer-4.jpg"
-      ],
-      "caption": "Story: agrega el sticker «Deslizador» con la pregunta «¿Qué tan fan eres?» 🖤",
-      "fecha": "2026-11-10"
-    },
-    {
-      "id": "2026-11-10-flyer-3",
-      "titulo": "Pósters para tu cuarto",
-      "tipo": "Producto",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-10-flyer-3.jpg"
-      ],
-      "caption": "¿Cuál pondrías en tu cuarto? 👇🖤\nTu póster con el diseño que tú elijas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
-      "fecha": "2026-11-10"
-    },
-    {
-      "id": "2026-11-10-flyer-2",
-      "titulo": "El hoodie de Spot",
-      "tipo": "Producto",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-10-flyer-2.jpg"
-      ],
-      "caption": "Martes de hoodie con el ojo de Spot 👇🖤\nPide el tuyo por DM 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
-      "fecha": "2026-11-10"
-    },
-    {
-      "id": "2026-11-10-flyer-1",
-      "titulo": "Prendas y cartas",
-      "tipo": "Producto",
-      "formato": "Post 4:5",
-      "archivos": [
-        "spot-2026-11-10-flyer-1.jpg"
-      ],
-      "caption": "¿Franela y carta con el mismo estilo? 👇🖤\nHacemos las dos con tu diseño. Escríbenos al DM 📩\n#franelaspersonalizadas #cartaspersonalizadas #venezuela #parati #streetwear",
-      "fecha": "2026-11-10"
-    },
-    {
-      "id": "2026-11-10-buenos-dias-2",
+      "id": "2026-11-11-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
       "formato": "Story 9:16",
       "archivos": [
-        "spot-2026-11-10-buenos-dias-2.jpg"
+        "spot-2026-11-11-buenos-dias-2.jpg"
       ],
       "caption": "Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.",
-      "fecha": "2026-11-10"
+      "fecha": "2026-11-11"
     },
     {
-      "id": "2026-11-10-buenos-dias-1",
+      "id": "2026-11-11-buenos-dias-1",
       "titulo": "Buenos días · Post",
       "tipo": "Comunidad",
       "formato": "Post 4:5",
       "archivos": [
-        "spot-2026-11-10-buenos-dias-1.jpg"
+        "spot-2026-11-11-buenos-dias-1.jpg"
       ],
-      "caption": "Nuevo día, nuevas ideas 🖤 Buenos días, Spot Club.\nDinos qué diseño te gustaría ver hoy 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
-      "fecha": "2026-11-10"
+      "caption": "Buenos días 🖤 Que sea un día bueno para ti y los tuyos.\n¿Qué estás escuchando para empezar? 👇\n#buenosdias #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-11"
     }
   ]
 }
