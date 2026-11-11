@@ -24,7 +24,7 @@ const CAP_DIAS=[
  'Nuevo día, nuevas ideas 🖤 Buenos días, Spot Club.\nDinos qué diseño te gustaría ver hoy 👇',
  'Buenos días 🖤 Que sea un día bueno para ti y los tuyos.\n¿Qué estás escuchando para empezar? 👇'];
 const NOCHES=[
- ['BUENAS','NOCHES','Descansa, que mañana seguimos creando'],['A DESCANSAR','MAÑANA MÁS','Gracias por estar, familia'],['CIERRA EL DÍA','CON ESTILO','Buenas noches, Spot Club'],
+ ['BUENAS','NOCHES','Mañana seguimos creando'],['A DESCANSAR','MAÑANA MÁS','Gracias por estar, familia'],['CIERRA EL DÍA','CON ESTILO','Buenas noches, Spot Club'],
  ['DUERME BIEN','SUEÑA GRANDE','Mañana arrancamos de nuevo'],['BUENAS','NOCHES','Gracias por otro día, familia'],['CIERRE DE','DÍA','Que descanses, Spot Club'],
  ['HASTA','MAÑANA','Gracias por estar, familia'],['A SOÑAR','EN GRANDE','Mañana seguimos creando'],['DESCONECTA','Y DESCANSA','Buenas noches, Spot Club'],
  ['NOCHE DE','RECARGAR','Mañana más y mejor'],['QUE LA NOCHE','TE RECARGUE','Buenas noches, familia'],['SUEÑA CON','ESTILO','Hasta mañana, Spot Club'],
@@ -52,12 +52,13 @@ const cartas=(k,m)=>toma(CARTAS,k,m).map(c=>C+c+'.jpg'), cartasInv=(k,m)=>toma([
 const FONDOS=(()=>{ try{ return fs.readdirSync(path.join(raiz,B,'fondos')).filter(f=>/\.(jpe?g|png|webp)$/i.test(f)).sort().map(f=>B+'fondos/'+f); }catch(e){ return []; } })();
 const MODOS=['cartas','promos',...(FONDOS.length?['propio','propio']:[])];
 const fondoDe=(k,inv)=>{ const m=pick(MODOS,k); return m==='cartas'?{montaje:(inv?cartasInv:cartas)(7+k,14)}:m==='promos'?{montaje:promos(k,12)}:{fondo:pick(FONDOS,n+({0:1,1:3,5:6}[k]||k)),velo:.5}; };   // fondo propio: avanza 2 por día y 3 de la noche al día siguiente (no se repite)
+const corto=(t,alt)=>{ t=t.toUpperCase(); return t.length>32?alt:t; };   // el texto chico de arriba no puede pasar de ~32 caracteres: se sale por el borde
 const d1=pick(DIAS,0), d2=pick(DIAS,Math.floor(DIAS.length/2)), nn=pick(NOCHES,0);   // post y story van a mitad del banco, así no coinciden
 const base={tema:'neon',datos:[],insignia:'',sello:[],pie:'Maracaibo · @spot__club',fecha:hoy};
 const piezas=[
- {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:d1[2].toUpperCase(),l1:d1[0],l2:d1[1],cartas:cartas(14,3),...fondoDe(0),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
- {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:d2[2].toUpperCase(),l1:d2[0],l2:d2[1],...disenoDe(0),...fondoDe(1),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
- {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:nn[2].toUpperCase(),l1:nn[0],l2:nn[1],cartas:cartasInv(3,3),...fondoDe(5,true),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
+ {id:hoy+'-buenos-dias-1',titulo:'Buenos días · Post',tipo:'Comunidad',formato:'post',pretitulo:corto(d1[2],'BUENOS DÍAS, SPOT CLUB'),l1:d1[0],l2:d1[1],cartas:cartas(14,3),...fondoDe(0),caption:pick(CAP_DIAS,0)+'\n'+HASH_D},
+ {id:hoy+'-buenos-dias-2',titulo:'Buenos días · Story',tipo:'Comunidad',formato:'story',pretitulo:corto(d2[2],'BUENOS DÍAS, SPOT CLUB'),l1:d2[0],l2:d2[1],...disenoDe(0),...fondoDe(1),caption:'Story: agrega un sticker de pregunta o de encuesta para que la gente conteste.'},
+ {id:hoy+'-buenas-noches',titulo:'Buenas noches · Story',tipo:'Comunidad',formato:'story',pretitulo:corto(nn[2],'BUENAS NOCHES, SPOT CLUB'),l1:nn[0],l2:nn[1],cartas:cartasInv(3,3),...fondoDe(5,true),caption:'Story: agrega el sticker de música o una cuenta regresiva para mañana.\n'+pick(CAP_NOCHES,0)+'\n'+HASH_N}
 ].filter(p=>(modo==='todo'||(modo==='dias'?p.id.includes('buenos-dias'):p.id.includes('buenas-noches')))&&!ya(p.id));
 if(!piezas.length){ console.log('los saludos de',hoy,'ya existen'); process.exit(0); }
 for(const p of piezas){ const spec=path.join(require('os').tmpdir(),'saludo-'+p.id+'.json'); fs.writeFileSync(spec,JSON.stringify({...base,...p,salida:p.id})); execFileSync('node',[path.join(__dirname,'premium.js'),spec],{stdio:'inherit',cwd:raiz}); }
