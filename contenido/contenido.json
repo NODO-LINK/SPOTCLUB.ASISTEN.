@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-12-video-tarde",
+      "titulo": "Cierre de jueves",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-12-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-12-video-tarde-poster.png",
+      "caption": "Cierre de jueves con tu carta y tu franela favoritas 🃏 ¿De quién la quieres? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: cierre de jueves 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-12"
+    },
+    {
       "id": "2026-11-12-video",
       "titulo": "Jueves de carta",
       "tipo": "Video",
