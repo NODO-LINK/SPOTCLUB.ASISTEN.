@@ -2,6 +2,73 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-12-video",
+      "titulo": "Jueves de carta",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-12-video.mp4"
+      ],
+      "poster": "spot-2026-11-12-video-poster.png",
+      "caption": "Jueves de carta y franela a tu manera 🖤 ¿Cuál armamos? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: jueves de carta 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-12"
+    },
+    {
+      "id": "2026-11-12-flyer-5",
+      "titulo": "Tu estilo, tu historia",
+      "tipo": "Marca",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-12-flyer-5.jpg"
+      ],
+      "caption": "Tu historia, en grande, por la espalda 👇🖤\nLlevamos tu diseño a tu franela. Escríbenos al DM 📩\n#franelaspersonalizadas #streetwear #venezuela #parati #maracaibo",
+      "fecha": "2026-11-12"
+    },
+    {
+      "id": "2026-11-12-flyer-4",
+      "titulo": "¿Quién manda en tu playlist?",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-12-flyer-4.jpg"
+      ],
+      "caption": "Story: agrega el sticker de pregunta «¿Qué suena hoy?» y comparte las respuestas 🖤",
+      "fecha": "2026-11-12"
+    },
+    {
+      "id": "2026-11-12-flyer-3",
+      "titulo": "Pósters con tus diseños",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-12-flyer-3.jpg"
+      ],
+      "caption": "¿Qué pondrías en tu pared? 👇🖤\nTu póster con el diseño que tú elijas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
+      "fecha": "2026-11-12"
+    },
+    {
+      "id": "2026-11-12-flyer-2",
+      "titulo": "Hoodie del jueves",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-12-flyer-2.jpg"
+      ],
+      "caption": "Jueves de hoodie con el ojo de Spot 👇🖤\nPide el tuyo por DM 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-12"
+    },
+    {
+      "id": "2026-11-12-flyer-1",
+      "titulo": "Franela blanca de jueves",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-12-flyer-1.jpg"
+      ],
+      "caption": "¿Franela blanca con tu diseño en la espalda? 👇🖤\nLa hacemos desde 1 pieza. Escríbenos al DM 📩\n#franelaspersonalizadas #franelablanca #venezuela #parati #streetwear",
+      "fecha": "2026-11-12"
+    },
+    {
       "id": "2026-11-12-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
