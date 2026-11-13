@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-13-video-tarde",
+      "titulo": "Tu finde, tu franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-13-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-13-video-tarde-poster.png",
+      "caption": "Finde de estrenar franela con tu diseño favorito 🖤 ¿Cuál va en la tuya? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: finde de franela 🖤 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-13"
+    },
+    {
       "id": "2026-11-13-video",
       "titulo": "Viernes 13",
       "tipo": "Video",
