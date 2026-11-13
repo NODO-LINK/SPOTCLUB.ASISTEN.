@@ -216,7 +216,7 @@ window.hacer=async s=>{
         blur(x,20,()=>{ x.fillStyle='rgba(0,0,0,.7)'; x.beginPath(); x.roundRect(-cw/2+12,-ch/2+20,cw,ch,14); x.fill(); });
         x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.save(); x.clip(); x.drawImage(im,-cw/2,-ch/2,cw,ch); x.restore();
         x.strokeStyle='rgba(255,255,255,.35)'; x.lineWidth=2; x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.stroke(); x.restore(); }); }
-    const n=pr.length, conC=!!(s.cartasData&&s.cartasData.length), base=(n===1?(s.formato==='story'?820:700):n===2?650:465)*(conC?.66:1)*(s.formato==='story'?1.1:1), sep=n===1?0:n===2?290:262, orden=n===3?[0,2,1]:[...Array(n).keys()];
+    const n=pr.length, conC=!!(s.cartasData&&s.cartasData.length), base=(n===1?(s.formato==='story'?820:655):n===2?615:465)*(conC?.66:1)*(s.formato==='story'?1.1:1), sep=n===1?0:n===2?290:262, orden=n===3?[0,2,1]:[...Array(n).keys()];
     orden.forEach(i=>{ const im=pr[i], t=n===1?0:(i-(n-1)/2), fw=base*(n===3&&i===1?1.12:1), fh=fw*im.naturalHeight/im.naturalWidth, cxp=pxm+t*sep, cyp=py-10+(n===3&&i!==1?24:0)-(conC?60:0);
       blur(x,26,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(cxp,cyp+fh/2-6,fw*.40,24,0,0,7); x.fill(); });
       x.save(); x.translate(cxp,cyp); x.rotate(n===1?-.035:t*.06); x.shadowColor='rgba(200,150,255,.35)'; x.shadowBlur=16; x.drawImage(im,-fw/2,-fh/2,fw,fh); x.restore(); }); }
