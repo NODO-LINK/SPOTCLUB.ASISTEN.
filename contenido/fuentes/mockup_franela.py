@@ -56,6 +56,8 @@ def componer(diseno_png, escala=None, y=None, dx=0.0, recorte=True, color='auto'
     hf = L - lf
 
     d = Image.open(diseno_png).convert('RGBA')
+    bb = d.getchannel('A').point(lambda v: 255 if v > 25 else 0).getbbox()
+    if bb: d = d.crop(bb)          # se quita el margen transparente: lo que cuenta es el dibujo, no el lienzo
     asp = d.height / d.width
     if escala is None:                       # se ajusta a la forma: ni más ancho que el pecho ni más alto que el torso
         if espalda:   # espalda: el diseño grande ocupa casi todo el torso

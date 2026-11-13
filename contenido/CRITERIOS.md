@@ -179,3 +179,5 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - En los flyers con varias prendas se puede mostrar una de espalda y otra de frente. `saludos.js` ya aplica la regla.
 - No usar la carta `noche.jpg` ("Primera noche": beso en primer plano) ni otras con imágenes íntimas; mirar siempre con Read las cartas antes de usarlas.
 - No usar la carta `mojame-alo.jpg` (Muhammad Ali: persona que no es artista de la comunidad). Revisar con Read el nombre de cada carta antes de usarla.
+- `don-kbrn-lista-eladio.png` (texto finísimo) queda fuera de la rotación de saludos: no se lee a tamaño de flyer. Usar solo diseños con elementos grandes y legibles.
+- `mockup_franela.py` recorta el margen transparente del PNG antes de estampar (antes un diseño con mucho lienzo vacío salía diminuto). Los diseños se ven ahora algo más grandes que en días anteriores; si alguno roza el título, bajar `escalaDiseno`.
