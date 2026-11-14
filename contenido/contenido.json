@@ -2,6 +2,73 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-14-video",
+      "titulo": "Sábado de cartas",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-14-video.mp4"
+      ],
+      "poster": "spot-2026-11-14-video-poster.png",
+      "caption": "Sábado de cartas y franelas con tu estilo 🖤 ¿Cuál armamos? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: sábado de cartas 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-14"
+    },
+    {
+      "id": "2026-11-14-flyer-5",
+      "titulo": "Tu estilo en la espalda",
+      "tipo": "Marca",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-14-flyer-5.jpg"
+      ],
+      "caption": "Tu estilo, en grande, por la espalda 👇🖤\nLlevamos tu diseño a tu franela. Escríbenos al DM 📩\n#franelaspersonalizadas #streetwear #venezuela #parati #maracaibo",
+      "fecha": "2026-11-14"
+    },
+    {
+      "id": "2026-11-14-flyer-4",
+      "titulo": "¿Cuál es tu cantante?",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-14-flyer-4.jpg"
+      ],
+      "caption": "Story: agrega el sticker de pregunta «¿Quién es tu cantante favorito?» 🖤",
+      "fecha": "2026-11-14"
+    },
+    {
+      "id": "2026-11-14-flyer-3",
+      "titulo": "Pósters del sábado",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-14-flyer-3.jpg"
+      ],
+      "caption": "¿Cuál pondrías en tu pared? 👇🖤\nTu póster con el diseño que tú elijas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
+      "fecha": "2026-11-14"
+    },
+    {
+      "id": "2026-11-14-flyer-2",
+      "titulo": "Hoodie de sábado",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-14-flyer-2.jpg"
+      ],
+      "caption": "Sábado de hoodie con el ojo de Spot 👇🖤\nPide el tuyo por DM 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-14"
+    },
+    {
+      "id": "2026-11-14-flyer-1",
+      "titulo": "Elige tu prenda de sábado",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-14-flyer-1.jpg"
+      ],
+      "caption": "¿Negra, blanca o hoodie para el sábado? 👇🖤\nTodas con tu diseño, desde 1 pieza. Escríbenos al DM 📩\n#franelaspersonalizadas #hoodies #venezuela #parati #streetwear",
+      "fecha": "2026-11-14"
+    },
+    {
       "id": "2026-11-14-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
