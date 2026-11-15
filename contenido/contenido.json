@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-15-video-tarde",
+      "titulo": "Tu domingo, tu franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-15-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-15-video-tarde-poster.png",
+      "caption": "Domingo de pensar qué diseño va en tu próxima franela 🖤 ¿Cuál será? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: domingo de franela 🖤 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-15"
+    },
+    {
       "id": "2026-11-15-video",
       "titulo": "Domingo de armar",
       "tipo": "Video",
