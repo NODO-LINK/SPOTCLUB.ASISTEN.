@@ -2,6 +2,73 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-15-video",
+      "titulo": "Domingo de armar",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-15-video.mp4"
+      ],
+      "poster": "spot-2026-11-15-video-poster.png",
+      "caption": "Domingo de armar tu look con carta y franela 🖤 ¿Qué armamos? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: domingo de armar 🖤 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-15"
+    },
+    {
+      "id": "2026-11-15-flyer-5",
+      "titulo": "Tu idea, tu franela",
+      "tipo": "Marca",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-15-flyer-5.jpg"
+      ],
+      "caption": "Tu idea, en grande, por la espalda 👇🖤\nLlevamos tu diseño a tu franela. Escríbenos al DM 📩\n#franelaspersonalizadas #streetwear #venezuela #parati #maracaibo",
+      "fecha": "2026-11-15"
+    },
+    {
+      "id": "2026-11-15-flyer-4",
+      "titulo": "¿Con quién te quedas?",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-15-flyer-4.jpg"
+      ],
+      "caption": "Story: agrega el sticker de encuesta con dos de estas cartas y deja que decidan 🖤",
+      "fecha": "2026-11-15"
+    },
+    {
+      "id": "2026-11-15-flyer-3",
+      "titulo": "Póster de domingo",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-15-flyer-3.jpg"
+      ],
+      "caption": "¿Qué colgarías en tu pared? 👇🖤\nTu póster con el artista que tú elijas. Escríbenos al DM 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
+      "fecha": "2026-11-15"
+    },
+    {
+      "id": "2026-11-15-flyer-2",
+      "titulo": "Hoodie de domingo",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-15-flyer-2.jpg"
+      ],
+      "caption": "Domingo de hoodie con el ojo de Spot 👇🖤\nPide el tuyo por DM 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-15"
+    },
+    {
+      "id": "2026-11-15-flyer-1",
+      "titulo": "Prendas y cartas del domingo",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-15-flyer-1.jpg"
+      ],
+      "caption": "¿Franela y carta con el mismo estilo? 👇🖤\nArma tu combo con tu diseño. Escríbenos al DM 📩\n#franelaspersonalizadas #cartaspersonalizadas #venezuela #parati #streetwear",
+      "fecha": "2026-11-15"
+    },
+    {
       "id": "2026-11-15-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",

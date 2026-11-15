@@ -194,7 +194,7 @@ window.hacer=async s=>{
   let img=null; if(s.disenoData){ img=new Image(); img.src=s.disenoData; await img.decode(); }
   if(s.postersData&&s.postersData.length){ // pósters con marco blanco colgados en la pared: centro grande y a los lados otros más chicos
     const ims=[]; for(const d of s.postersData){ const im=new Image(); im.src=d; await im.decode(); ims.push(im); }
-    const k=s.formato==='story'?1.22:1.14, n=ims.length;
+    const k=s.formato==='story'?1.22:1.07, n=ims.length;
     // orden de dibujo: primero los de atrás (extremos), al final el central
     const slots=[[-440,0.58,-.13,0.9,-20],[440,0.58,.13,0.9,-20],[-300,0.78,-.07,1,10],[300,0.78,.07,1,10],[0,1,0,1,-25]];
     const pick=n>=5?slots:n===4?[slots[2],slots[3],[-120,1,-.02,1,-25],[150,0.9,.03,1,5]]:n===3?[slots[2],slots[3],slots[4]]:n===2?[[-190,.92,-.04,1,0],[190,.92,.04,1,0]]:[slots[4]];
@@ -216,7 +216,7 @@ window.hacer=async s=>{
         blur(x,20,()=>{ x.fillStyle='rgba(0,0,0,.7)'; x.beginPath(); x.roundRect(-cw/2+12,-ch/2+20,cw,ch,14); x.fill(); });
         x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.save(); x.clip(); x.drawImage(im,-cw/2,-ch/2,cw,ch); x.restore();
         x.strokeStyle='rgba(255,255,255,.35)'; x.lineWidth=2; x.beginPath(); x.roundRect(-cw/2,-ch/2,cw,ch,12); x.stroke(); x.restore(); }); }
-    const n=pr.length, conC=!!(s.cartasData&&s.cartasData.length), base=(n===1?(s.formato==='story'?820:620):n===2?615:430)*(conC?.66:1)*(s.formato==='story'?1.1:1), sep=n===1?0:n===2?290:262, orden=n===3?[0,2,1]:[...Array(n).keys()];
+    const n=pr.length, conC=!!(s.cartasData&&s.cartasData.length), base=(n===1?(s.formato==='story'?820:600):n===2?615:430)*(conC?.66:1)*(s.formato==='story'?1.1:1), sep=n===1?0:n===2?290:262, orden=n===3?[0,2,1]:[...Array(n).keys()];
     orden.forEach(i=>{ const im=pr[i], t=n===1?0:(i-(n-1)/2), fw=base*(n===3&&i===1?1.12:1), fh=fw*im.naturalHeight/im.naturalWidth, cxp=pxm+t*sep, cyp=py-10+(n===3&&i!==1?24:0)-(conC?60:0);
       blur(x,26,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(cxp,cyp+fh/2-6,fw*.40,24,0,0,7); x.fill(); });
       x.save(); x.translate(cxp,cyp); x.rotate(n===1?-.035:t*.06); x.shadowColor='rgba(200,150,255,.35)'; x.shadowBlur=16; x.drawImage(im,-fw/2,-fh/2,fw,fh); x.restore(); }); }
