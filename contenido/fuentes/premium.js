@@ -194,9 +194,9 @@ window.hacer=async s=>{
   let img=null; if(s.disenoData){ img=new Image(); img.src=s.disenoData; await img.decode(); }
   if(s.postersData&&s.postersData.length){ // pósters con marco blanco colgados en la pared: centro grande y a los lados otros más chicos
     const ims=[]; for(const d of s.postersData){ const im=new Image(); im.src=d; await im.decode(); ims.push(im); }
-    const k=s.formato==='story'?1.22:1.07, n=ims.length;
+    const k=s.formato==='story'?1.22:1.14, n=ims.length;
     // orden de dibujo: primero los de atrás (extremos), al final el central
-    const slots=[[-440,0.58,-.13,0.9,-20],[440,0.58,.13,0.9,-20],[-300,0.78,-.07,1,10],[300,0.78,.07,1,10],[0,1,0,1,-25]];
+    const slots=[[-440,0.58,-.13,0.9,-20],[440,0.58,.13,0.9,-20],[-300,0.78,-.07,1,10],[300,0.78,.07,1,10],[0,1,0,1,-8]];
     const pick=n>=5?slots:n===4?[slots[2],slots[3],[-120,1,-.02,1,-25],[150,0.9,.03,1,5]]:n===3?[slots[2],slots[3],slots[4]]:n===2?[[-190,.92,-.04,1,0],[190,.92,.04,1,0]]:[slots[4]];
     pick.forEach((sl,i)=>{ const im=ims[i%n], pw2=400*k*sl[1], ph2=pw2*1.414, cx=pxm+sl[0]*k, cy=py+(s.formato==='story'?-25:35)+sl[4]*k, br=14;
       x.save(); x.translate(cx,cy); x.rotate(sl[2]); x.globalAlpha=sl[3];
