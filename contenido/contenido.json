@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-16-video-tarde",
+      "titulo": "Cierre de lunes",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-16-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-16-video-tarde-poster.png",
+      "caption": "Cierre de lunes con tu carta y tu franela favoritas 🃏 ¿De quién la quieres? #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: cierre de lunes 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-16"
+    },
+    {
       "id": "2026-11-16-video",
       "titulo": "Lunes de empezar fuerte",
       "tipo": "Video",
