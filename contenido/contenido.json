@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-17-video-tarde",
+      "titulo": "Tu martes, tu franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-17-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-17-video-tarde-poster.png",
+      "caption": "Martes de armar la franela que quieres 🖤 ¿Con qué diseño? #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: martes de franela 🖤 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-17"
+    },
+    {
       "id": "2026-11-17-video",
       "titulo": "Martes de elegir",
       "tipo": "Video",

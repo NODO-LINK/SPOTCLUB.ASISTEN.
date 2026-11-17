@@ -181,3 +181,4 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - No usar la carta `mojame-alo.jpg` (Muhammad Ali: persona que no es artista de la comunidad). Revisar con Read el nombre de cada carta antes de usarla.
 - `don-kbrn-lista-eladio.png` (texto finísimo) queda fuera de la rotación de saludos: no se lee a tamaño de flyer. Usar solo diseños con elementos grandes y legibles.
 - `mockup_franela.py` recorta el margen transparente del PNG antes de estampar (antes un diseño con mucho lienzo vacío salía diminuto). Los diseños se ven ahora algo más grandes que en días anteriores; si alguno roza el título, bajar `escalaDiseno`.
+- No usar la carta `suei.jpg` (persona fumando en primer plano): evitar imágenes de cigarro, alcohol o consumo en piezas de venta.
