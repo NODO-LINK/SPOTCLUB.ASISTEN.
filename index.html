@@ -505,6 +505,13 @@ td{padding:11px 14px;vertical-align:middle}
   .dis-img img{max-width:100%;max-height:100%;object-fit:contain}
   .dis-info{padding:8px 10px 4px}.dis-info strong{display:block;font-size:.84rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dis-info small{color:var(--muted);font:500 .72rem var(--mono)}
   .dis-acc{display:flex;gap:6px;flex-wrap:wrap;padding:6px 10px 10px}
+.tal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:14px}
+  .tal-card{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+  .tal-img{aspect-ratio:1;background:var(--soft);position:relative}
+  .tal-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .tal-img .vid{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.7);color:#fff;font:700 .7rem var(--mono);padding:2px 6px;border-radius:4px}
+  .tal-info{padding:8px 10px 4px}.tal-info strong{display:block;font-size:.8rem}.tal-info small{display:block;color:var(--muted);font-size:.74rem;margin-top:2px;overflow-wrap:anywhere}
+  .tal-acc{display:flex;gap:6px;flex-wrap:wrap;padding:6px 10px 10px}
 </style>
 </head>
 <body>
@@ -537,6 +544,7 @@ td{padding:11px 14px;vertical-align:middle}
       <button class="nv sec" type="button" data-act="go" data-view="con"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M3.5 17.5 9 13l4 3.5 3-2.5 4.5 3.5"/></svg>Contenido <span class="ct" id="ctCon"></span></button>
       <button class="nv sec" type="button" data-act="go" data-view="prod"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.4"/></svg>Productos</button>
       <button class="nv sec" type="button" data-act="go" data-view="dis"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="9" cy="9" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>Diseños</button>
+      <button class="nv sec" type="button" data-act="go" data-view="tal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v11H4z"/><path d="M9 8l1.5-3h3L15 8"/><circle cx="12" cy="13.5" r="3"/></svg>Taller</button>
       <button class="nv sec" type="button" data-act="go" data-view="act" id="nvAct"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Actividad</button>
       <button class="nv nv-mas" type="button" data-act="mas" aria-haspopup="dialog"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>Más <span class="ct" id="ctMas"></span></button>
     </nav>
@@ -704,6 +712,7 @@ td{padding:11px 14px;vertical-align:middle}
       <section id="v-prod" hidden></section>
       <section id="v-act" hidden></section>
       <section id="v-dis" hidden></section>
+      <section id="v-tal" hidden></section>
     </main>
   </div>
 </div>
@@ -997,8 +1006,8 @@ const DAY = 864e5;
 
 // permisos por rol (sin documento en "usuarios" se asume admin)
 const PERMISOS = {
-    admin:    {views:['panel','ent','fact','ventas','cli','rec','inv','con','prod','dis','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
-    ventas:   {views:['panel','ent','fact','ventas','cli','rec','inv','con','dis'],inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
+    admin:    {views:['panel','ent','fact','ventas','cli','rec','inv','con','prod','dis','tal','act'], inventario:1, registrar:1, cobrar:1, anular:1, eliminar:1, catalogo:1, migrar:1, entregas:1},
+    ventas:   {views:['panel','ent','fact','ventas','cli','rec','inv','con','dis','tal'],inventario:1, registrar:1, cobrar:1, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1},
     despacho: {views:['panel','ent'],                        inventario:0, registrar:0, cobrar:0, anular:0, eliminar:0, catalogo:0, migrar:0, entregas:1}
 };
 
@@ -1079,7 +1088,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
 let user=null, rol='admin', ventas=[], unsub=null, unsubAct=null, unsubCfg=null, actividad=[];
 let delCtx=null, pagoCtx=null, prodEditId=null, pdraft={t:[],d:[]};
 let recs=[], unsubRec=null;
-let disDB=[], disQ='', piezas=[], piezasBase=[], piezasGen=[], unsubGen=null, conMode='lib', gen=null;
+let talDB=[], talF='all', unsubTal=null, disDB=[], disQ='', piezas=[], piezasBase=[], piezasGen=[], unsubGen=null, conMode='lib', gen=null;
 let pubMap={}, unsubPub=null, selPieza=null, conFilter='all', conImg=0, conErr='';
 let cliNotas={}, unsubCli=null, selCli=null, cliQ='', cliSort='rec';
 let invMap={}, unsubInv=null, invEdit=false, invFilter='all', stockCtx=null;
@@ -1162,9 +1171,10 @@ auth.onAuthStateChanged(async u=>{
         if(unsubCli){unsubCli();unsubCli=null;}
         if(unsubPub){unsubPub();unsubPub=null;}
         if(unsubGen){unsubGen();unsubGen=null;}
+        if(unsubTal){unsubTal();unsubTal=null;}
         if(unsubRec){unsubRec();unsubRec=null;}
         recs=[];
-        pubMap={}; piezasGen=[]; disDB=[]; piezasBase=[];
+        pubMap={}; piezasGen=[]; disDB=[]; talDB=[]; piezasBase=[];
         invMap={}; cliNotas={}; ventas=[];
     }
 });
@@ -1211,7 +1221,7 @@ function go(v,o={}){
     if(v==='cli'&&o.cli) selCli=o.cli;
     if(v==='con'&&o.pieza){ selPieza=o.pieza; conImg=0; }
     $$('#nav .nv').forEach(b=>b.dataset.view===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
-    ['panel','ent','fact','ventas','cli','rec','inv','con','prod','dis','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
+    ['panel','ent','fact','ventas','cli','rec','inv','con','prod','dis','tal','act'].forEach(k=>{ $('#v-'+k).hidden=k!==v; });
     if(v==='act') startActividad();
     render();
     window.scrollTo({top:0});
@@ -1234,6 +1244,7 @@ function render(){
     if(view==='rec')   renderRec();
     { const n=recPendientesHoy().length; const c=$('#ctRec'); if(c){ c.textContent=n?n:''; c.classList.toggle('alert',n>0);} }
     if(view==='dis')   renderDis();
+    if(view==='tal')   renderTal();
     if(view==='con')   renderCon();
     { const n=piezasVencidas().length; const c=$('#ctCon'); if(c){ c.textContent=n?n+' ⚠':''; c.classList.toggle('alert',!!n);} }
     if(view==='ventas') renderReg();
@@ -1889,6 +1900,11 @@ function abrirEliminar(kind,id){
         $('#mEliminarT').textContent='Eliminar factura';
         $('#delInfo').textContent=`${inv(v)} · ${v.nombre} · ${fmt(v.total)}`;
         $('#delWarn').textContent='Se borra el pedido con sus pagos e historial y no se puede recuperar. El número de factura queda sin usar. Si solo quieres que deje de contar, usa Anular.';
+    }else if(kind==='tal'){
+        const g=talDB.find(x=>x.id===id); if(!g) return;
+        $('#mEliminarT').textContent='Eliminar del taller';
+        $('#delInfo').textContent=(g.nota||g.tipoLbl||'Archivo');
+        $('#delWarn').textContent='Se borra el archivo y su original del panel. No se puede recuperar.';
     }else if(kind==='dis'){
         const g=disDB.find(x=>x.id===id); if(!g) return;
         $('#mEliminarT').textContent='Eliminar diseño guardado';
@@ -1920,6 +1936,11 @@ async function eliminarOk(){
             await b.commit();
             if(selId===v.id) selId=null;
             toast('Factura eliminada.');
+        }else if(delCtx.kind==='tal'){
+            if(!can('registrar')) throw new Error('permiso');
+            const q=await db.collection('taller_orig').where('p','==',delCtx.id).get(); for(let i=0;i<q.docs.length;i+=400){ const b=db.batch(); q.docs.slice(i,i+400).forEach(x=>b.delete(x.ref)); await b.commit(); }
+            await db.collection('taller').doc(delCtx.id).delete();
+            toast('Archivo eliminado.');
         }else if(delCtx.kind==='dis'){
             if(!can('registrar')) throw new Error('permiso');
             const dd=disDB.find(x=>x.id===delCtx.id);
@@ -2388,7 +2409,9 @@ setInterval(()=>{ if(document.visibilityState==='visible') refrescarContenido();
 async function startContenido(){
     if(unsubPub){unsubPub();unsubPub=null;}
     if(unsubGen){unsubGen();unsubGen=null;}
+    if(unsubTal){unsubTal();unsubTal=null;}
     if(!can('registrar')) return;
+    unsubTal=db.collection('taller').onSnapshot(q=>{ talDB=q.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>((b.creado&&b.creado.toMillis?b.creado.toMillis():0)-(a.creado&&a.creado.toMillis?a.creado.toMillis():0))); if(view==='tal') renderTal(); },e=>console.warn('taller',e));
     try{
         const r=await fetch('contenido/contenido.json',{cache:'no-store'});
         if(!r.ok) throw new Error(r.status);
@@ -2532,6 +2555,85 @@ async function conDescargar(id,i){
         const b=await r.blob(); guardarArchivo(b,String(a).startsWith('data:')?'spot-'+p.id+'.jpg':a);
         toast('Descarga lista: '+a+' ('+(b.size/1048576).toFixed(1)+' MB, calidad original).');
     }catch(e){ console.error(e); toast('No se pudo descargar.','error'); }
+}
+
+// ══════════════════════════════════════════════
+//  TALLER (fotos y videos reales para el contenido diario)
+// ══════════════════════════════════════════════
+const TAL_TIPOS=[['proceso','Taller / proceso','Manos, prensa, film DTF, mesa de trabajo (sin caras)'],['empaque','Pedido empacado','Bolsa, etiqueta, nota, guía de envío'],['hecha','Franela ya hecha','Colgada, doblada o sobre una mesa'],['cliente','Cliente usando la prenda','Solo con permiso del cliente y sin que se vea la cara'],['antesdespues','Antes y después','Diseño en pantalla y franela estampada'],['chat','Chat o reseña de cliente','Captura con el NOMBRE y el número TAPADOS']];
+const talLbl=k=>(TAL_TIPOS.find(t=>t[0]===k)||[k,k])[1];
+function renderTal(){
+    const lista=talDB.filter(d=>talF==='all'||d.tipo===talF);
+    const chips=[['all','Todo',talDB.length],...TAL_TIPOS.map(t=>[t[0],t[1],talDB.filter(d=>d.tipo===t[0]).length])].map(c=>`<button type="button" class="chip" data-act="talFiltro" data-f="${c[0]}" aria-pressed="${talF===c[0]}">${esc(c[1])} · ${c[2]}</button>`).join('');
+    const cards=lista.map(d=>`<div class="tal-card"><div class="tal-img"><img src="${esc(d.img)}" alt="" loading="lazy">${d.esVideo?'<span class="vid">VIDEO</span>':''}</div>`+
+        `<div class="tal-info"><strong>${esc(talLbl(d.tipo))}</strong><small>${esc(d.nota||'Sin nota')}</small><small>${d.orig?((d.orig.bytes/1048576).toFixed(1)+' MB · original'):'solo vista previa'}${d.permiso===false?' · SIN permiso':''}</small></div>`+
+        `<div class="tal-acc"><button type="button" class="btn ghost sm" data-act="talDl" data-id="${esc(d.id)}">Descargar</button><button type="button" class="btn ghost sm" data-act="talNota" data-id="${esc(d.id)}">Nota</button>${can('eliminar')?`<button type="button" class="btn ghost sm" data-act="talDel" data-id="${esc(d.id)}">Eliminar</button>`:''}</div></div>`).join('');
+    keep($('#v-tal'),()=>{
+        $('#v-tal').innerHTML=`<div class="pane-head"><h3>Taller</h3><button type="button" class="btn" data-act="talElegir">+ Subir fotos o videos</button></div>`+
+          `<p class="note-ig">Aquí guardas el material REAL del negocio para que las piezas del día se vean humanas: proceso, pedidos empacados, franelas hechas, clientes con la prenda (con su permiso), antes y después, y chats o reseñas. Sin caras. En los chats tapa el nombre y el número ANTES de subirlos.</p>`+
+          `<div class="field" style="margin-top:10px"><label for="talTipo">Qué vas a subir (se aplica a todo lo que elijas ahora)</label><select id="talTipo">${TAL_TIPOS.map(t=>`<option value="${t[0]}">${esc(t[1])} — ${esc(t[2])}</option>`).join('')}</select></div>`+
+          `<div class="field"><label for="talNotaIn">Nota (opcional: qué es, de qué pedido, qué quieres que diga)</label><input type="text" id="talNotaIn" maxlength="140" autocomplete="off" placeholder="Ej: Primera franela blanca del pedido de Ana"></div>`+
+          `<label class="tog"><input type="checkbox" id="talPermiso" checked><span>Tengo permiso de las personas que aparecen y no se ven caras</span></label>`+
+          `<input type="file" id="talFile" accept="image/*,video/mp4,video/quicktime,video/webm" multiple hidden>`+
+          `<div class="toolbar" style="margin-top:12px">${chips}</div>`+
+          (lista.length?`<div class="tal-grid">${cards}</div>`:'<p class="empty">Todavía no hay archivos aquí. Toca «+ Subir fotos o videos».</p>');
+    });
+}
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('[data-act="talFiltro"]'); if(b){ talF=b.dataset.f; renderTal(); } });
+document.addEventListener('change',e=>{ if(e.target&&e.target.id==='talFile'){ const fs=[...e.target.files]; e.target.value=''; talSubir(fs); } });
+const TAL_PARTE=700000, TAL_MAX_IMG=30*1048576, TAL_MAX_VID=25*1048576;
+async function talMiniatura(file){
+    if(/^video\//.test(file.type)){
+        const u=URL.createObjectURL(file), v=document.createElement('video'); v.muted=true; v.playsInline=true; v.preload='metadata'; v.src=u;
+        await new Promise((ok,no)=>{ v.onloadeddata=ok; v.onerror=()=>no(new Error('video')); });
+        try{ v.currentTime=Math.min(1,(v.duration||1)/2); await new Promise(ok=>{ v.onseeked=ok; setTimeout(ok,1500); }); }catch(e){}
+        const k=Math.min(1,640/Math.max(v.videoWidth,v.videoHeight)), c=document.createElement('canvas'); c.width=Math.round(v.videoWidth*k); c.height=Math.round(v.videoHeight*k);
+        c.getContext('2d').drawImage(v,0,0,c.width,c.height); URL.revokeObjectURL(u); return {img:c.toDataURL('image/jpeg',.72),w:v.videoWidth,h:v.videoHeight,esVideo:true};
+    }
+    const bmp=await createImageBitmap(file); let k=Math.min(1,640/Math.max(bmp.width,bmp.height)), out='';
+    for(let i=0;i<8;i++){ const c=document.createElement('canvas'); c.width=Math.max(1,Math.round(bmp.width*k)); c.height=Math.max(1,Math.round(bmp.height*k)); c.getContext('2d').drawImage(bmp,0,0,c.width,c.height); out=c.toDataURL('image/jpeg',.72); if(out.length<200000) break; k*=.8; }
+    return {img:out,w:bmp.width,h:bmp.height,esVideo:false};
+}
+async function talGuardarOriginal(id,file){
+    const u8=new Uint8Array(await file.arrayBuffer()); let b64='';
+    for(let i=0;i<u8.length;i+=0x8000) b64+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));
+    b64=btoa(b64); const n=Math.ceil(b64.length/TAL_PARTE), col=db.collection('taller_orig');
+    for(let i=0;i<n;i+=4){ const b=db.batch(); for(let k=i;k<Math.min(n,i+4);k++) b.set(col.doc(id+'_'+String(k).padStart(3,'0')),{p:id,n:k,d:b64.slice(k*TAL_PARTE,(k+1)*TAL_PARTE)}); await b.commit(); }
+    return {partes:n,bytes:file.size,tipo:file.type||'application/octet-stream',nombre:file.name};
+}
+async function talSubir(files){
+    if(!can('registrar')||!files.length) return;
+    const tipo=$('#talTipo')?$('#talTipo').value:'proceso', nota=($('#talNotaIn')?$('#talNotaIn').value:'').trim().slice(0,140), permiso=$('#talPermiso')?$('#talPermiso').checked:true;
+    if((tipo==='cliente'||tipo==='chat')&&!permiso){ toast('Para clientes y chats marca que tienes permiso y que no se ven caras ni nombres.','error'); return; }
+    let ok=0; const mal=[];
+    toast('Subiendo '+files.length+' archivo(s)… no cierres la app.');
+    for(const f of files){
+        try{
+            const vid=/^video\//.test(f.type);
+            if(!vid&&!/^image\//.test(f.type)) throw new Error('tipo');
+            if(f.size>(vid?TAL_MAX_VID:TAL_MAX_IMG)) throw new Error('pesa mucho');
+            const m=await talMiniatura(f), ref=db.collection('taller').doc();
+            const orig=await talGuardarOriginal(ref.id,f);
+            await ref.set({tipo,tipoLbl:talLbl(tipo),nota,permiso,img:m.img,w:m.w,h:m.h,esVideo:m.esVideo,orig,creado:FV.serverTimestamp(),por:user.email});
+            ok++;
+        }catch(err){ console.error(err); mal.push(f.name+(err&&err.message==='pesa mucho'?' (pesa demasiado: fotos hasta 30 MB, videos hasta 25 MB)':'')); }
+    }
+    if(ok) toast(ok+(ok===1?' archivo guardado.':' archivos guardados.')+(mal.length?' No se pudo: '+mal.join(', '):'')); else toast('No se pudo guardar: '+mal.join(', '),'error');
+}
+async function talDescargar(id){
+    const d=talDB.find(x=>x.id===id); if(!d||!d.orig) return;
+    try{
+        toast('Preparando el original…');
+        const q=await db.collection('taller_orig').where('p','==',id).get(), ps=q.docs.map(x=>x.data()).sort((a,b)=>a.n-b.n);
+        if(ps.length!==d.orig.partes) throw new Error('faltan partes');
+        const bin=atob(ps.map(x=>x.d).join('')), u8=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);
+        guardarArchivo(new Blob([u8],{type:d.orig.tipo}),d.orig.nombre||('taller-'+id));
+    }catch(e){ console.error(e); toast('No se pudo descargar.','error'); }
+}
+async function talNota(id){
+    const d=talDB.find(x=>x.id===id); if(!d||!can('registrar')) return;
+    const n=(prompt('Nota del archivo:',d.nota||'')||'').trim().slice(0,140); if(n===(d.nota||'')) return;
+    try{ await db.collection('taller').doc(id).update({nota:n}); toast('Nota actualizada.'); }catch(e){ toast('No se pudo guardar la nota.','error'); }
 }
 function detallePieza(p){
     const e=estadoPieza(p);
@@ -2976,6 +3078,10 @@ document.addEventListener('click',e=>{
         case 'recibo': verRecibo(id); break;
         case 'reciboPrint': imprimirRecibo(); break;
         case 'conDl': conDescargar(id,+t.dataset.i||0); break;
+        case 'talDel': abrirEliminar('tal',id); break;
+        case 'talDl': talDescargar(id); break;
+        case 'talElegir': $('#talFile').click(); break;
+        case 'talNota': talNota(id); break;
         case 'disDel': abrirEliminar('dis',id); break;
         case 'disDl': disDescargar(id); break;
         case 'disRen': disRenombrar(id); break;
