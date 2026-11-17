@@ -182,3 +182,16 @@ Decisión del dueño: **todos los flyers donde aparezca una prenda usan el mocku
 - `don-kbrn-lista-eladio.png` (texto finísimo) queda fuera de la rotación de saludos: no se lee a tamaño de flyer. Usar solo diseños con elementos grandes y legibles.
 - `mockup_franela.py` recorta el margen transparente del PNG antes de estampar (antes un diseño con mucho lienzo vacío salía diminuto). Los diseños se ven ahora algo más grandes que en días anteriores; si alguno roza el título, bajar `escalaDiseno`.
 - No usar la carta `suei.jpg` (persona fumando en primer plano): evitar imágenes de cigarro, alcohol o consumo en piezas de venta.
+
+## Contenido más orgánico y humano (cuestionario del dueño, 2026-11-17)
+Respuestas del dueño y reglas que se derivan. Mandan sobre el estilo anterior donde choquen.
+- Lo que más molesta de lo automático: (a) siempre el mismo orden de elementos, (b) muros de cartas/franelas repetidos de fondo, (c) textos de relleno, (d) prendas flotando como recortes. → Variar la composición entre flyers del día (no los 5 con título arriba-producto centro-botón abajo); usar fondos propios y fotos reales antes que muros; las prendas deben ir "apoyadas" (sombra de suelo/mesa o colgadas), no flotando.
+- Estilo humano: MEZCLA (fotos reales del dueño, collage/zine con recortes y notas a mano, foto de producto limpia). Alternar de un día a otro.
+- Proceso (manos, taller, prensa, empaque; SIN caras): TODOS LOS DÍAS al menos 1 pieza con material real del taller.
+- Voz: cercana y relajada (sin tanta jerga, sin sonar a empresa). Humor: memes de internet y situaciones del cliente ("cuando te piden la franela para ayer"). Hablar en primera persona del dueño con MUCHA frecuencia (historias, cómo empezó, su día) sin mostrar la cara.
+- Títulos: se mantiene la marca (Inter Black MAYÚSCULAS, blanco y rojo).
+- Datos fijos (Desde 1 pieza / Impresión DTF / Envíos nacionales + sello 3 a 5 días): SOLO en 1 de cada 3 flyers; en el resto, más limpio con una frase corta y el botón.
+- PROHIBIDO usar la estructura de lema "Tu X, tu Y" ("Tu estilo, tu regla", "Tu diseño, tu franela" en flyers) y parecidas. Escribir titulares concretos y distintos cada día.
+- Saludos (Buenos días / Buenas noches): se dejan, pero con algo real (foto del taller, un pedido, una frase del momento), no solo cartas.
+- Lo que falta en el feed y debe entrar: ANTES Y DESPUÉS (diseño en pantalla vs franela estampada), DETRÁS DE CÁMARAS, y RESEÑAS / MENSAJES DE CLIENTES (capturas con el nombre tapado; el dueño dice que le escriben todos los días).
+- Material real: el dueño lo subirá DESDE EL PANEL (sección tipo «Diseños» pero para fotos/videos del taller, pedidos empacados, franelas hechas y clientes usando la prenda con permiso y sin cara). Día de grabación: mitad de semana. Hasta que exista esa sección, usar `contenido/material/` y los chats que pegue el dueño.
