@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-18-video-tarde",
+      "titulo": "La carta del que sí llega",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-18-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-18-video-tarde-poster.png",
+      "caption": "A esta hora ya sabes quién eres en versión carta 🃏🖤 Escríbenos y la armamos. #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #venezuela\nTikTok: ¿cuál sería tu carta? 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-18"
+    },
+    {
       "id": "2026-11-18-video",
       "titulo": "Miércoles de decidir",
       "tipo": "Video",
