@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-17T21:15:59Z",
+  "actualizado": "2026-11-18T10:43:05Z",
   "disenos": [
     {
       "id": "2Vj64CL5J2IOssX1AnTR",
@@ -71,7 +71,7 @@
       "tipo": "diseno",
       "prenda": "blanca",
       "grande": true,
-      "usar": true
+      "usar": false
     },
     {
       "id": "amKOO3W6DnbrWny30moY",
