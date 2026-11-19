@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-19-video-tarde",
+      "titulo": "Tu franela para el finde",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-19-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-19-video-tarde-poster.png",
+      "caption": "Ya casi es viernes y la franela del finde se arma hoy 🖤 Escríbenos y la hacemos. #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #venezuela\nTikTok: la franela del finde se arma hoy 👕 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-19"
+    },
+    {
       "id": "2026-11-19-video",
       "titulo": "Jueves de franela nueva",
       "tipo": "Video",
