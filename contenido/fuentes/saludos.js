@@ -38,7 +38,7 @@ const manif=JSON.parse(fs.readFileSync(path.join(dir,'contenido.json'),'utf8'));
 const ya=id=>manif.piezas.some(p=>p.id===id);
 const B='contenido/biblioteca/', C=B+'cartas/', P=B+'promos/';
 // cartas de artistas limpias (sin marcas ajenas ni personajes con copyright) y diseños propios aptos para saludar
-const CARTAS=['karol-g','milo-j','doja-cat','omar-courtz','duki','young-miko-1','mora-1','lil-cry','kid-keo','royal-kid','zell-2','linkin','billie-eilish-1','alex-g','akrilla','akapellah-rojo','atorrante','juice-world','lobe','kanye','humbe','feirly','eladio-carrion','big-soto-morada','cancerbero','lil-supa','cosmic-kid'].filter(c=>fs.existsSync(path.join(raiz,C+c+'.jpg')));
+const CARTAS=['karol-g','milo-j','doja-cat','omar-courtz','duki','mora-1','lil-cry','kid-keo','royal-kid','zell-2','linkin','billie-eilish-1','alex-g','akrilla','akapellah-rojo','atorrante','juice-world','lobe','kanye','humbe','feirly','eladio-carrion','big-soto-morada','cancerbero','lil-supa','cosmic-kid'].filter(c=>fs.existsSync(path.join(raiz,C+c+'.jpg')));
 const DISENOS=['greys-save-lives','greys-anatomy','outer-banks-pogue-life','retrato-collage','no-me-arrepiento-de-sentir-tanto'].filter(c=>fs.existsSync(path.join(raiz,'contenido/disenos/'+c+'.png')));
 // diseños que el dueño sube en el apartado «Diseños» del panel (los baja sincronizar_disenos.py): rotan junto con los de la biblioteca fija
 const GRANDES_FIJOS=['retrato-collage','outer-banks-pogue-life','greys-anatomy','greys-save-lives'];   // ilustraciones/collages grandes: van en la ESPALDA casi siempre
