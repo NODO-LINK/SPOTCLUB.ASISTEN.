@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-20-video-tarde",
+      "titulo": "La carta del fin de semana",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-20-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-20-video-tarde-poster.png",
+      "caption": "Viernes por la tarde y ya sabes qué carta te toca 🃏🖤 Escríbenos y la armamos. #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #venezuela\nTikTok: la carta del finde 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-20"
+    },
+    {
       "id": "2026-11-20-video",
       "titulo": "Viernes de decidir",
       "tipo": "Video",
