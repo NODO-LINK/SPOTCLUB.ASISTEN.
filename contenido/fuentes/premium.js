@@ -4,6 +4,7 @@
 //   "marca":"SPOT CLUB", "pretitulo":"FRANELAS PERSONALIZADAS", "l1":"TU ESTILO", "l2":"DA MIEDO",
 //   "datos":["DESDE 1 PIEZA","IMPRESIÓN DTF","ENVÍOS A TODO EL PAÍS"], "insignia":"PÍDELA POR DM", "sello":["3 A 5 DÍAS","HÁBILES"],
 //   "pie":"Maracaibo · @spot__club", "diseno":"contenido/disenos/x.png" (PNG transparente; si falta, logo-spotclub.png),
+//   "sinProducto":true (teaser sin producto: no dibuja la franela de relleno),
 //   "fondo":"contenido/material/foto-x.jpg" (opcional: foto propia o imagen generada fuera en lugar de la escena dibujada),
 //   "id","titulo","tipo","caption","fecha" (opcionales: si hay id, la pieza se agrega al panel)
 //   "modo":"mockup" (opcional: la prenda sola en estudio, 1080x1080, con "nombre" arriba) }
@@ -231,7 +232,7 @@ window.hacer=async s=>{
     blur(x,26,()=>{ x.fillStyle='rgba(0,0,0,.6)'; x.beginPath(); x.ellipse(pxm,py+fh/2-4,fw*.42,26,0,0,7); x.fill(); });
     x.save(); x.translate(pxm,py); x.rotate(-.035); x.translate(-pxm,-py);
     x.shadowColor='rgba(200,150,255,.35)'; x.shadowBlur=16; x.drawImage(fi,pxm-fw/2,py-fh/2,fw,fh); x.shadowBlur=0; x.restore(); }
-  else { x.save(); x.translate(pxm,py); x.rotate(-.045); x.translate(-pxm,-py); franela(x,pxm,py,pw,ph,s.colorProducto||'#0e0e14',img,{escalaDiseno:s.escalaDiseno||.40,yDiseno:s.yDiseno||.31}); x.restore(); }
+  else if(!s.sinProducto){ x.save(); x.translate(pxm,py); x.rotate(-.045); x.translate(-pxm,-py); franela(x,pxm,py,pw,ph,s.colorProducto||'#0e0e14',img,{escalaDiseno:s.escalaDiseno||.40,yDiseno:s.yDiseno||.31}); x.restore(); }
   if(!fondoImg&&E.dibujar===ESCENAS.halloween.dibujar){ calabaza(x,W*.16,yLosa+10,66,-.1); calabaza(x,W*.27,yLosa+34,38,.1); calabaza(x,W*.86,yLosa+6,76,.12); }
   // textos
   let logo=null; if(s.logoData){ logo=new Image(); logo.src=s.logoData; await logo.decode(); }
