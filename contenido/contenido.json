@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-21-video-tarde",
+      "titulo": "Noche de sábado con franela",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-21-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-21-video-tarde-poster.png",
+      "caption": "Sábado en la noche y la franela que te pones la hacemos nosotros 🖤 Escríbenos y la armamos. #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #venezuela\nTikTok: sábado de salir con franela nueva 👕 #franelas #maracaibo #spotclub",
+      "fecha": "2026-11-21"
+    },
+    {
       "id": "2026-11-21-video",
       "titulo": "Sábado de franela nueva",
       "tipo": "Video",
