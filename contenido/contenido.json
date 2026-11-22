@@ -2,6 +2,73 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-22-video",
+      "titulo": "Domingo de elegir",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-22-video.mp4"
+      ],
+      "poster": "spot-2026-11-22-video-poster.png",
+      "caption": "Domingo de elegir qué carta y qué franela te toca 🖤 Cuéntanos tu idea y la armamos #franelaspersonalizadas #cartaspersonalizadas #spotclub #maracaibo #streetwear\nTikTok: domingo de elegir 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-22"
+    },
+    {
+      "id": "2026-11-22-flyer-5",
+      "titulo": "Franela que se queda contigo",
+      "tipo": "Marca",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-22-flyer-5.jpg"
+      ],
+      "caption": "Esa que ya no te quitas porque es tuya 👇🖤\nEscríbenos al DM y la armamos contigo 📩\n#franelaspersonalizadas #venezuela #parati #streetwear #maracaibo",
+      "fecha": "2026-11-22"
+    },
+    {
+      "id": "2026-11-22-flyer-4",
+      "titulo": "¿Cuál fue tu primera canción favorita?",
+      "tipo": "Comunidad",
+      "formato": "Story 9:16",
+      "archivos": [
+        "spot-2026-11-22-flyer-4.jpg"
+      ],
+      "caption": "Story: pon el sticker de pregunta «¿Cuál fue tu primera canción favorita?» y comparte las respuestas más locas 🖤",
+      "fecha": "2026-11-22"
+    },
+    {
+      "id": "2026-11-22-flyer-3",
+      "titulo": "Cinco cartas para tu cuarto",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-22-flyer-3.jpg"
+      ],
+      "caption": "Ese póster que siempre quisiste ya se puede armar 👇🖤\nEscríbenos al DM y lo hacemos a tu gusto 📩\n#posterspersonalizados #venezuela #parati #posters #maracaibo",
+      "fecha": "2026-11-22"
+    },
+    {
+      "id": "2026-11-22-flyer-2",
+      "titulo": "Hoodie para el domingo de frío",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-22-flyer-2.jpg"
+      ],
+      "caption": "Domingo de cobija y hoodie 👇🖤\nHoodie negro con el ojo de Spot. Escríbenos al DM 📩\n#hoodies #spotclub #venezuela #parati #streetwear",
+      "fecha": "2026-11-22"
+    },
+    {
+      "id": "2026-11-22-flyer-1",
+      "titulo": "Blanca de domingo",
+      "tipo": "Producto",
+      "formato": "Post 4:5",
+      "archivos": [
+        "spot-2026-11-22-flyer-1.jpg"
+      ],
+      "caption": "Domingo tranquilo y la franela blanca con diseño propio 👇🖤\nEscríbenos al DM y la armamos 📩\n#franelaspersonalizadas #venezuela #parati #franelablanca #streetwear",
+      "fecha": "2026-11-22"
+    },
+    {
       "id": "2026-11-22-buenos-dias-2",
       "titulo": "Buenos días · Story",
       "tipo": "Comunidad",
