@@ -2,6 +2,18 @@
   "cuenta": "@spot__club",
   "piezas": [
     {
+      "id": "2026-11-22-video-tarde",
+      "titulo": "Domingo en la noche, carta nueva",
+      "tipo": "Video",
+      "formato": "Video 9:16 · 12 s",
+      "archivos": [
+        "spot-2026-11-22-video-tarde.mp4"
+      ],
+      "poster": "spot-2026-11-22-video-tarde-poster.png",
+      "caption": "Domingo en la noche y la semana que viene ya se ve distinta con tu carta 🃏🖤 Escríbenos y la armamos. #cartaspersonalizadas #franelaspersonalizadas #spotclub #maracaibo #venezuela\nTikTok: ¿qué carta empieza tu semana? 🃏 #cartas #maracaibo #spotclub",
+      "fecha": "2026-11-22"
+    },
+    {
       "id": "2026-11-22-video",
       "titulo": "Domingo de elegir",
       "tipo": "Video",
